@@ -216,6 +216,13 @@ footer {
   display: none;
 }
 
+/* Estilos para estados de foco */
+ul li a:focus {
+  color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
 @media (max-width: 768px) {
   header {
     padding: 1rem;
