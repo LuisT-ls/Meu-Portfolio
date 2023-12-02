@@ -1,10 +1,10 @@
 :root {
   --bg-primary-light: #333;
-  --bg-primary-dark: #222;
+  --bg-primary-dark: #000000;  /* Alteração de cor */
   --text-primary-light: #fff;
   --text-primary-dark: #fff;
-  --accent-color: #fff; /* Cor de destaque */
-  --accent-color-content: #555; /* Cor de destaque para o conteúdo */
+  --accent-color: #FF0000;  /* Alteração de cor */
+  --accent-color-content: #3D0000;  /* Alteração de cor */
 }
 
 body {
