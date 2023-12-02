@@ -194,25 +194,30 @@ ul li a:hover {
 
 .skills {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .skill {
-  margin: 1rem;
+  flex: 0 0 calc(33.3333% - 1rem);
+  margin: 0.5rem;
   padding: 20px;
-  width: 200px;
   text-align: center;
   background: #222;
   border-radius: 4px;
   transition: all 0.3s ease;
-  transform: rotate(-90deg);
-}
+  position: relative;
 
-.skill h3 {
-  transform: rotate(90deg);
+  h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    margin: 0;
+    font-size: 1.2rem;
+    white-space: nowrap;
+  }
 }
 
 .skill:hover {
