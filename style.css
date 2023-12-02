@@ -193,16 +193,46 @@ ul li a:hover {
 }
 
 .skills {
-  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 2rem;
 }
 
-.skills ul {
-  list-style: none;
-  padding: 0;
+.skill {
+  margin: 1rem;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  background: #222;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  transform: rotate(-90deg);
 }
 
-.skills ul li {
-  margin-bottom: 0.5rem;
+.skill h3 {
+  transform: rotate(90deg);
+}
+
+.skill:hover {
+  background: #555;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.skill-bar {
+  height: 8px;
+  width: 100%;
+  background: #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skill-progress {
+  height: 100%;
+  background: #777;
+  border-radius: 4px;
+  transition: width 0.5s ease;
 }
 
 .project {
@@ -365,8 +395,21 @@ ul li a:focus {
   }
 
   .content-section {
-    margin: 1rem;
-    padding: 1rem;
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 40rem;
+    text-align: center;
+    color: var(--text-primary-light);
+    background: var(--accent-color-content);
+    border-radius: 1rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+  }
+
+  .content-section p:last-child {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: var(--accent-color);
   }
 
   footer {
@@ -409,5 +452,9 @@ ul li a:focus {
   .social-links a:hover {
     color: var(--text-primary-dark);
     transform: scale(1.2);
+  }
+
+  .skill {
+    margin: 0.5rem; /* Espaçamento entre os cartões */
   }
 }
