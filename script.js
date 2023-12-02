@@ -17,17 +17,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   progressBars.forEach(bar => {
     const value = bar.getAttribute('data-progress')
-    bar.style.width = value
+    animateProgressBar(bar, value)
   })
+
+  // Adicionando animações específicas para Segurança da Informação e Redes de Computadores
+  const securityProgressBar = document.querySelector(
+    '.security .skill-progress'
+  )
+  const networkingProgressBar = document.querySelector(
+    '.networking .skill-progress'
+  )
+
+  animateProgressBar(
+    securityProgressBar,
+    securityProgressBar.getAttribute('data-progress')
+  )
+  animateProgressBar(
+    networkingProgressBar,
+    networkingProgressBar.getAttribute('data-progress')
+  )
 })
 
-progressBars.forEach(bar => {
+function animateProgressBar(bar, value) {
   let progress = 0
-
   const interval = setInterval(() => {
-    bar.style.width = progress + '%'
-    progress++
+    bar.style.width = `${progress}%`
+    progress += 1
 
-    if (progress > value) clearInterval(interval)
+    if (progress > parseInt(value)) {
+      clearInterval(interval)
+    }
   }, 10)
-})
+}
