@@ -192,6 +192,11 @@ ul li a:hover {
   transform: scale(1.1);
 }
 
+.expertise-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
 .skills {
   display: flex;
   flex-wrap: wrap;
@@ -202,7 +207,7 @@ ul li a:hover {
 .skill {
   flex: 0 0 calc(33.3333% - 1rem);
   margin: 0.5rem;
-  padding: 20px;
+  padding: 15px;
   text-align: center;
   background: #222;
   border-radius: 4px;
@@ -215,7 +220,7 @@ ul li a:hover {
     left: 50%;
     transform: translate(-50%, -50%) rotate(90deg);
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
     white-space: nowrap;
   }
 }
