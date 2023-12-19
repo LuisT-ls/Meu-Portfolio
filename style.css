@@ -1,10 +1,26 @@
 :root {
-  --bg-primary-light: #333;
-  --bg-primary-dark: #000000;  /* Alteração de cor */
+  --bg-primary-light: #55efc4;
+  --bg-primary-dark: #00b894;
   --text-primary-light: #fff;
   --text-primary-dark: #fff;
-  --accent-color: #FF0000;  /* Alteração de cor */
-  --accent-color-content: #3D0000;  /* Alteração de cor */
+  --accent-color: #4fc3dc;
+  --accent-color-content: #23a7d2;
+  --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background: var(--bg-primary-light);
+  color: var(--text-primary-light);
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+body.dark-mode {
+  background: var(--bg-primary-dark);
+  color: var(--text-primary-dark);
 }
 
 body {
@@ -27,7 +43,7 @@ body.dark-mode {
   margin: 0;
   padding: 1.25rem;
   color: var(--text-primary-dark);
-  text-align: center; /* Centraliza o texto */
+  text-align: center;
 }
 
 h2::before {
@@ -136,15 +152,16 @@ ul li a:hover {
 }
 
 .content-section {
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 40rem;
+  padding: 4rem;
+  margin: 3rem auto;
+  max-width: 800px;
   text-align: center;
   color: var(--text-primary-light);
   background: var(--accent-color-content);
-  border-radius: 1rem;
+  border-radius: 30px;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
   transition: 0.3s ease-in-out;
+  justify-content: center;
 }
 
 .content-section:hover {
@@ -182,7 +199,7 @@ ul li a:hover {
 .about-photo {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: 30px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
@@ -205,44 +222,89 @@ ul li a:hover {
 }
 
 .skill {
-  flex: 0 0 calc(33.3333% - 1rem);
-  margin: 0.5rem;
-  padding: 15px;
-  text-align: center;
-  background: #222;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  position: relative;
-
-  h3 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    margin: 0;
-    font-size: 1rem;
-    white-space: nowrap;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1.5rem;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: border 0.2s ease;
+  box-shadow: var(--box-shadow);
 }
 
 .skill:hover {
-  background: #555;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent-color);
+}
+
+.skill i {
+  flex: 0 0 70px;
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  transition: transform 0.3s ease;
+}
+
+.skill:hover i {
+  transform: scale(1.2) rotate(-15deg);
+}
+
+.skill:hover .skill-title {
+  color: var(--accent-color);
+}
+
+.skill h3 {
+  color: #333;
+}
+
+.skill-info {
+  flex: 1;
+  margin-left: 1.5rem;
+}
+
+.skill-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .skill-bar {
-  height: 8px;
-  width: 100%;
-  background: #ddd;
-  border-radius: 4px;
-  overflow: hidden;
+  height: 10px;
+  border-radius: 5px;
+  background: #eee;
+  overflow: visible;
+  margin-top: 0.75rem;
+}
+
+/* Animação da barra de progresso */
+@keyframes progress-animation {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: var(--w);
+  }
 }
 
 .skill-progress {
   height: 100%;
-  background: #777;
-  border-radius: 4px;
-  transition: width 0.5s ease;
+  background: var(--accent-color);
+  border-radius: 5px;
+  animation: progress-animation 3s ease-in-out;
+}
+
+.skill-progress::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
 }
 
 .project {
