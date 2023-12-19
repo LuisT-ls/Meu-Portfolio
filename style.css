@@ -75,6 +75,33 @@ nav {
   display: flex;
   align-items: center;
   padding: 1.25rem;
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul li {
+    list-style: none;
+  }
+  
+  ul li a {
+    text-decoration: none;
+    color: var(--text-primary-dark);
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+  }
+  
+  ul li a i {
+    margin-right: 0.5rem;
+  }
+  
+  ul li a:hover {
+    color: var(--accent-color);
+  }
 }
 
 .about-text {
@@ -123,33 +150,6 @@ nav {
   color: var(--accent-color);
 }
 
-ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-}
-
-ul li {
-  list-style: none;
-}
-
-ul li a {
-  text-decoration: none;
-  color: var(--text-primary-dark);
-  display: flex;
-  align-items: center;
-  transition: color 0.3s ease;
-}
-
-ul li a i {
-  margin-right: 0.5rem;
-}
-
-ul li a:hover {
-  color: var(--accent-color);
-}
 
 .content-section {
   padding: 4rem;
