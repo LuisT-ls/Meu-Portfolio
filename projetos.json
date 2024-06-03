@@ -1,8 +1,8 @@
 [
   {
-    "nome": "Projeto 1",
-    "descricao": "Descrição do Projeto 1.",
-    "link": "https://github.com/seu-usuario/projeto1"
+    "nome": "Calculadora Web",
+    "descricao": "Desenvolvi o projeto Calculadoras Online, uma plataforma web que oferece uma variedade de calculadoras especializadas para diversas áreas, como estatística, regressão linear, probabilidade, finanças, unidades de medida, elétrica e química. Além disso, o projeto inclui uma tabela periódica interativa para auxiliar estudantes e profissionais da área.",
+    "link": "https://github.com/LuisT-ls/CalculadoraWeb_de_Estatistica"
   },
   {
     "nome": "Projeto 2",
