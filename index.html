@@ -1,195 +1,102 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfólio de Luís Teixeira" />
-    <meta name="author" content="Luís Teixeira" />
-    <meta
-      name="keywords"
-      content="Luís Teixeira, Portfólio, Desenvolvedor Web"
-    />
-    <link rel="icon" type="image/x-icon" href="Imagens/favicon.ico">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
-    />
+    <title>Portfólio de Luís Teixeira</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
-    <title>Luís Teixeira - Portfólio</title>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      ;(function () {
+        emailjs.init('1PLc3xymOa3PrKHEX')
+      })()
+    </script>
   </head>
-
-  <body>
+  <body class="dark-mode">
     <header>
       <div class="container">
-        <h1 class="title">Luís Teixeira</h1>
-        <nav>
+        <h1>Luís Teixeira</h1>
+        <nav id="navbar">
           <ul>
-            <li><a href="#sobre"><i class="bi bi-person-badge-fill"></i>Sobre</a></li>
-            <li><a href="#projetos"><i class="bi bi-code-slash"></i>Projetos</a></li>
-            <li><a href="#contato"><i class="bi bi-envelope-fill"></i>Contato</a></li>
-            <li><a href="Currículo/Currículo-Luís Teixeira.pdf" download><i class="bi bi-file-person"></i>Currículo</a></li>
-            <li><a href="https://www.linkedin.com/in/luis-tei/" target="_blank"><i class="bi bi-linkedin"></i></a></li>
-            <li><a href="https://github.com/LuisT-ls" target="_blank"><i class="bi bi-github"></i></a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#contato">Contato</a></li>
+            <li>
+              <a href="Currículo/Currículo-Luís Teixeira.pdf" download
+                >Currículo</a
+              >
+            </li>
           </ul>
         </nav>
+        <div id="menu-btn">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
       </div>
     </header>
 
     <main>
-      <section id="sobre" class="content-section">
-        <h2><i class="bi bi-person-badge-fill"></i> Sobre Mim</h2>
-        <div class="about-me">
-          <figure>
-            <img
-              src="Imagens/Foto 3x4.jpg"
-              alt="Minha foto"
-              class="about-photo"
-            />
-          </figure>
-          <p>
-            Me chamo <b>Luís Teixeira</b>, sou estudante de tecnologia motivado
-            e proativo, sempre em busca de aprimorar meus conhecimentos.
-          </p>
-          <p class="expertise-title">Minhas áreas de expertise incluem:</p>
+      <section id="sobre">
+        <div class="container">
+          <h2>Sobre Mim</h2>
+          <p>Breve descrição sobre você...</p>
         </div>
-        <div class="skills">
-          <div class="skill">
-              <i class="bi bi-server"></i>
-              <h3>Infraestrutura de TI</h3> 
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="85%"></div>
-              </div>
-            </div>
-            <div class="skill">
-              <i class="bi bi-layers"></i>
-              <h3>Redes de Computadores</h3> 
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="90%"></div>
-              </div>
-            </div>
-            <div class="skill">
-              <i class="bi bi-laptop"></i>
-              <h3>Hardware e Manutenção</h3> 
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="90%"></div>
-              </div>
-            </div>
-            <div class="skill">
-              <i class="bi bi-windows"></i>
-              <h3>Sistemas Windows e Linux</h3> 
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="85%"></div>
-              </div>
-            </div>
-            <div class="skill">
-              <i class="bi bi-shield-lock"></i>
-              <h3>Segurança da Informação</h3> 
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="80%"></div>
-              </div>
-            </div>
-            <div class="skill">
-              <i class="bi bi-code"></i>
-              <h3>Programação Web</h3> 
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="90%"></div> 
-              </div>
-            </div>
-        </div>
-          <p>
-            As certificações em meu currículo comprovam meu conhecimento sólido
-            nessas áreas.
-          </p>
-        </div>
-        <p>
-          Meus olhos brilham quando falam em novos desafios. Adoro colocar a mão
-          na massa, seja montando um computador ou configurando uma rede
-          corporativa.
-        </p>
-        <p>
-          Já trabalhei como <b>estagiário de suporte técnico</b> e adquiri
-          experiência valiosa na prática, atendendo usuários, recuperando
-          equipamentos e configurando servidores.
-        </p>
-        <p>
-          Participo ativamente dos projetos acadêmicos, sempre com ideias
-          inovadoras e vontade de liderar as equipes.
-        </p>
-        <p>
-          Nos eventos de tecnologia, sou aquele que faz as perguntas intricadas
-          e sai com novos contatos e oportunidades.
-        </p>
-        <p>
-          Busco uma chance para mostrar do que sou capaz. Tenho certeza que
-          posso impactar positivamente qualquer equipe de TI com minha
-          proatividade, trabalho em equipe e rapidez em aprender e me adaptar.
-        </p>
-        <p>
-          <b>Contrate esse entusiasta da tecnologia e não se arrependerá!</b>
-        </p>
       </section>
 
-      <section id="projetos" class="content-section">
-        <h2><i class="bi bi-code-slash"></i> Projetos</h2>
-
-        <article class="project">
-          <h3>Projeto 1</h3>
-          <div class="project-details">
-            <p>
-              Este repositório contém o código-fonte de uma calculadora web de estatística desenvolvida por mim utilizando HTML, CSS e JavaScript.
-              A calculadora permite ao usuário inserir dados numéricos e realizar cálculos estatísticos básicos como média, mediana, moda, desvio padrão, variância, intervalos de confiança e mais.
-              O design é responsivo, adaptando-se a dispositivos móveis. Fiz a estilização utilizando CSS moderno com Flexbox e Grid.
-              O objetivo deste projeto foi praticar meus conhecimentos de front-end e também criar uma ferramenta útil para estudantes e profissionais que precisam fazer cálculos estatísticos rapidamente.
-            </p>
-            <figure class="project-image">
-              <img src="Imagens/Projeto 1.png" alt="Projeto 1" />
-            </figure>
+      <section id="projetos">
+        <div class="container">
+          <h2>Projetos</h2>
+          <div class="projetos-grid" id="projetos-grid">
+            <!-- Projetos serão carregados dinamicamente -->
           </div>
-        </article>        
+        </div>
+      </section>
 
-        <article class="project">
-          <h3>Projeto 2</h3>
-          <div class="project-details">
-          <p>
-            Explore meu segundo projeto, este portfólio online, interativo e moderno. Com design responsivo, seções interativas e barras de progresso visuais para destacar minhas habilidades, este projeto oferece uma experiência envolvente. Destaque para descrições detalhadas de projetos, opção de modos claro e escuro, e informações de contato acessíveis, no footer, logo abaixo. 
-          </p>
-          <!--<figure class="project-image">
-            <img src="Imagens/Projeto 2.png" alt="Projeto 2" />
-          </figure> -->
-        </article>
+      <section id="blog">
+        <div class="container">
+          <h2>Blog</h2>
+          <div class="blog-grid" id="blog-grid">
+            <!-- Artigos do blog serão carregados dinamicamente -->
+          </div>
+        </div>
+      </section>
+
+      <section id="contato">
+        <div class="container">
+          <h2>Contato</h2>
+          <form id="contato-form">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="mensagem">Mensagem:</label>
+            <textarea id="mensagem" name="mensagem" required></textarea>
+
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
       </section>
     </main>
 
-    <footer id="contato" class="footer">
+    <footer>
       <div class="container">
-        <div class="address-container">
-          <address class="contact-info">
-            <i class="bi bi-envelope-fill"></i>
-            <a href="mailto:luishg213@outlook.com" class="contact-link"
-              >luishg213@outlook.com</a
-            >
-            <i class="bi bi-whatsapp"></i>
-            <a href="https://wa.me/5571993322305" class="contact-link" target="_blank"
-              >(71) 99332-2305</a
-            >
-            <i class="bi bi-geo-alt-fill"></i> Salvador, BA
-          </address>
-          <div class="additional-info">
-            <i class="bi bi-info-circle"></i>
-            <p>&copy; 2023 Luís Teixeira. Todos os direitos reservados.</p>
-          </div>
-        </div>
-        <div class="social-links">
-          <a href="https://www.linkedin.com/in/luis-tei/" target="_blank"
-            ><i class="bi bi-linkedin"></i
-          ></a>
-          <a href="https://github.com/LuisT-ls" target="_blank"
-            ><i class="bi bi-github"></i
-          ></a>
-        </div>
+        <ul class="social-icons">
+          <li>
+            <a href="https://github.com/seu-usuario"
+              ><i class="fab fa-github"></i
+            ></a>
+          </li>
+          <!-- Adicione outros ícones de redes sociais conforme necessário -->
+        </ul>
+        <p>&copy; 2024 Luís Teixeira</p>
+        <button id="theme-toggle">🌓</button>
       </div>
     </footer>
-    
+
+    <script src="script.js"></script>
   </body>
 </html>

@@ -1,51 +1,144 @@
-;(() => {
-  // Seleciona o botão do menu e o elemento de navegação
-  const menuBtn = document.querySelector('.menu-btn')
-  const nav = document.querySelector('nav')
+// Inicialize o EmailJS com seu user ID
+emailjs.init('1PLc3xymOa3PrKHEX')
 
-  // Função para alternar a exibição do menu
-  const toggleMenu = () => {
-    nav.classList.toggle('show')
-  }
+// Menu Hambúrguer
+const menuBtn = document.getElementById('menu-btn')
+const navbar = document.getElementById('navbar')
 
-  // Adiciona um ouvinte de evento de clique ao botão do menu
-  menuBtn.addEventListener('click', toggleMenu)
-})()
+menuBtn.addEventListener('click', () => {
+  navbar.classList.toggle('active')
+  menuBtn.classList.toggle('open')
+})
 
-document.addEventListener('DOMContentLoaded', () => {
-  const progressBars = document.querySelectorAll('.skill-progress')
+// Rolagem Suave
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault()
 
-  progressBars.forEach(bar => {
-    const value = bar.getAttribute('data-progress')
-    animateProgressBar(bar, value)
+    const targetId = this.getAttribute('href')
+    const targetElement = document.querySelector(targetId)
+
+    const offsetTop =
+      targetElement.getBoundingClientRect().top +
+      window.pageYOffset -
+      document.querySelector('header').offsetHeight
+
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth'
+    })
   })
+})
 
-  // Adicionando animações específicas para Segurança da Informação e Redes de Computadores
-  const securityProgressBar = document.querySelector(
-    '.security .skill-progress'
-  )
-  const networkingProgressBar = document.querySelector(
-    '.networking .skill-progress'
-  )
+// Modo Escuro/Claro com armazenamento em localStorage
+const themeToggle = document.getElementById('theme-toggle')
+const body = document.body
 
-  animateProgressBar(
-    securityProgressBar,
-    securityProgressBar.getAttribute('data-progress')
-  )
-  animateProgressBar(
-    networkingProgressBar,
-    networkingProgressBar.getAttribute('data-progress')
+const currentTheme = localStorage.getItem('theme') || 'dark'
+body.classList.add(currentTheme)
+
+themeToggle.addEventListener('click', () => {
+  body.classList.toggle('dark-mode')
+  localStorage.setItem(
+    'theme',
+    body.classList.contains('dark-mode') ? 'dark' : 'light'
   )
 })
 
-function animateProgressBar(bar, value) {
-  let progress = 0
-  const interval = setInterval(() => {
-    bar.style.width = `${progress}%`
-    progress += 1
+// Carregamento Dinâmico de Conteúdo (Projetos)
+fetch('projetos.json')
+  .then(response => response.json())
+  .then(projetos => {
+    const projetosGrid = document.getElementById('projetos-grid')
+    projetos.forEach(projeto => {
+      const projetoDiv = document.createElement('div')
+      projetoDiv.classList.add('projeto')
+      projetoDiv.innerHTML = `
+        <h3>${projeto.nome}</h3>
+        <p>${projeto.descricao}</p>
+        <a href="${projeto.link}" target="_blank">Ver Projeto</a>
+      `
+      projetosGrid.appendChild(projetoDiv)
+    })
+  })
 
-    if (progress > parseInt(value)) {
-      clearInterval(interval)
+// Carregamento Dinâmico de Conteúdo (Blog)
+fetch('blog.json')
+  .then(response => response.json())
+  .then(artigos => {
+    const blogGrid = document.getElementById('blog-grid')
+    artigos.forEach(artigo => {
+      const artigoDiv = document.createElement('div')
+      artigoDiv.classList.add('artigo')
+      artigoDiv.innerHTML = `
+        <h3>${artigo.titulo}</h3>
+        <p>${artigo.extrato}</p>
+        <a href="${artigo.link}" target="_blank">Leia Mais</a>
+      `
+      blogGrid.appendChild(artigoDiv)
+    })
+  })
+
+// Formulário de Contato (com validação básica e envio via EmailJS)
+const form = document.getElementById('contato-form')
+form.addEventListener('submit', event => {
+  event.preventDefault()
+
+  const nome = document.getElementById('nome').value
+  const email = document.getElementById('email').value
+  const mensagem = document.getElementById('mensagem').value
+
+  if (!nome || !email || !mensagem) {
+    alert('Por favor, preencha todos os campos.')
+    return
+  }
+
+  if (!validateEmail(email)) {
+    alert('Por favor, insira um e-mail válido.')
+    return
+  }
+
+  // Parâmetros para o EmailJS
+  const templateParams = {
+    from_name: nome,
+    from_email: email,
+    message: mensagem
+  }
+
+  emailjs.send('service_luist-ls', 'template_8vzhxeg', templateParams).then(
+    response => {
+      console.log('SUCCESS!', response.status, response.text)
+      alert('Mensagem enviada com sucesso!')
+      form.reset()
+    },
+    error => {
+      console.log('FAILED...', error)
+      alert('Ocorreu um erro ao enviar a mensagem. Tente novamente mais tarde.')
     }
-  }, 10)
+  )
+})
+
+function validateEmail(email) {
+  const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  return re.test(String(email).toLowerCase())
 }
+
+// Aplicando animações quando as seções entram na viewport
+const sections = document.querySelectorAll('section')
+
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible')
+      }
+    })
+  },
+  {
+    threshold: 0.1
+  }
+)
+
+sections.forEach(section => {
+  observer.observe(section)
+})
