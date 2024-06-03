@@ -109,6 +109,45 @@ section h2 {
   font-size: 2.5em;
 }
 
+/* Estilos para Habilidades e Competências */
+#habilidades {
+  padding: 80px 0;
+}
+
+.habilidades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+}
+
+.habilidade {
+  background-color: #555;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.habilidade img {
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+.habilidade h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.habilidade p {
+  font-size: 0.9em;
+  color: #f0f0f0;
+}
+
+.habilidade:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
 /* Rodapé */
 footer {
   background-color: #333;
