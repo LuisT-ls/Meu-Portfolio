@@ -144,7 +144,7 @@ section h2 {
 }
 
 .habilidade {
-  background-color: #555;
+  background-color: #666;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -159,11 +159,12 @@ section h2 {
 .habilidade h3 {
   font-size: 1.2em;
   margin-bottom: 10px;
+  color: #f4f4f4;
 }
 
 .habilidade p {
   font-size: 0.9em;
-  color: #f0f0f0;
+  color: #f4f4f4;
 }
 
 .habilidade:hover {
@@ -171,22 +172,129 @@ section h2 {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Rodapé */
+/* Estilos do Rodapé */
+/* Estilos do Rodapé (Modo Claro) */
 footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 20px 0;
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 40px 0;
 }
 
-footer .social-icons li {
+/* Estilos do Rodapé (Modo Escuro) */
+body.dark-mode footer {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+body.dark-mode .footer-section h2 {
+  color: #6c757d;
+}
+
+footer .footer-section.about p {
+  /* Seletor mais específico para o parágrafo da seção "Sobre Mim" */
+  color: #333;
+}
+
+body.dark-mode footer .footer-section.about p {
+  color: #00ffff;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.footer-section {
+  width: 25%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.footer-section img {
+  /* Estilos para o logo */
+  color: #007bff;
+  max-width: 150px;
+  margin-bottom: 10px;
+}
+
+.footer-section h2 {
+  color: #007bff;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+}
+
+.footer-section p {
+  line-height: 1.5;
+  margin-bottom: 20px;
+  color: #00ffff;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: 8px;
+}
+
+.footer-section a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #007bff;
+}
+
+.footer-section.about {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.footer-section.about img {
+  max-width: 120px;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.footer-section.about p {
+  text-align: center;
+  max-width: 300px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.social-icons li {
   display: inline-block;
   margin: 0 10px;
 }
 
-footer .social-icons a {
-  color: #fff;
-  font-size: 1.5em;
+.social-icons a {
+  font-size: 1.8em;
+  color: #333;
+  transition: transform 0.3s ease;
+}
+
+.social-icons li a i {
+  margin-right: 12px;
+}
+
+.social-icons a:hover {
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #555;
 }
 
 /* Modo Escuro */
@@ -216,7 +324,9 @@ body.dark-mode nav a:hover {
 }
 
 .projeto {
-  background: #fff;
+  background: #666;
+  color: #f4f4f4;
+  border-radius: 10px;
   padding: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
@@ -309,5 +419,14 @@ body.dark-mode button:hover {
 
   section {
     padding: 60px 20px;
+  }
+
+  .footer-content {
+    justify-content: center;
+  }
+
+  .footer-section {
+    width: 50%;
+    margin-right: 0;
   }
 }

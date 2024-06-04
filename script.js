@@ -30,6 +30,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   })
 })
 
+// Rolagem suave para o link "Voltar ao topo"
+document.querySelector('a[href="#"]').addEventListener('click', function (e) {
+  e.preventDefault()
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+})
+
 // Modo Escuro/Claro com armazenamento em localStorage
 const themeToggle = document.getElementById('theme-toggle')
 const body = document.body
