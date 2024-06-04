@@ -30,6 +30,29 @@ a:hover {
   color: #0056b3;
 }
 
+#theme-toggle-container {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 100;
+}
+
+#theme-toggle {
+  /* Estilos do botão (cor, ícone, etc.) */
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode #theme-toggle {
+  background-color: #333;
+  color: #f0f0f0;
+}
+
 /* Cabeçalho */
 header {
   background-color: #fff;
@@ -278,6 +301,10 @@ body.dark-mode button:hover {
 
   #menu-btn {
     display: block;
+  }
+
+  #theme-toggle-container {
+    display: none;
   }
 
   section {
