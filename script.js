@@ -55,7 +55,7 @@ themeToggle.addEventListener('click', () => {
 })
 
 // Carregamento Dinâmico de Conteúdo (Projetos)
-fetch('/api/projetos') // Adiciona /api/ ao caminho
+fetch('/api/projetos')
   .then(response => response.json())
   .then(projetos => {
     const projetosGrid = document.getElementById('projetos-grid')
@@ -72,7 +72,7 @@ fetch('/api/projetos') // Adiciona /api/ ao caminho
   })
 
 // Carregamento Dinâmico de Conteúdo (Blog)
-fetch('/api/posts') // Adiciona /api/ ao caminho
+fetch('/api/posts')
   .then(response => response.json())
   .then(artigos => {
     const blogGrid = document.getElementById('blog-grid')
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
   // Obter e exibir o total de visitas (uma única vez)
-  fetch('/api/total-visitas') // Movido para dentro do DOMContentLoaded
+  fetch('/api/total-visitas')
     .then(response => response.json())
     .then(data => {
       const totalVisitasElement = document.getElementById('total-visitas')
