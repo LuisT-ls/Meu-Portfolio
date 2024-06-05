@@ -133,6 +133,63 @@ section h2 {
   font-size: 2.5em;
 }
 
+/* Estilos para a Seção de Experiência */
+#experiencia {
+  padding: 80px 0; /* Espaçamento interno da seção */
+  background-color: #f8f9fa; /* Cor de fundo (modo claro) */
+  color: #333; /* Cor do texto (modo claro) */
+}
+
+body.dark-mode #experiencia {
+  background-color: #212529; /* Cor de fundo (modo escuro) */
+  color: #f8f9fa; /* Cor do texto (modo escuro) */
+}
+
+.experiencia-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Responsividade */
+  gap: 30px; /* Espaçamento entre as experiências */
+}
+
+.experiencia {
+  background-color: #fff; /* Cor de fundo do card (modo claro) */
+  padding: 20px;
+  border-radius: 10px; /* Bordas arredondadas */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave para o hover */
+}
+
+body.dark-mode .experiencia {
+  background-color: #343a40; /* Cor de fundo do card (modo escuro) */
+  color: #f8f9fa; /* Cor do texto (modo escuro) */
+}
+
+.experiencia h3 {
+  color: #007bff; /* Cor do título do cargo */
+  margin-bottom: 5px;
+}
+
+.experiencia h4 {
+  font-size: 1em;
+  margin-bottom: 10px;
+  font-weight: normal;
+  color: #6c757d; /* Cor do texto da empresa e data */
+}
+
+.experiencia ul {
+  list-style: none; /* Remove marcadores da lista */
+  padding: 0;
+}
+
+/* Efeito Hover */
+.experiencia:hover {
+  transform: translateY(-5px); /* Eleva o card ao passar o mouse */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra mais forte no hover */
+}
+
 /* Estilos para Habilidades e Competências */
 #habilidades {
   padding: 80px 0;
@@ -173,6 +230,11 @@ section h2 {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
+#projetos,
+#contato {
+  background-color: #f8f8f8;
+}
+
 /* Estilos do Rodapé */
 /* Estilos do Rodapé (Modo Claro) */
 footer {
@@ -183,12 +245,12 @@ footer {
 
 /* Estilos do Rodapé (Modo Escuro) */
 body.dark-mode footer {
-  background-color: #212529;
+  background-color: #222222;
   color: #f8f9fa;
 }
 
 body.dark-mode .footer-section h2 {
-  color: #6c757d;
+  color: #007bff;
 }
 
 footer .footer-section.about p {
@@ -298,6 +360,10 @@ body.dark-mode footer .footer-section.about p {
   border-top: 1px solid #555;
 }
 
+#footer {
+  background-color: #222222;
+}
+
 /* Modo Escuro */
 body.dark-mode {
   background-color: #333;
@@ -324,9 +390,13 @@ body.dark-mode nav a:hover {
   gap: 20px;
 }
 
+#projetos {
+  background-color: #f4f4f4;
+}
+
 .projeto {
-  background: #666;
-  color: #f4f4f4;
+  background: #fff;
+  color: #333;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -409,6 +479,15 @@ body.dark-mode #menu-btn .bar {
 }
 body.dark-mode #menu-btn:hover .bar {
   background-color: #00ffff;
+}
+
+body.dark-mode #projetos {
+  background-color: #212529;
+}
+
+body.dark-mode #projetos,
+body.dark-mode #contato {
+  background-color: #212529;
 }
 
 /* Remove contorno azul em foco (opcional) */
