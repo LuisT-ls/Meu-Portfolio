@@ -18,10 +18,7 @@
       property="og:description"
       content="Estudante de Ciência, Tecnologia e Inovação na UFBA."
     />
-    <meta
-      property="og:image"
-      content="Imagens/Imagem Principal.png"
-    />
+    <meta property="og:image" content="Imagens/Imagem Principal.png" />
     <meta property="og:url" content="https://luistls.vercel.app/" />
     <meta property="og:type" content="website" />
     <title>Portfólio de Luís Teixeira</title>
@@ -40,12 +37,14 @@
   </head>
   <body class="dark-mode">
     <div id="theme-toggle-container">
-      <button id="theme-toggle">🌓</button>
+      <button id="theme-toggle" aria-label="Alternar tema entre claro e escuro">
+        🌓
+      </button>
     </div>
     <header>
       <div class="container">
         <h1>Luís Teixeira</h1>
-        <nav id="navbar">
+        <nav id="navbar" aria-label="Navegação principal">
           <ul>
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#habilidades">Habilidades</a></li>
@@ -59,11 +58,11 @@
             </li>
           </ul>
         </nav>
-        <div id="menu-btn">
+        <button id="menu-btn" aria-label="Abrir/Fechar Menu">
           <div class="bar"></div>
           <div class="bar"></div>
           <div class="bar"></div>
-        </div>
+        </button>
       </div>
     </header>
 
@@ -92,7 +91,7 @@
         <div class="container">
           <h2>Habilidades e Competências</h2>
           <div class="habilidades-grid">
-            <div class="habilidade">
+            <li class="habilidade">
               <img
                 src="Imagens/icon/windows-applications-svgrepo-com.svg"
                 alt="Ícone do Windows Server"
@@ -102,8 +101,8 @@
                 Experiência em administração e configuração de servidores
                 Windows.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img
                 src="Imagens/icon/managed-service-for-microsoft-active-directory-svgrepo-com.svg"
                 alt="Ícone do Active Directory"
@@ -113,8 +112,8 @@
                 Conhecimento avançado em gerenciamento de diretórios e políticas
                 de segurança.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img
                 src="Imagens/icon/linux-tux-svgrepo-com.svg"
                 alt="Ícone do Kernel Linux"
@@ -124,8 +123,8 @@
                 Domínio em sistemas baseados no Kernel Linux, incluindo
                 administração e configuração avançada.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img
                 src="Imagens/icon/cld-cloud-computer-network-svgrepo-com.svg"
                 alt="Ícone de Redes de Computadores"
@@ -135,16 +134,16 @@
                 Experiência sólida em configuração e manutenção de redes
                 corporativas.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img src="Imagens/icon/git-svgrepo-com.svg" alt="Ícone do Git" />
               <h3>GIT</h3>
               <p>
                 Domínio em controle de versão com GIT, incluindo repositórios
                 remotos e colaboração em equipe.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img
                 src="Imagens/icon/html-templates-svgrepo-com.svg"
                 alt="Ícone de HTML, CSS e JavaScript"
@@ -154,8 +153,8 @@
                 Proficiência em desenvolvimento web front-end com HTML5, CSS3 e
                 JavaScript.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img
                 src="Imagens/icon/sql-svgrepo-com.svg"
                 alt="Ícone de Banco de Dados SQL"
@@ -165,8 +164,8 @@
                 Experiência em design, implementação e administração de bancos
                 de dados SQL.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img
                 src="Imagens/icon/vmware-svgrepo-com.svg"
                 alt="Ícone de Virtualização"
@@ -176,8 +175,8 @@
                 Conhecimento em implementação e gerenciamento de ambientes
                 virtualizados.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img
                 src="Imagens/icon/powershell-psm-svgrepo-com.svg"
                 alt="Ícone de Shell Scripting"
@@ -187,8 +186,8 @@
                 Habilidade em escrever scripts de shell para automatizar
                 tarefas.
               </p>
-            </div>
-            <div class="habilidade">
+            </li>
+            <li class="habilidade">
               <img
                 src="Imagens/icon/node-js-svgrepo-com.svg"
                 alt="Ícone de Node.js"
@@ -198,7 +197,7 @@
                 Criação de aplicativos web dinâmicos e escaláveis no lado do
                 servidor com Node.js.
               </p>
-            </div>
+            </li>
           </div>
         </div>
       </section>
@@ -279,12 +278,18 @@
             <h2>Siga-me</h2>
             <ul class="social-icons">
               <li>
-                <a href="https://github.com/LuisT-ls" target="_blank"
+                <a
+                  href="https://github.com/LuisT-ls"
+                  target="_blank"
+                  aria-label="Visitar meu perfil no GitHub"
                   ><i class="fab fa-github"></i>Github</a
                 >
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/luis-tei" target="_blank"
+                <a
+                  href="https://www.linkedin.com/in/luis-tei"
+                  target="_blank"
+                  aria-label="Visitar meu perfil no LinkedIn"
                   ><i class="fab fa-linkedin"></i>LinkedIn</a
                 >
               </li>
@@ -296,7 +301,20 @@
         </div>
       </div>
     </footer>
-
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Luís Teixeira",
+        "url": "https://luistls.vercel.app/",
+        "image": "https://luistls.vercel.app/Imagens/Imagem Principal.png",
+        "jobTitle": "Estudante de Ciência, Tecnologia e Inovação",
+        "sameAs": [
+          "https://github.com/LuisT-ls",
+          "https://www.linkedin.com/in/luis-tei"
+        ]
+      }
+    </script>
     <script src="script.js"></script>
   </body>
 </html>
