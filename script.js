@@ -55,7 +55,7 @@ themeToggle.addEventListener('click', () => {
 })
 
 // Carregamento Dinâmico de Conteúdo (Projetos)
-fetch('/api/projetos')
+fetch('/Data/projetos.json')
   .then(response => response.json())
   .then(projetos => {
     const projetosGrid = document.getElementById('projetos-grid')
@@ -72,7 +72,7 @@ fetch('/api/projetos')
   })
 
 // Carregamento Dinâmico de Conteúdo (Blog)
-fetch('/api/posts')
+fetch('Data/blog.json')
   .then(response => response.json())
   .then(artigos => {
     const blogGrid = document.getElementById('blog-grid')
