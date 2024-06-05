@@ -1,39 +1,34 @@
-const sqlite3 = require('sqlite3').verbose()
-const db = new sqlite3.Database('./db/visitas.db')
+import { sql } from '@vercel/postgres'
 
-function criarTabelaVisitas() {
-  db.run(`
-    CREATE TABLE IF NOT EXISTS visitas (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `)
+async function criarTabelaVisitas() {
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS visitas (
+        id SERIAL PRIMARY KEY,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `
+    console.log('Tabela "visitas" criada com sucesso!')
+  } catch (err) {
+    console.error('Erro ao criar tabela "visitas":', err)
+  }
 }
 
-criarTabelaVisitas()
-
-function registrarVisita() {
-  return new Promise((resolve, reject) => {
-    db.run('INSERT INTO visitas DEFAULT VALUES', err => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve()
-      }
-    })
-  })
+async function registrarVisita() {
+  try {
+    await sql`INSERT INTO visitas DEFAULT VALUES`
+  } catch (err) {
+    throw new Error('Erro ao registrar visita: ' + err.message)
+  }
 }
 
-function getTotalVisitas() {
-  return new Promise((resolve, reject) => {
-    db.get('SELECT COUNT(*) AS total FROM visitas', (err, row) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(row.total)
-      }
-    })
-  })
+async function getTotalVisitas() {
+  try {
+    const { rows } = await sql`SELECT COUNT(*) AS total FROM visitas`
+    return rows[0].total
+  } catch (err) {
+    throw new Error('Erro ao obter total de visitas: ' + err.message)
+  }
 }
 
-module.exports = { registrarVisita, getTotalVisitas }
+module.exports = { criarTabelaVisitas, registrarVisita, getTotalVisitas }

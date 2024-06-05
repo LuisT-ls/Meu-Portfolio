@@ -10,7 +10,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@vercel/postgres": "^0.8.0",
     "express": "^4.19.2",
+    "pg": "^8.12.0",
     "sqlite3": "^5.1.7"
   }
 }
