@@ -402,11 +402,13 @@ body.dark-mode button:hover {
 
 /* Botão Hambúrguer no Modo Escuro */
 body.dark-mode #menu-btn {
-  background-color: #555;
-  border: none;
+  background-color: transparent;
 }
 body.dark-mode #menu-btn .bar {
-  background-color: #f0f0f0;
+  background-color: #f4f4f4;
+}
+body.dark-mode #menu-btn:hover .bar {
+  background-color: #00ffff;
 }
 
 /* Remove contorno azul em foco (opcional) */
