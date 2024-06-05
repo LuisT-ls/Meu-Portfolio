@@ -141,34 +141,31 @@ section h2 {
 }
 
 body.dark-mode #experiencia {
-  background-color: #212529; /* Cor de fundo (modo escuro) */
-  color: #f8f9fa; /* Cor do texto (modo escuro) */
+  background-color: #212529;
+  color: #f8f9fa;
 }
 
 .experiencia-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(300px, 1fr)
-  ); /* Responsividade */
-  gap: 30px; /* Espaçamento entre as experiências */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
 }
 
 .experiencia {
-  background-color: #fff; /* Cor de fundo do card (modo claro) */
+  background-color: #fff;
   padding: 20px;
-  border-radius: 10px; /* Bordas arredondadas */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave para o hover */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 body.dark-mode .experiencia {
-  background-color: #343a40; /* Cor de fundo do card (modo escuro) */
-  color: #f8f9fa; /* Cor do texto (modo escuro) */
+  background-color: #343a40;
+  color: #f8f9fa;
 }
 
 .experiencia h3 {
-  color: #007bff; /* Cor do título do cargo */
+  color: #007bff;
   margin-bottom: 5px;
 }
 
@@ -176,18 +173,18 @@ body.dark-mode .experiencia {
   font-size: 1em;
   margin-bottom: 10px;
   font-weight: normal;
-  color: #6c757d; /* Cor do texto da empresa e data */
+  color: #99a0a7;
 }
 
 .experiencia ul {
-  list-style: none; /* Remove marcadores da lista */
+  list-style: none;
   padding: 0;
 }
 
 /* Efeito Hover */
 .experiencia:hover {
-  transform: translateY(-5px); /* Eleva o card ao passar o mouse */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra mais forte no hover */
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Estilos para Habilidades e Competências */
@@ -245,12 +242,12 @@ footer {
 
 /* Estilos do Rodapé (Modo Escuro) */
 body.dark-mode footer {
-  background-color: #222222;
-  color: #f8f9fa;
+  background-color: #222;
+  color: #f0f0f0;
 }
 
 body.dark-mode .footer-section h2 {
-  color: #007bff;
+  color: #00ffff;
 }
 
 footer .footer-section.about p {
@@ -259,7 +256,7 @@ footer .footer-section.about p {
 }
 
 body.dark-mode footer .footer-section.about p {
-  color: #00ffff;
+  color: #99a0a7;
 }
 
 .footer-content {
@@ -364,6 +361,21 @@ body.dark-mode footer .footer-section.about p {
   background-color: #222222;
 }
 
+#total-visitas {
+  display: flex; /* Alinha o ícone e o texto */
+  align-items: center; /* Alinha verticalmente ao centro */
+  font-size: 1em; /* Tamanho da fonte normal */
+  color: #333; /* Cor de texto escura */
+  margin-bottom: 20px;
+}
+
+#total-visitas::before {
+  content: '\f06e'; /* Ícone de olho do Font Awesome */
+  font-family: 'Font Awesome 5 Free'; /* Fonte do Font Awesome */
+  font-weight: 900; /* Peso da fonte (bold) */
+  margin-right: 5px; /* Espaçamento entre o ícone e o texto */
+}
+
 /* Modo Escuro */
 body.dark-mode {
   background-color: #333;
@@ -377,10 +389,15 @@ body.dark-mode a {
 body.dark-mode header {
   background-color: #222;
   box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+}
+
+body.dark-mode nav a {
+  color: #00ffff;
 }
 
 body.dark-mode nav a:hover {
-  background-color: #444;
+  background-color: #333;
 }
 
 /* Projetos */

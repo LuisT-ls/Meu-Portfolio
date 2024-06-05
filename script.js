@@ -55,7 +55,7 @@ themeToggle.addEventListener('click', () => {
 })
 
 // Carregamento Dinâmico de Conteúdo (Projetos)
-fetch('Data/projetos.json')
+fetch('/api/projetos') // Adiciona /api/ ao caminho
   .then(response => response.json())
   .then(projetos => {
     const projetosGrid = document.getElementById('projetos-grid')
@@ -72,7 +72,7 @@ fetch('Data/projetos.json')
   })
 
 // Carregamento Dinâmico de Conteúdo (Blog)
-fetch('Data/blog.json')
+fetch('/api/posts') // Adiciona /api/ ao caminho
   .then(response => response.json())
   .then(artigos => {
     const blogGrid = document.getElementById('blog-grid')
@@ -133,21 +133,54 @@ function validateEmail(email) {
 }
 
 // Aplicando animações quando as seções entram na viewport
-const sections = document.querySelectorAll('section')
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('section')
 
-const observer = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible')
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    },
+    {
+      threshold: 0.1
+    }
+  )
+
+  sections.forEach(section => {
+    observer.observe(section)
+  })
+
+  // Registrar visita ao carregar a página
+  fetch('/api/registrar-visita')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao registrar visita')
       }
     })
-  },
-  {
-    threshold: 0.1
-  }
-)
+    .catch(error => {
+      console.error(error)
+    })
 
-sections.forEach(section => {
-  observer.observe(section)
+  // Obter e exibir o total de visitas (uma única vez)
+  fetch('/api/total-visitas') // Movido para dentro do DOMContentLoaded
+    .then(response => response.json())
+    .then(data => {
+      const totalVisitasElement = document.getElementById('total-visitas')
+      totalVisitasElement.textContent = data.total
+    })
+})
+
+// server.js
+app.get('/api/total-visitas', (req, res) => {
+  db.get('SELECT COUNT(*) AS total FROM visitas', (err, row) => {
+    if (err) {
+      console.error('Erro ao obter total de visitas:', err)
+      res.status(500).send('Erro interno do servidor')
+    } else {
+      res.json({ total: row.total })
+    }
+  })
 })
