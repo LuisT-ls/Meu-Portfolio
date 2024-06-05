@@ -119,6 +119,7 @@ section {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  margin-top: 80px;
 }
 
 section.visible {
@@ -399,6 +400,20 @@ body.dark-mode button:hover {
   background-color: #0056b3;
 }
 
+/* Botão Hambúrguer no Modo Escuro */
+body.dark-mode #menu-btn {
+  background-color: #555;
+  border: none;
+}
+body.dark-mode #menu-btn .bar {
+  background-color: #f0f0f0;
+}
+
+/* Remove contorno azul em foco (opcional) */
+#menu-btn:focus {
+  outline: none;
+}
+
 @media (max-width: 768px) {
   nav ul {
     display: none;
@@ -419,6 +434,7 @@ body.dark-mode button:hover {
 
   section {
     padding: 60px 20px;
+    margin-top: 80px;
   }
 
   .footer-content {
