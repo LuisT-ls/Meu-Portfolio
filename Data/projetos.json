@@ -5,8 +5,8 @@
     "link": "https://github.com/LuisT-ls/CalculadoraWeb_de_Estatistica"
   },
   {
-    "nome": "Projeto 2",
-    "descricao": "Descrição do Projeto 2.",
-    "link": "https://github.com/seu-usuario/projeto2"
+    "nome": "Gerador de Senhas",
+    "descricao": "Este projeto é um gerador de senhas online personalizável que permite criar senhas fortes e seguras, com opções para ajustar o comprimento, incluir diferentes tipos de caracteres e avaliar a força da senha gerada. Ele também oferece geradores rápidos para senhas Wi-Fi e PINs, além de opções criativas para gerar senhas a partir de histórias pessoais ou temas. O projeto inclui um glossário de segurança para ajudar os usuários a entenderem conceitos importantes sobre senhas e oferece um modo escuro para melhor visualização.",
+    "link": "https://github.com/LuisT-ls/Gerador-de-Senhas"
   }
 ]
