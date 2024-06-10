@@ -1,9 +1,11 @@
-const express = require('express')
+import express from 'express'
+import { sql } from '@vercel/postgres'
+import fs from 'fs'
+import sqlite3 from 'sqlite3'
+import db from './db/database'
+
 const app = express()
 const port = 3000
-const fs = require('fs')
-const sqlite3 = require('sqlite3').verbose()
-const db = require('./db/database')
 
 // Ler os dados dos projetos
 let projetos = []
@@ -59,4 +61,10 @@ app.get('/', (req, res) => {
 // Iniciar o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`)
+})
+
+// Middleware de tratamento de erros
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Erro interno do servidor')
 })
