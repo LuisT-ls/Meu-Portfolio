@@ -2,7 +2,7 @@ const fs = require('fs-extra')
 
 try {
   fs.emptyDirSync('build') // Limpa a pasta build se ela existir
-  fs.copySync('.', 'build', { dereference: true }) // Copia todos os arquivos para a pasta build
+  fs.copySync('src', 'build')
   console.log('Build concluído com sucesso!')
 } catch (err) {
   console.error('Erro ao executar o build:', err)
