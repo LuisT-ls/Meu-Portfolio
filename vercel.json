@@ -1,9 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { 
-      "src": "server.js", 
-      "use": "@vercel/node" 
+    {
+      "src": "server.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["Data/**/*", "db/**/*"] } // Inclui as pastas Data e db
     }
   ],
   "routes": [

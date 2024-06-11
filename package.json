@@ -26,5 +26,8 @@
   "devDependencies": {
     "cpy-cli": "^5.0.0",
     "mkdirp": "^3.0.1"
+  },
+  "engines": {
+    "node": "20.14.0"
   }
 }
