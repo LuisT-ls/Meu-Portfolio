@@ -41,11 +41,49 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="icon" href="Imagens/Logo/logo.ico" type="image/x-icon" />
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-      ;(function () {
+    <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
+    <script type="module">
+      window.addEventListener('DOMContentLoaded', event => {
+        // Inicialização do emailjs
         emailjs.init('1PLc3xymOa3PrKHEX')
-      })()
+
+        // Importação e configuração do Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js'
+        import {
+          getDatabase,
+          ref,
+          onValue,
+          runTransaction
+        } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'
+
+        const firebaseConfig = {
+          apiKey: '',
+          authDomain: 'meu-portf.firebaseapp.com',
+          projectId: 'meu-portf',
+          storageBucket: 'meu-portf.appspot.com',
+          messagingSenderId: '107302529297',
+          appId: '',
+          measurementId: 'G-VFM4M3FVS6'
+        }
+
+        const app = initializeApp(firebaseConfig)
+        const database = getDatabase(app)
+
+        // Contador de visitas
+        const visitCountRef = ref(database, 'visitCount')
+        runTransaction(visitCountRef, currentCount => {
+          if (currentCount === null) {
+            return 1 // Inicializa o contador com 1 se não existir
+          }
+          return currentCount + 1 // Incrementa o contador
+        })
+
+        onValue(visitCountRef, snapshot => {
+          document.getElementById(
+            'total-visitas'
+          ).innerText = `Total de visitas: ${snapshot.val()}`
+        })
+      })
     </script>
   </head>
   <body class="dark-mode">
@@ -357,7 +395,7 @@
             </ul>
           </div>
         </div>
-        <div id="total-visitas"></div>
+        <div id="total-visitas">Total de visitas: 0</div>
         <div class="footer-bottom">
           <p>&copy; 2024 Luís Teixeira. Todos os direitos reservados.</p>
         </div>
