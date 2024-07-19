@@ -1,11 +1,22 @@
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #0056b3;
+  --background-color: #f4f4f4;
+  --text-color: #333;
+  --dark-mode-background: #333;
+  --dark-mode-text: #f4f4f4;
+  --transition-speed: 0.3s;
+}
+
 /* Estilos Gerais */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   margin: 0;
-  background-color: #f4f4f4;
-  color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
 }
 
 .container {
@@ -22,12 +33,12 @@ h3 {
 
 a {
   text-decoration: none;
-  color: #007bff;
-  transition: color 0.3s ease;
+  color: var(--primary-color);
+  transition: color var(--transition-speed) ease;
 }
 
 a:hover {
-  color: #0056b3;
+  color: var(--secondary-color);
 }
 
 #theme-toggle-container {
@@ -38,19 +49,19 @@ a:hover {
 }
 
 #theme-toggle {
-  /* Estilos do botão (cor, ícone, etc.) */
   background-color: #f0f0f0;
   color: #333;
   border: none;
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
 }
 
 body.dark-mode #theme-toggle {
-  background-color: #333;
-  color: #f0f0f0;
+  background-color: var(--dark-mode-background);
+  color: var(--dark-mode-text);
 }
 
 /* Cabeçalho */
@@ -63,7 +74,7 @@ header {
   left: 0;
   width: 100%;
   z-index: 10;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--transition-speed) ease;
 }
 
 header .container {
@@ -108,12 +119,12 @@ nav a:hover {
 #menu-btn .bar {
   width: 25px;
   height: 3px;
-  background-color: #333;
+  background-color: var(--text-color);
   margin: 5px 0;
-  transition: all 0.3s ease;
+  transition: all var(--transition-speed) ease;
 }
 
-/* Estilos para as Seções (Sobre, Projetos, Contato) */
+/* Estilos para as Seções */
 section {
   padding: 80px 0;
   opacity: 0;
@@ -135,9 +146,9 @@ section h2 {
 
 /* Estilos para a Seção de Experiência */
 #experiencia {
-  padding: 80px 0; /* Espaçamento interno da seção */
-  background-color: #f8f9fa; /* Cor de fundo (modo claro) */
-  color: #333; /* Cor do texto (modo claro) */
+  padding: 80px 0;
+  background-color: #f8f9fa;
+  color: #333;
 }
 
 body.dark-mode #experiencia {
@@ -156,7 +167,8 @@ body.dark-mode #experiencia {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease;
 }
 
 body.dark-mode .experiencia {
@@ -165,7 +177,7 @@ body.dark-mode .experiencia {
 }
 
 .experiencia h3 {
-  color: #007bff;
+  color: var(--primary-color);
   margin-bottom: 5px;
 }
 
@@ -181,7 +193,6 @@ body.dark-mode .experiencia {
   padding: 0;
 }
 
-/* Efeito Hover */
 .experiencia:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -203,7 +214,8 @@ body.dark-mode .experiencia {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease;
 }
 
 .habilidade img {
@@ -227,36 +239,104 @@ body.dark-mode .experiencia {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-#projetos,
-#contato {
-  background-color: #f8f8f8;
+/* Projetos */
+.projetos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
-/* Estilos do Rodapé */
-/* Estilos do Rodapé (Modo Claro) */
+#projetos {
+  background-color: var(--background-color);
+}
+
+.projeto {
+  background: #fff;
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition-speed) ease,
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
+}
+
+.projeto:hover {
+  transform: translateY(-10px);
+}
+
+body.dark-mode .projeto {
+  background: #444;
+  color: var(--dark-mode-text);
+}
+
+body.dark-mode .projeto:hover {
+  background: #555;
+}
+
+/* Formulário de Contato */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+}
+
+input,
+textarea {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+body.dark-mode input,
+body.dark-mode textarea {
+  background-color: #555;
+  color: var(--dark-mode-text);
+  border: 1px solid #444;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #ccc;
+}
+
+body.dark-mode button {
+  background-color: var(--primary-color);
+}
+
+body.dark-mode button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Rodapé */
 footer {
   background-color: #f8f9fa;
-  color: #333;
+  color: var(--text-color);
   padding: 40px 0;
 }
 
-/* Estilos do Rodapé (Modo Escuro) */
 body.dark-mode footer {
   background-color: #222;
-  color: #f0f0f0;
-}
-
-body.dark-mode .footer-section h2 {
-  color: #00ffff;
-}
-
-footer .footer-section.about p {
-  /* Seletor mais específico para o parágrafo da seção "Sobre Mim" */
-  color: #333;
-}
-
-body.dark-mode footer .footer-section.about p {
-  color: #99a0a7;
+  color: var(--dark-mode-text);
 }
 
 .footer-content {
@@ -272,14 +352,12 @@ body.dark-mode footer .footer-section.about p {
 }
 
 .footer-section img {
-  /* Estilos para o logo */
-  color: #007bff;
   max-width: 150px;
   margin-bottom: 10px;
 }
 
 .footer-section h2 {
-  color: #007bff;
+  color: var(--primary-color);
   margin-bottom: 15px;
   font-size: 1.2em;
 }
@@ -287,7 +365,11 @@ body.dark-mode footer .footer-section.about p {
 .footer-section p {
   line-height: 1.5;
   margin-bottom: 20px;
-  color: #00ffff;
+  color: var(--text-color);
+}
+
+body.dark-mode footer .footer-section p {
+  color: #99a0a7;
 }
 
 .footer-section ul {
@@ -300,13 +382,13 @@ body.dark-mode footer .footer-section.about p {
 }
 
 .footer-section a {
-  color: #333;
+  color: var(--text-color);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color var(--transition-speed) ease;
 }
 
 .footer-section a:hover {
-  color: #007bff;
+  color: var(--primary-color);
 }
 
 .footer-section.about {
@@ -338,8 +420,8 @@ body.dark-mode footer .footer-section.about p {
 
 .social-icons a {
   font-size: 1.8em;
-  color: #333;
-  transition: transform 0.3s ease;
+  color: var(--text-color);
+  transition: transform var(--transition-speed) ease;
 }
 
 .social-icons li a i {
@@ -362,24 +444,24 @@ body.dark-mode footer .footer-section.about p {
 }
 
 #total-visitas {
-  display: flex; /* Alinha o ícone e o texto */
-  align-items: center; /* Alinha verticalmente ao centro */
-  font-size: 1em; /* Tamanho da fonte normal */
-  color: #333; /* Cor de texto escura */
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  color: var(--text-color);
   margin-bottom: 20px;
 }
 
 #total-visitas::before {
-  content: '\f06e'; /* Ícone de olho do Font Awesome */
-  font-family: 'Font Awesome 5 Free'; /* Fonte do Font Awesome */
-  font-weight: 900; /* Peso da fonte (bold) */
-  margin-right: 5px; /* Espaçamento entre o ícone e o texto */
+  content: '\f06e';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 5px;
 }
 
 /* Modo Escuro */
 body.dark-mode {
-  background-color: #333;
-  color: #f4f4f4;
+  background-color: var(--dark-mode-background);
+  color: var(--dark-mode-text);
 }
 
 body.dark-mode a {
@@ -400,118 +482,28 @@ body.dark-mode nav a:hover {
   background-color: #333;
 }
 
-/* Projetos */
-.projetos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-#projetos {
-  background-color: #f4f4f4;
-}
-
-.projeto {
-  background: #fff;
-  color: #333;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-}
-
-.projeto:hover {
-  transform: translateY(-10px);
-}
-
-/* Projetos no Modo Escuro */
-body.dark-mode .projeto {
-  background: #444;
-  color: #f4f4f4;
-}
-
-body.dark-mode .projeto:hover {
-  background: #555;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  margin-top: 10px;
-}
-
-input,
-textarea {
-  margin-top: 5px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Formulário no Modo Escuro */
-body.dark-mode input,
-body.dark-mode textarea {
-  background-color: #555;
-  color: #f4f4f4;
-  border: 1px solid #444;
-}
-
-body.dark-mode input::placeholder,
-body.dark-mode textarea::placeholder {
-  color: #ccc;
-}
-
-body.dark-mode button {
-  background-color: #007bff;
-}
-
-body.dark-mode button:hover {
-  background-color: #0056b3;
-}
-
-/* Botão Hambúrguer no Modo Escuro */
-body.dark-mode #menu-btn {
-  background-color: transparent;
-}
-body.dark-mode #menu-btn .bar {
-  background-color: #f4f4f4;
-}
-body.dark-mode #menu-btn:hover .bar {
-  background-color: #00ffff;
-}
-
-body.dark-mode #projetos {
-  background-color: #212529;
-}
-
 body.dark-mode #projetos,
 body.dark-mode #contato {
   background-color: #212529;
 }
 
-/* Remove contorno azul em foco (opcional) */
+body.dark-mode #menu-btn {
+  background-color: transparent;
+}
+
+body.dark-mode #menu-btn .bar {
+  background-color: #f4f4f4;
+}
+
+body.dark-mode #menu-btn:hover .bar {
+  background-color: #00ffff;
+}
+
 #menu-btn:focus {
   outline: none;
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
   nav ul {
     display: none;
@@ -524,10 +516,6 @@ body.dark-mode #contato {
 
   #menu-btn {
     display: block;
-  }
-
-  #theme-toggle-container {
-    display: none;
   }
 
   section {

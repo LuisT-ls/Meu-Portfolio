@@ -71,23 +71,6 @@ fetch('/Data/projetos.json')
     })
   })
 
-// Carregamento Dinâmico de Conteúdo (Blog)
-fetch('Data/blog.json')
-  .then(response => response.json())
-  .then(artigos => {
-    const blogGrid = document.getElementById('blog-grid')
-    artigos.forEach(artigo => {
-      const artigoDiv = document.createElement('div')
-      artigoDiv.classList.add('artigo')
-      artigoDiv.innerHTML = `
-        <h3>${artigo.titulo}</h3>
-        <p>${artigo.extrato}</p>
-        <a href="${artigo.link}" target="_blank">Leia Mais</a>
-      `
-      blogGrid.appendChild(artigoDiv)
-    })
-  })
-
 // Formulário de Contato (com validação básica e envio via EmailJS)
 const form = document.getElementById('contato-form')
 form.addEventListener('submit', event => {
