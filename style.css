@@ -449,6 +449,17 @@ section h2::after {
   transform: translateY(-2px);
 }
 
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Footer Styles */
 footer {
   background-color: var(--footer-bg);
@@ -558,6 +569,10 @@ footer::before {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+
   header .container {
     flex-direction: column;
     align-items: flex-start;
@@ -634,16 +649,17 @@ footer::before {
   .habilidades-grid,
   .projetos-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .experiencia,
   .habilidade,
   .projeto {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   #contato-form {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   .footer-content {
@@ -653,12 +669,16 @@ footer::before {
 }
 
 @media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
   header h1 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   section h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .experiencia h3,
@@ -671,8 +691,8 @@ footer::before {
   }
 
   .habilidade img {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
   }
 
   .habilidade h3 {

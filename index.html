@@ -3,44 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Portfólio de Luís Teixeira - Desenvolvedor Web e Estudante de Tecnologia
+    </title>
+
+    <!-- Preconnect e preload para melhorar performance -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://www.gstatic.com" />
+    <link rel="preload" href="style.css" as="style" />
+    <link rel="preload" href="script.js" as="script" />
+
+    <!-- Meta tags para SEO -->
     <meta
       name="description"
-      content="Portfólio de Luís Teixeira, estudante de Ciência, Tecnologia e Inovação na UFBA. Apaixonado por desenvolvimento web, Linux e redes, com foco em projetos inovadores. Conecte-se comigo e veja meu trabalho!"
+      content="Portfólio de Luís Teixeira, estudante de Ciência, Tecnologia e Inovação na UFBA. Desenvolvedor web apaixonado por Linux, redes e projetos inovadores. Explore meu trabalho e entre em contato!"
     />
     <meta
       name="keywords"
-      content="portfólio, Luís Teixeira, desenvolvimento web, frontend, backend, Linux, redes, projetos, tecnologia, estudante, UFBA, JavaScript, Node.js"
+      content="Luís Teixeira, desenvolvedor web, frontend, backend, Linux, redes, projetos tecnológicos, UFBA, JavaScript, Node.js"
     />
-    <meta name="robots" content="index, follow" />
     <meta name="author" content="Luís Teixeira" />
-    <meta property="og:title" content="Portfólio de Luís Teixeira" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://luistls.vercel.app/" />
+
+    <!-- Open Graph tags para compartilhamento em redes sociais -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://luistls.vercel.app/" />
+    <meta
+      property="og:title"
+      content="Portfólio de Luís Teixeira - Desenvolvedor Web e Estudante de Tecnologia"
+    />
     <meta
       property="og:description"
-      content="Portfólio de Luís Teixeira, estudante de Ciência, Tecnologia e Inovação na UFBA. Apaixonado por desenvolvimento web, Linux e redes, com foco em projetos inovadores. Conecte-se comigo e veja meu trabalho!"
+      content="Conheça os projetos e habilidades de Luís Teixeira, desenvolvedor web e estudante de Ciência, Tecnologia e Inovação na UFBA. Apaixonado por criar soluções inovadoras em web, Linux e redes."
     />
     <meta
       property="og:image"
-      content="https://luistls.vercel.app/Imagens/Imagem Principal.png"
+      content="https://luistls.vercel.app/Imagens/og-image.png"
     />
-    <meta property="og:url" content="https://luistls.vercel.app/" />
-    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Portfólio de Luís Teixeira" />
+    <meta
+      name="twitter:title"
+      content="Portfólio de Luís Teixeira - Desenvolvedor Web e Estudante de Tecnologia"
+    />
     <meta
       name="twitter:description"
-      content="Portfólio de Luís Teixeira, estudante de Ciência, Tecnologia e Inovação na UFBA. Apaixonado por desenvolvimento web, Linux e redes, com foco em projetos inovadores. Conecte-se comigo e veja meu trabalho!"
+      content="Conheça os projetos e habilidades de Luís Teixeira, desenvolvedor web e estudante de Ciência, Tecnologia e Inovação na UFBA. Apaixonado por criar soluções inovadoras em web, Linux e redes."
     />
     <meta
       name="twitter:image"
-      content="https://luistls.vercel.app/Imagens/Imagem Principal.png"
+      content="https://luistls.vercel.app/Imagens/twitter-image.png"
     />
-    <title>Portfólio de Luís Teixeira</title>
+
+    <!-- Estilos e ícones -->
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="icon" href="Imagens/Logo/logo.ico" type="image/x-icon" />
+    <link rel="icon" href="Imagens/Logo/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="Imagens/Logo/apple-touch-icon.png" />
+
+    <!-- Scripts -->
     <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
     <script type="module">
       window.addEventListener('DOMContentLoaded', async event => {
@@ -55,7 +81,7 @@
           'https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'
         )
 
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        // Configuração do Firebase
         const firebaseConfig = {
           apiKey: 'AIzaSyCZvrx_AxtPb7QTO02zcI0kqyOv6OBUxkQ',
           authDomain: 'meu-portf.firebaseapp.com',
@@ -72,30 +98,28 @@
         // Contador de visitas
         const visitCountRef = ref(database, 'visitCount')
         runTransaction(visitCountRef, currentCount => {
-          if (currentCount === null) {
-            return 1 // Inicializa o contador com 1 se não existir
-          }
-          return currentCount + 1 // Incrementa o contador
+          return (currentCount || 0) + 1
         })
 
         onValue(visitCountRef, snapshot => {
           document.getElementById(
             'total-visitas'
-          ).innerText = `Total de visitas: ${snapshot.val()}`
+          ).textContent = `Total de visitas: ${snapshot.val()}`
         })
       })
     </script>
   </head>
+
   <body class="dark-mode">
     <div id="theme-toggle-container">
       <button id="theme-toggle" aria-label="Alternar tema entre claro e escuro">
         🌓
       </button>
     </div>
-    <header>
+    <header role="banner">
       <div class="container">
         <h1>Luís Teixeira</h1>
-        <nav id="navbar" aria-label="Navegação principal">
+        <nav role="navigation" aria-label="Menu principal">
           <ul>
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#experiencia">Experiência</a></li>
@@ -116,10 +140,10 @@
         </button>
       </div>
     </header>
-    <main>
-      <section id="sobre">
+    <main role="main">
+      <section id="sobre" aria-labelledby="sobre-titulo">
         <div class="container">
-          <h2>Sobre Mim</h2>
+          <h2 id="sobre-titulo">Sobre Mim</h2>
           <p>
             Sou um estudante dedicado do curso de graduação Interdisciplinar em
             Ciência, Tecnologia e Inovação na Universidade Federal da Bahia,
@@ -326,7 +350,7 @@
         </div>
       </section>
     </main>
-    <footer>
+    <footer role="contentinfo">
       <div class="container">
         <div class="footer-content">
           <div class="footer-section about">

@@ -136,6 +136,26 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(section)
   })
 
+  // Adicionar animações aos elementos com a classe "animate-on-scroll"
+  function addAnimations() {
+    const elements = document.querySelectorAll('.animate-on-scroll')
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated')
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    elements.forEach(element => {
+      observer.observe(element)
+    })
+  }
+
   // Registrar visita ao carregar a página
   fetch('/api/registrar-visita')
     .then(response => {
