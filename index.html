@@ -7,9 +7,18 @@
       Portfólio de Luís Teixeira - Desenvolvedor Web e Estudante de Tecnologia
     </title>
 
+    <link rel="alternate" hreflang="en" href="https://luistls.vercel.app/en/" />
+
     <!-- Preconnect e preload para melhorar performance -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://www.gstatic.com" />
+    <link
+      rel="preload"
+      href="/fonts/main-font.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="preload" href="style.css" as="style" />
     <link rel="preload" href="script.js" as="script" />
 
@@ -25,6 +34,7 @@
     <meta name="author" content="Luís Teixeira" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://luistls.vercel.app/" />
+    <link rel="manifest" href="/manifest.json" />
 
     <!-- Open Graph tags para compartilhamento em redes sociais -->
     <meta property="og:type" content="website" />
@@ -107,6 +117,13 @@
           ).textContent = `Total de visitas: ${snapshot.val()}`
         })
       })
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js')
+        })
+      }
     </script>
   </head>
 
@@ -426,9 +443,20 @@
         "sameAs": [
           "https://github.com/LuisT-ls",
           "https://www.linkedin.com/in/luis-tei"
+        ],
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Universidade Federal da Bahia"
+        },
+        "knowsAbout": [
+          "Desenvolvimento Web",
+          "Linux",
+          "Redes de Computadores",
+          "JavaScript",
+          "Node.js"
         ]
       }
     </script>
-    <script src="script.js" defer></script>
+    <script src="script.js" type="module" defer></script>
   </body>
 </html>

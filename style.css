@@ -1,5 +1,6 @@
 /* Advanced Portfolio Styles */
 
+/* Variables */
 :root {
   --primary-color: #3498db;
   --secondary-color: #2ecc71;
@@ -11,6 +12,14 @@
   --footer-bg: #2c3e50;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --font-size-base: 16px;
+  --font-size-h1: 2rem;
+  --font-size-h2: 1.8rem;
+  --font-size-h3: 1.5rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --border-radius: 15px;
 }
 
 /* Dark mode variables */
@@ -34,13 +43,14 @@ body {
   color: var(--text-color);
   background-color: var(--bg-color);
   transition: var(--transition);
+  font-size: var(--font-size-base);
 }
 
 .container {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 var(--spacing-md);
 }
 
 /* Header Styles */
@@ -104,6 +114,58 @@ nav ul li a::before {
 nav ul li a:hover::before {
   visibility: visible;
   transform: scaleX(1);
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: clamp(1.5rem, 5vw, var(--font-size-h1));
+}
+
+h2 {
+  font-size: clamp(1.3rem, 4vw, var(--font-size-h2));
+}
+
+h3 {
+  font-size: clamp(1.1rem, 3vw, var(--font-size-h3));
+}
+
+/* Accessibility Improvements */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-color: #0000ff;
+    --secondary-color: #008000;
+    --accent-color: #ff0000;
+    --text-color: #000000;
+    --bg-color: #ffffff;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Performance Optimizations */
+.animate-on-scroll {
+  will-change: opacity, transform;
 }
 
 /* Theme Toggle Button */
@@ -722,8 +784,60 @@ footer::before {
   }
 }
 
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .animated {
   animation: fadeInUp 0.5s ease-out;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+.margin-bottom-sm {
+  margin-bottom: var(--spacing-sm);
+}
+.margin-bottom-md {
+  margin-bottom: var(--spacing-md);
+}
+.margin-bottom-lg {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Modernization */
+.responsive-font {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Scroll Snap */
+.scroll-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+section {
+  scroll-snap-align: start;
 }
 
 /* Hover Effects */
