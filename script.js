@@ -380,3 +380,60 @@ style.textContent = `
 `
 
 document.head.appendChild(style)
+
+// No seu script.js
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
+
+const scrollButton = document.createElement('button')
+scrollButton.innerHTML = '↑'
+scrollButton.className = 'scroll-to-top'
+scrollButton.setAttribute('aria-label', 'Voltar ao topo')
+document.body.appendChild(scrollButton)
+
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 200) {
+    scrollButton.classList.add('visible')
+  } else {
+    scrollButton.classList.remove('visible')
+  }
+})
+
+scrollButton.addEventListener('click', scrollToTop)
+
+document.addEventListener('DOMContentLoaded', () => {
+  const images = document.querySelectorAll('img[data-src]')
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target
+        img.src = img.dataset.src
+        img.removeAttribute('data-src')
+        observer.unobserve(img)
+      }
+    })
+  })
+
+  images.forEach(img => imageObserver.observe(img))
+})
+
+const sections = document.querySelectorAll('section')
+const sectionObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible')
+      }
+    })
+  },
+  { threshold: 0.1 }
+)
+
+sections.forEach(section => {
+  section.classList.add('section-hidden')
+  sectionObserver.observe(section)
+})
