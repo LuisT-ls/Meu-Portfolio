@@ -1,31 +1,3 @@
-// Projetos - Dados mockados para exemplo
-const projetos = [
-  {
-    titulo: 'Sistema de Gerenciamento de Redes',
-    descricao:
-      'Aplicação para monitoramento e gerenciamento de redes corporativas usando Node.js e React.',
-    tecnologias: ['Node.js', 'React', 'Docker', 'Network Monitoring'],
-    imagem: '/Imagens/projetos/projeto1.webp',
-    link: 'https://github.com/username/projeto1'
-  },
-  {
-    titulo: 'Automação de Backup com Bacula',
-    descricao:
-      'Sistema automatizado de backup empresarial utilizando Bacula e PostgreSQL.',
-    tecnologias: ['Bacula', 'PostgreSQL', 'Shell Script', 'Linux'],
-    imagem: '/Imagens/projetos/projeto2.webp',
-    link: 'https://github.com/username/projeto2'
-  },
-  {
-    titulo: 'Dashboard de Monitoramento',
-    descricao:
-      'Interface web para visualização de métricas de servidores e serviços em tempo real.',
-    tecnologias: ['JavaScript', 'Chart.js', 'WebSocket', 'HTML/CSS'],
-    imagem: '/Imagens/projetos/projeto3.webp',
-    link: 'https://github.com/username/projeto3'
-  }
-]
-
 // Classe principal para gerenciar o portfólio
 class Portfolio {
   constructor() {
@@ -110,39 +82,6 @@ class Portfolio {
       'aria-label',
       `Mudar para tema ${isDark ? 'claro' : 'escuro'}`
     )
-  }
-
-  // Carrega e renderiza os projetos
-  loadProjects() {
-    const projetosGrid = document.querySelector('#projetos-grid')
-    if (!projetosGrid) return
-
-    projetosGrid.innerHTML = projetos
-      .map(
-        projeto => `
-      <article class="projeto" data-aos="fade-up">
-        <div class="projeto-imagem">
-          <img src="${projeto.imagem}" alt="${projeto.titulo}" loading="lazy">
-        </div>
-        <div class="projeto-conteudo">
-          <h3>${projeto.titulo}</h3>
-          <p>${projeto.descricao}</p>
-          <div class="tecnologias">
-            ${projeto.tecnologias
-              .map(
-                tech => `
-              <span class="tech-tag">${tech}</span>
-            `
-              )
-              .join('')}
-          </div>
-          <a href="${projeto.link}" target="_blank" rel="noopener noreferrer" 
-             class="projeto-link">Ver Projeto</a>
-        </div>
-      </article>
-    `
-      )
-      .join('')
   }
 
   // Gerencia o formulário de contato
@@ -381,7 +320,6 @@ style.textContent = `
 
 document.head.appendChild(style)
 
-// No seu script.js
 const scrollToTop = () => {
   window.scrollTo({
     top: 0,

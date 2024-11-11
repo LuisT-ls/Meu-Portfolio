@@ -184,13 +184,6 @@ section h2 {
   margin-bottom: 0.5rem;
 }
 
-/* Projetos Section */
-.projetos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
 /* Contato Section */
 #contato form {
   max-width: 600px;
@@ -364,8 +357,7 @@ footer {
   }
 
   .experiencia-grid,
-  .habilidades-grid,
-  .projetos-grid {
+  .habilidades-grid {
     grid-template-columns: 1fr;
   }
 }
