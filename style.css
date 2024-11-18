@@ -365,6 +365,20 @@ section h2 {
   transform: translateY(0);
 }
 
+/* Project Error Message */
+.projeto-error {
+  text-align: center;
+  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.projeto-error h3 {
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .projetos-grid {

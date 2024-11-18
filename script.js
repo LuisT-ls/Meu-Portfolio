@@ -376,6 +376,7 @@ sections.forEach(section => {
   sectionObserver.observe(section)
 })
 
+// Projects Manager
 class ProjectsManager {
   constructor() {
     this.username = 'LuisT-ls'
@@ -390,29 +391,33 @@ class ProjectsManager {
       this.setupIntersectionObserver()
     } catch (error) {
       console.error('Erro ao carregar projetos:', error)
-      // Mostrar mensagem de erro para o usuário
       this.showErrorMessage()
     }
   }
 
   async fetchRepositories() {
-    const response = await fetch(
-      `https://api.github.com/users/${LuisT-ls}/repos`
-    )
-    if (!response.ok) throw new Error('Erro ao buscar repositórios')
-    const repos = await response.json()
+    try {
+      const response = await fetch(
+        `https://api.github.com/users/${this.username}/repos`
+      )
+      if (!response.ok) throw new Error('Erro ao buscar repositórios')
+      const repos = await response.json()
 
-    // Filtra e ordena os repositórios
-    return repos
-      .filter(repo => !repo.fork && !repo.private)
-      .sort((a, b) => b.stargazers_count - a.stargazers_count)
-      .slice(0, 6)
+      return repos
+        .filter(repo => !repo.fork && !repo.private)
+        .sort((a, b) => b.stargazers_count - a.stargazers_count)
+        .slice(0, 6)
+    } catch (error) {
+      console.error('Erro ao buscar repositórios:', error)
+      throw error
+    }
   }
 
   showErrorMessage() {
     if (this.projectsContainer) {
       this.projectsContainer.innerHTML = `
         <div class="projeto-error">
+          <h3>Erro ao carregar projetos</h3>
           <p>Não foi possível carregar os projetos no momento.</p>
           <p>Por favor, tente novamente mais tarde.</p>
         </div>
@@ -424,8 +429,8 @@ class ProjectsManager {
     const article = document.createElement('article')
     article.className = 'projeto'
 
-    // Garante que topics existe antes de tentar usar
     const topics = repo.topics || []
+    const description = repo.description || 'Sem descrição disponível.'
 
     article.innerHTML = `
       <div class="projeto-header">
@@ -433,9 +438,7 @@ class ProjectsManager {
         <h3>${this.escapeHtml(repo.name)}</h3>
       </div>
       <div class="projeto-content">
-        <p class="projeto-descricao">${this.escapeHtml(
-          repo.description || 'Sem descrição disponível.'
-        )}</p>
+        <p class="projeto-descricao">${this.escapeHtml(description)}</p>
         <div class="projeto-tecnologias">
           ${topics
             .map(
@@ -457,17 +460,19 @@ class ProjectsManager {
           ${
             repo.homepage
               ? `
-            <a href="${this.escapeHtml(
-              repo.homepage
-            )}" class="projeto-link demo" target="_blank" rel="noopener noreferrer">
+            <a href="${this.escapeHtml(repo.homepage)}" 
+               class="projeto-link demo" 
+               target="_blank" 
+               rel="noopener noreferrer">
               <i class="fas fa-external-link-alt"></i> Demo
             </a>
           `
               : ''
           }
-          <a href="${this.escapeHtml(
-            repo.html_url
-          )}" class="projeto-link repo" target="_blank" rel="noopener noreferrer">
+          <a href="${this.escapeHtml(repo.html_url)}" 
+             class="projeto-link repo" 
+             target="_blank" 
+             rel="noopener noreferrer">
             <i class="fab fa-github"></i> Repositório
           </a>
         </div>
@@ -477,8 +482,8 @@ class ProjectsManager {
     return article
   }
 
-  // Função auxiliar para escapar HTML e prevenir XSS
   escapeHtml(unsafe) {
+    if (typeof unsafe !== 'string') return ''
     return unsafe
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -517,3 +522,8 @@ class ProjectsManager {
     })
   }
 }
+
+// Inicializa o gerenciador de projetos quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
+  new ProjectsManager()
+})
