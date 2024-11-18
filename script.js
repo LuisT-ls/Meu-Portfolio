@@ -375,3 +375,145 @@ sections.forEach(section => {
   section.classList.add('section-hidden')
   sectionObserver.observe(section)
 })
+
+class ProjectsManager {
+  constructor() {
+    this.username = 'LuisT-ls'
+    this.projectsContainer = document.querySelector('.projetos-grid')
+    this.init()
+  }
+
+  async init() {
+    try {
+      const repos = await this.fetchRepositories()
+      this.renderProjects(repos)
+      this.setupIntersectionObserver()
+    } catch (error) {
+      console.error('Erro ao carregar projetos:', error)
+      // Mostrar mensagem de erro para o usuário
+      this.showErrorMessage()
+    }
+  }
+
+  async fetchRepositories() {
+    const response = await fetch(
+      `https://api.github.com/users/${LuisT-ls}/repos`
+    )
+    if (!response.ok) throw new Error('Erro ao buscar repositórios')
+    const repos = await response.json()
+
+    // Filtra e ordena os repositórios
+    return repos
+      .filter(repo => !repo.fork && !repo.private)
+      .sort((a, b) => b.stargazers_count - a.stargazers_count)
+      .slice(0, 6)
+  }
+
+  showErrorMessage() {
+    if (this.projectsContainer) {
+      this.projectsContainer.innerHTML = `
+        <div class="projeto-error">
+          <p>Não foi possível carregar os projetos no momento.</p>
+          <p>Por favor, tente novamente mais tarde.</p>
+        </div>
+      `
+    }
+  }
+
+  createProjectElement(repo) {
+    const article = document.createElement('article')
+    article.className = 'projeto'
+
+    // Garante que topics existe antes de tentar usar
+    const topics = repo.topics || []
+
+    article.innerHTML = `
+      <div class="projeto-header">
+        <i class="fab fa-github"></i>
+        <h3>${this.escapeHtml(repo.name)}</h3>
+      </div>
+      <div class="projeto-content">
+        <p class="projeto-descricao">${this.escapeHtml(
+          repo.description || 'Sem descrição disponível.'
+        )}</p>
+        <div class="projeto-tecnologias">
+          ${topics
+            .map(
+              topic => `<span class="tech-tag">${this.escapeHtml(topic)}</span>`
+            )
+            .join('')}
+        </div>
+        <div class="projeto-stats">
+          <span class="stars">
+            <i class="fas fa-star"></i>
+            <span>${repo.stargazers_count}</span>
+          </span>
+          <span class="forks">
+            <i class="fas fa-code-branch"></i>
+            <span>${repo.forks_count}</span>
+          </span>
+        </div>
+        <div class="projeto-links">
+          ${
+            repo.homepage
+              ? `
+            <a href="${this.escapeHtml(
+              repo.homepage
+            )}" class="projeto-link demo" target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-external-link-alt"></i> Demo
+            </a>
+          `
+              : ''
+          }
+          <a href="${this.escapeHtml(
+            repo.html_url
+          )}" class="projeto-link repo" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i> Repositório
+          </a>
+        </div>
+      </div>
+    `
+
+    return article
+  }
+
+  // Função auxiliar para escapar HTML e prevenir XSS
+  escapeHtml(unsafe) {
+    return unsafe
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+  }
+
+  renderProjects(repos) {
+    if (!this.projectsContainer) return
+
+    this.projectsContainer.innerHTML = ''
+    repos.forEach(repo => {
+      const projectElement = this.createProjectElement(repo)
+      this.projectsContainer.appendChild(projectElement)
+    })
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      {
+        threshold: 0.1
+      }
+    )
+
+    document.querySelectorAll('.projeto').forEach(project => {
+      observer.observe(project)
+    })
+  }
+}
