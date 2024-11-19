@@ -445,6 +445,11 @@ body.dark-mode .site-header {
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
+.animate-on-scroll.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .animate-on-scroll.visible {
   opacity: 1;
   transform: translateY(0);
@@ -1648,14 +1653,6 @@ body.dark-mode .cert-skills span {
 }
 
 /* Seção de Contato */
-.section-contato {
-  padding: 5rem 0;
-  background-color: var(--background-dark);
-}
-
-[data-theme='dark'] .section-contato {
-  background-color: var(--background-dark);
-}
 
 .contato-wrapper {
   display: grid;
@@ -1673,7 +1670,7 @@ body.dark-mode .cert-skills span {
 }
 
 .info-card {
-  background-color: var(--card-bg-light);
+  background-color: var(--card-bg-dark);
   padding: 2rem;
   border-radius: 1rem;
   text-align: center;
@@ -1700,7 +1697,7 @@ body.dark-mode .cert-skills span {
 }
 
 .info-card h3 {
-  color: var(--text-primary-light);
+  color: var(--text-primary-dark);
   margin-bottom: 0.5rem;
   font-size: 1.25rem;
 }
@@ -1710,7 +1707,7 @@ body.dark-mode .cert-skills span {
 }
 
 .info-card p {
-  color: var(--text-secondary-light);
+  color: var(--text-secondary-dark);
   margin-bottom: 1.5rem;
 }
 
@@ -1742,7 +1739,7 @@ body.dark-mode .cert-skills span {
 
 /* Formulário de Contato */
 .contato-form {
-  background-color: var(--card-bg-light);
+  background-color: var(--card-bg-dark);
   padding: 2.5rem;
   border-radius: 1rem;
   box-shadow: var(--shadow-md);
@@ -1758,7 +1755,7 @@ body.dark-mode .cert-skills span {
 }
 
 .form-header h3 {
-  color: var(--text-primary-light);
+  color: var(--text-primary-dark);
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
@@ -1768,7 +1765,7 @@ body.dark-mode .cert-skills span {
 }
 
 .form-header p {
-  color: var(--text-secondary-light);
+  color: var(--text-secondary-dark);
 }
 
 [data-theme='dark'] .form-header p {
@@ -1782,7 +1779,7 @@ body.dark-mode .cert-skills span {
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: var(--text-primary-light);
+  color: var(--text-primary-dark);
   font-weight: 500;
 }
 
@@ -1849,7 +1846,7 @@ body.dark-mode .cert-skills span {
   display: block;
   margin-top: 0.25rem;
   font-size: 0.875rem;
-  color: var(--text-secondary-light);
+  color: var(--text-secondary-dark);
 }
 
 [data-theme='dark'] .form-text {
