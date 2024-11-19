@@ -1,0 +1,213 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--background-dark); /* Cor padrão para dark mode */
+  color: var(--text-primary-dark); /* Cor padrão para dark mode */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Container centralizado */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Cabeçalho minimalista e elegante */
+.site-header {
+  background-color: var(--header-bg-dark);
+  border-bottom: 2px solid var(--border-dark);
+  box-shadow: var(--shadow-sm);
+  padding: 10px 0;
+  position: relative;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-dark);
+}
+
+.logo-img {
+  width: 35px;
+  height: auto;
+  transition: transform 0.2s;
+}
+
+.logo-img:hover {
+  transform: scale(1.1);
+}
+
+.logo-text {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-left: 10px;
+  color: var(--text-primary-dark);
+}
+
+.main-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  color: var(--primary-dark);
+  font-weight: 500;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-list a:hover {
+  background-color: var(--primary-dark);
+  color: var(--background-dark);
+}
+
+/* Botão de alternância para navegação mobile */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--primary-dark);
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.nav-toggle:focus {
+  outline: none;
+}
+
+/* Estilo para a seção de Política de Privacidade */
+.privacy-policy-container {
+  background-color: var(--surface-dark);
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+  margin: 40px 20px;
+  padding: 40px;
+  transition: transform 0.3s;
+}
+
+.privacy-policy-container:hover {
+  transform: translateY(-3px);
+}
+
+.section-title {
+  font-size: 2.5em;
+  color: var(--text-primary-dark);
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 3px solid var(--border-dark);
+  padding-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.75em;
+  color: var(--text-primary-dark);
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.1em;
+  color: var(--text-secondary-dark);
+  margin-bottom: 15px;
+  line-height: 1.8;
+}
+
+a {
+  color: var(--accent-dark);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Rodapé refinado */
+.site-footer {
+  background-color: var(--primary-dark);
+  color: var(--text-primary-dark);
+  padding: 20px 0;
+  text-align: center;
+  border-top: 3px solid var(--border-dark);
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+.social-icons a {
+  color: var(--text-primary-dark);
+  font-size: 1.3em;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+  transform: translateY(-3px);
+  color: var(--accent-dark);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .main-nav {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--background-dark);
+    border-top: 1px solid var(--border-dark);
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 200px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-toggle.active + .main-nav {
+    display: flex;
+  }
+}
