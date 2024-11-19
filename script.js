@@ -58,32 +58,6 @@ class Portfolio {
       : 'none'
   }
 
-  // Gerenciamento de tema escuro/claro
-  initializeTheme() {
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme) {
-      document.body.classList.toggle('dark-mode', savedTheme === 'dark')
-      this.updateThemeIcon(savedTheme === 'dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.body.classList.add('dark-mode')
-      this.updateThemeIcon(true)
-    }
-  }
-
-  toggleTheme() {
-    const isDark = document.body.classList.toggle('dark-mode')
-    localStorage.setItem('theme', isDark ? 'dark' : 'light')
-    this.updateThemeIcon(isDark)
-  }
-
-  updateThemeIcon(isDark) {
-    this.themeToggle.innerHTML = isDark ? '☀️' : '🌙'
-    this.themeToggle.setAttribute(
-      'aria-label',
-      `Mudar para tema ${isDark ? 'claro' : 'escuro'}`
-    )
-  }
-
   // Gerencia o formulário de contato
   async handleFormSubmit(e) {
     e.preventDefault()
