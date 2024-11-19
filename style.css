@@ -54,92 +54,231 @@ body.dark-mode {
   color: var(--text-primary-dark);
 }
 
-/* Header */
+/* Estilos para o cabeçalho */
 .site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  backdrop-filter: blur(8px);
-  transition: background-color 0.3s ease;
-}
-
-body .site-header {
   background-color: var(--header-bg-light);
+  box-shadow: var(--shadow-sm);
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Modo escuro */
 body.dark-mode .site-header {
   background-color: var(--header-bg-dark);
+  box-shadow: var(--shadow-md);
 }
 
+/* Container do cabeçalho */
 .header-container {
-  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0 20px;
+}
+
+/* Logo */
+.logo-container .logo-link {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.logo-container {
-  width: 50px;
-  height: 50px;
 }
 
 .logo-img {
-  width: 100%;
-  height: 100%;
+  height: 40px;
+  width: 40px;
   object-fit: contain;
 }
 
 .site-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  margin: 0;
+  color: var(--text-primary-light);
+  margin-left: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+/* Modo escuro */
+body.dark-mode .site-title {
+  color: var(--text-primary-dark);
+}
+
+/* Botão Dark Mode */
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dark-mode-toggle i {
+  font-size: 1.2rem;
+  color: var(--text-primary-light);
+}
+
+body.dark-mode .dark-mode-toggle i {
+  color: var(--text-primary-dark);
+}
+
+/* Esconde o ícone do sol quando no modo escuro */
+body.dark-mode #sun-icon {
+  display: none;
+}
+
+/* Esconde o ícone da lua quando no modo claro */
+body:not(.dark-mode) #moon-icon {
+  display: none;
+}
+
+/* Hover do botão */
+.dark-mode-toggle:hover,
+.dark-mode-toggle:focus {
+  opacity: 0.8;
+  transform: scale(1.1);
 }
 
 /* Navegação */
-.nav-list {
+.main-nav {
   display: flex;
-  gap: 2rem;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-list {
   list-style: none;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  gap: 15px;
 }
 
 .nav-link {
-  text-decoration: none;
+  color: var(--text-primary-light);
+  font-size: 0.9rem;
   font-weight: 500;
-  transition: color 0.2s ease;
-  position: relative;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-body .nav-link {
-  color: var(--text-primary-light);
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--primary-light);
+  transform: translateY(-1px);
 }
 
 body.dark-mode .nav-link {
   color: var(--text-primary-dark);
 }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
+body.dark-mode .nav-link:hover {
+  color: var(--primary-dark);
+}
+
+/* Menu responsivo */
+.menu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hamburger .bar {
+  width: 30px;
+  height: 4px;
+  background-color: var(--text-primary-light);
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+/* Modo escuro */
+body.dark-mode .hamburger .bar {
+  background-color: var(--text-primary-dark);
+}
+
+/* Exibição do menu em dispositivos móveis */
+@media (max-width: 768px) {
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: var(--header-bg-light);
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    width: 200px;
+    padding: 10px;
+  }
+
+  #menu-btn[aria-expanded='true'] + .main-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hamburger .bar:nth-child(1) {
+    transform: rotate(45deg) translateY(5px);
+  }
+
+  .hamburger .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger .bar:nth-child(3) {
+    transform: rotate(-45deg) translateY(-5px);
+  }
+}
+
+/* Estilo do link do currículo */
+.cv-link {
   background-color: var(--primary-light);
-  transition: width 0.2s ease;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-body.dark-mode .nav-link::after {
-  background-color: var(--primary-dark);
+.cv-link:hover,
+.cv-link:focus {
+  background-color: var(--secondary-light);
+  transform: translateY(-1px);
 }
 
-.nav-link:hover::after {
-  width: 100%;
+.fas.fa-download {
+  font-size: 1.1rem;
+}
+
+.site-header {
+  box-shadow: var(--shadow-sm);
+}
+
+body.dark-mode .site-header {
+  box-shadow: var(--shadow-md);
 }
 
 /* Hero Section */
@@ -1004,7 +1143,7 @@ body.dark-mode .cert-skills span {
 /* Seção de Habilidades */
 .section-habilidades {
   padding: 4rem 0;
-  background-color: var(--background-light);
+  background-color: var(--background-dark);
 }
 
 [data-theme='dark'] .section-habilidades {
@@ -1032,7 +1171,7 @@ body.dark-mode .cert-skills span {
 }
 
 .hab-categoria {
-  background-color: var(--card-bg-light);
+  background-color: var(--card-bg-dark);
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: var(--shadow-md);
@@ -1050,7 +1189,7 @@ body.dark-mode .cert-skills span {
 .hab-categoria h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--text-primary-light);
+  color: var(--text-primary-dark);
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -1066,7 +1205,7 @@ body.dark-mode .cert-skills span {
 }
 
 .skill-item {
-  background-color: var(--surface-light);
+  background-color: var(--secondary-light);
   border-radius: 0.75rem;
   padding: 1rem;
   transition: all 0.3s ease;
@@ -1174,7 +1313,7 @@ body.dark-mode .cert-skills span {
 /* Seção de Projetos */
 .section-projetos {
   padding: 5rem 0;
-  background-color: var(--background-light);
+  background-color: var(--background-dark);
 }
 
 [data-theme='dark'] .section-projetos {
@@ -1238,7 +1377,7 @@ body.dark-mode .cert-skills span {
 
 /* Card do Projeto */
 .projeto {
-  background-color: var(--card-bg-light);
+  background-color: var(--card-bg-dark);
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: var(--shadow-md);
@@ -1511,7 +1650,7 @@ body.dark-mode .cert-skills span {
 /* Seção de Contato */
 .section-contato {
   padding: 5rem 0;
-  background-color: var(--background-light);
+  background-color: var(--background-dark);
 }
 
 [data-theme='dark'] .section-contato {

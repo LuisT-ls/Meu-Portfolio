@@ -225,23 +225,6 @@
   </head>
 
   <body class="dark-mode">
-    <!-- Skip to main content -->
-    <a href="#main-content" class="skip-link"
-      >Pular para o conteúdo principal</a
-    >
-
-    <!-- Theme Toggle -->
-    <div id="theme-toggle-container">
-      <button
-        id="theme-toggle"
-        aria-label="Alternar tema entre claro e escuro"
-        class="theme-toggle-btn"
-      >
-        <span class="theme-toggle-icon">🌓</span>
-        <span class="theme-toggle-text sr-only">Alternar tema</span>
-      </button>
-    </div>
-
     <!-- Header -->
     <header role="banner" class="site-header">
       <div class="container header-container">
@@ -299,6 +282,16 @@
             </li>
           </ul>
         </nav>
+
+        <!-- Botão de Dark Mode -->
+        <button
+          id="dark-mode-toggle"
+          class="dark-mode-toggle"
+          aria-label="Alternar modo escuro/claro"
+        >
+          <i class="fas fa-sun" id="sun-icon"></i>
+          <i class="fas fa-moon" id="moon-icon"></i>
+        </button>
       </div>
     </header>
 
@@ -523,7 +516,11 @@
           <div class="cert-grid">
             <article class="certificacao">
               <div class="cert-logo">
-                <img src="Imagens/icon/cisco-svgrepo-com.svg" alt="Cisco Logo" loading="lazy" />
+                <img
+                  src="Imagens/icon/cisco-svgrepo-com.svg"
+                  alt="Cisco Logo"
+                  loading="lazy"
+                />
               </div>
               <div class="cert-info">
                 <h3>CCNA - Cisco Certified Network Associate</h3>
@@ -549,7 +546,11 @@
 
             <article class="certificacao">
               <div class="cert-logo">
-                <img src="Imagens/icon/aws-svgrepo-com.svg" alt="AWS Logo" loading="lazy" />
+                <img
+                  src="Imagens/icon/aws-svgrepo-com.svg"
+                  alt="AWS Logo"
+                  loading="lazy"
+                />
               </div>
               <div class="cert-info">
                 <h3>AWS Cloud Practitioner</h3>
@@ -630,7 +631,7 @@
                 </div>
                 <div class="skill-item" data-skill="CSS3">
                   <div class="skill-header">
-                    <img src="Imagens/icons/css3.svg" alt="CSS3 icon" />
+                    <img src="Imagens/icon/css-3-svgrepo-com.svg" alt="CSS3 icon" />
                     <span>CSS3</span>
                   </div>
                   <div class="skill-level" data-level="85">
@@ -640,7 +641,7 @@
                 <div class="skill-item" data-skill="JavaScript">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icons/javascript.svg"
+                      src="Imagens/icon/javascript-svgrepo-com.svg"
                       alt="JavaScript icon"
                     />
                     <span>JavaScript</span>
@@ -694,7 +695,7 @@
                 </div>
                 <div class="skill-item" data-skill="Redes">
                   <div class="skill-header">
-                    <img src="Imagens/icons/network.svg" alt="Network icon" />
+                    <img src="Imagens/icon/server_technology_network_computer_connection_icon_175929.svg" alt="Network icon" />
                     <span>Redes</span>
                   </div>
                   <div class="skill-level" data-level="90">
@@ -1163,7 +1164,9 @@
                   />
                   <label class="form-check-label" for="privacy-check">
                     Concordo com a
-                    <a href="/privacy-policy/privacy-policy.html">Política de Privacidade</a>
+                    <a href="/privacy-policy/privacy-policy.html"
+                      >Política de Privacidade</a
+                    >
                   </label>
                 </div>
               </div>
