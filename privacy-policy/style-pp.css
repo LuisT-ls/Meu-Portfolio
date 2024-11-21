@@ -1,3 +1,39 @@
+/* Variáveis de cores e temas */
+:root {
+  /* Light mode */
+  --primary-light: #2563eb;
+  --secondary-light: #3b82f6;
+  --background-light: #ffffff;
+  --surface-light: #f3f4f6;
+  --text-primary-light: #1f2937;
+  --text-secondary-light: #4b5563;
+  --border-light: #e5e7eb;
+  --accent-light: #3b82f6;
+  --success-light: #10b981;
+  --error-light: #ef4444;
+  --card-bg-light: #ffffff;
+  --header-bg-light: rgba(255, 255, 255, 0.95);
+
+  /* Dark mode */
+  --primary-dark: #3b82f6;
+  --secondary-dark: #60a5fa;
+  --background-dark: #111827;
+  --surface-dark: #1f2937;
+  --text-primary-dark: #f9fafb;
+  --text-secondary-dark: #d1d5db;
+  --border-dark: #374151;
+  --accent-dark: #60a5fa;
+  --success-dark: #34d399;
+  --error-dark: #f87171;
+  --card-bg-dark: #1f2937;
+  --header-bg-dark: rgba(17, 24, 39, 0.95);
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
 /* Reset básico */
 * {
   box-sizing: border-box;
@@ -157,7 +193,7 @@ a:hover {
 
 /* Rodapé refinado */
 .site-footer {
-  background-color: var(--primary-dark);
+  background-color: var(--background-dark);
   color: var(--text-primary-dark);
   padding: 20px 0;
   text-align: center;
