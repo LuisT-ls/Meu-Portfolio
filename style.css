@@ -108,44 +108,6 @@ body.dark-mode .site-title {
   color: var(--text-primary-dark);
 }
 
-/* Botão Dark Mode */
-.dark-mode-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.dark-mode-toggle i {
-  font-size: 1.2rem;
-  color: var(--text-primary-light);
-}
-
-body.dark-mode .dark-mode-toggle i {
-  color: var(--text-primary-dark);
-}
-
-/* Esconde o ícone do sol quando no modo escuro */
-body.dark-mode #sun-icon {
-  display: none;
-}
-
-/* Esconde o ícone da lua quando no modo claro */
-body:not(.dark-mode) #moon-icon {
-  display: none;
-}
-
-/* Hover do botão */
-.dark-mode-toggle:hover,
-.dark-mode-toggle:focus {
-  opacity: 0.8;
-  transform: scale(1.1);
-}
-
 /* Navegação */
 .main-nav {
   display: flex;
@@ -283,7 +245,7 @@ body.dark-mode .site-header {
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
+  min-height: 20vh;
   background-color: var(--background-light);
   position: relative;
   overflow: hidden;
