@@ -1,0 +1,95 @@
+/**
+ * Icons - Estilos para ícones
+ */
+
+/* Tamanhos de ícones */
+.icon-xs {
+  font-size: var(--font-size-xs);
+}
+
+.icon-sm {
+  font-size: var(--font-size-sm);
+}
+
+.icon-md {
+  font-size: var(--font-size-md);
+}
+
+.icon-lg {
+  font-size: var(--font-size-lg);
+}
+
+.icon-xl {
+  font-size: var(--font-size-xl);
+}
+
+.icon-2xl {
+  font-size: var(--font-size-2xl);
+}
+
+/* Cores dos ícones */
+.icon-primary {
+  color: var(--primary-color);
+}
+
+.icon-secondary {
+  color: var(--secondary-color);
+}
+
+.icon-success {
+  color: var(--success-color);
+}
+
+.icon-danger {
+  color: var(--danger-color);
+}
+
+.icon-warning {
+  color: var(--warning-color);
+}
+
+.icon-info {
+  color: var(--info-color);
+}
+
+.icon-light {
+  color: var(--text-light);
+}
+
+.icon-dark {
+  color: var(--text-primary);
+}
+
+/* Containers de ícones */
+.icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--card-bg);
+}
+
+.icon-circle.primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.icon-circle.secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+/* Ícones com animação */
+.icon-spin {
+  animation: spin 2s linear infinite;
+}
+
+.icon-pulse {
+  animation: pulse 2s ease infinite;
+}
+
+.icon-bounce {
+  animation: bounce 2s infinite;
+}

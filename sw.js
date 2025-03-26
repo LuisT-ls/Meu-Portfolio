@@ -8,21 +8,7 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/assets/css/main.css',
-  '/js/app.js',
-  '/js/modules/ThemeManager.js',
-  '/js/modules/Navigation.js',
-  '/js/modules/AnimationManager.js',
-  '/js/modules/SkillsManager.js',
-  '/js/modules/StatsCounter.js',
-  '/js/modules/ContactForm.js',
-  '/js/modules/NotificationManager.js',
-  '/js/modules/BackToTop.js',
-  '/assets/img/Logo/image.png',
-  '/assets/img/web_development_maintenance_construction_teamwork_icon_192840.webp',
-  '/fonts/main-font.woff2',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2'
+  '/js/app.js'
 ]
 
 // Instalação do Service Worker
@@ -35,6 +21,10 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache)
       })
       .then(() => self.skipWaiting())
+      .catch(error => {
+        console.error('Erro ao cache recursos:', error)
+        return self.skipWaiting()
+      })
   )
 })
 
@@ -57,7 +47,7 @@ self.addEventListener('activate', event => {
   )
 })
 
-// Estratégia de cache: Cache First, fallback para rede
+// Estratégia de cache: Network First, fallback para cache
 self.addEventListener('fetch', event => {
   // Ignorar requisições para analytics e APIs
   if (
@@ -70,39 +60,39 @@ self.addEventListener('fetch', event => {
   }
 
   event.respondWith(
-    caches.match(event.request).then(response => {
-      // Cache hit - retorna resposta do cache
-      if (response) {
-        return response
-      }
+    fetch(event.request)
+      .then(response => {
+        // Clone da resposta
+        const responseToCache = response.clone()
 
-      // Clone da requisição
-      const fetchRequest = event.request.clone()
-
-      return fetch(fetchRequest)
-        .then(response => {
-          // Verifica se resposta é válida
-          if (
-            !response ||
-            response.status !== 200 ||
-            response.type !== 'basic'
-          ) {
-            return response
-          }
-
-          // Clone da resposta para cache
-          const responseToCache = response.clone()
-
-          caches.open(CACHE_NAME).then(cache => {
+        // Armazena no cache
+        caches
+          .open(CACHE_NAME)
+          .then(cache => {
             cache.put(event.request, responseToCache)
           })
+          .catch(err => console.log('Erro ao armazenar em cache:', err))
 
-          return response
+        return response
+      })
+      .catch(() => {
+        // Se falhar, tenta buscar do cache
+        return caches.match(event.request).then(cachedResponse => {
+          if (cachedResponse) {
+            return cachedResponse
+          }
+
+          // Se não encontrou no cache, retorna uma página offline simples para requests HTML
+          if (event.request.headers.get('accept').includes('text/html')) {
+            return caches.match('/index.html')
+          }
+
+          // Para outros tipos de recursos, retorna uma resposta vazia
+          return new Response('', {
+            status: 408,
+            statusText: 'Request timed out.'
+          })
         })
-        .catch(error => {
-          console.log('Erro na requisição:', error)
-          // Pode adicionar uma página offline aqui
-        })
-    })
+      })
   )
 })

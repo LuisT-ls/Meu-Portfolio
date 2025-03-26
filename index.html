@@ -26,23 +26,15 @@
     <!-- Preload crítico -->
     <link
       rel="preload"
-      href="/fonts/main-font.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      as="style"
     />
     <link rel="preload" href="assets/css/main.css" as="style" />
-    <link rel="preload" href="js/app.js" as="script" />
+    <script type="module" src="js/app.js"></script>
 
     <!-- Font display strategy -->
     <style>
-      @font-face {
-        font-family: 'MainFont';
-        src: url('/fonts/main-font.woff2') format('woff2');
-        font-display: swap;
-        font-weight: 400 700;
-        unicode-range: U+000-5FF;
-      }
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     </style>
 
     <!-- Meta tags para SEO -->
@@ -96,6 +88,7 @@
     <!-- Configurações PWA e tema -->
     <meta name="application-name" content="Portfólio Luís Teixeira" />
     <meta name="theme-color" content="#2563eb" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
@@ -991,12 +984,13 @@
       }
     </script>
 
-    <!-- Firebase & Analytics -->
+    <!-- Firebase Config -->
     <script type="module">
-      // Firebase initialization will be loaded here
       window.addEventListener('DOMContentLoaded', async event => {
         // Inicialização do emailjs
-        emailjs.init('1PLc3xymOa3PrKHEX')
+        if (typeof emailjs !== 'undefined') {
+          emailjs.init('1PLc3xymOa3PrKHEX')
+        }
 
         try {
           // Importação e configuração do Firebase
@@ -1019,26 +1013,40 @@
             databaseURL: 'https://meu-portf-default-rtdb.firebaseio.com'
           }
 
-          const app = initializeApp(firebaseConfig)
-          const database = getDatabase(app)
+          // Inicializa o Firebase com tratamento de erros
+          try {
+            const app = initializeApp(firebaseConfig)
+            const database = getDatabase(app)
 
-          // Contador de visitas com tratamento de erro
-          const visitCountRef = ref(database, 'visitCount')
-          await runTransaction(visitCountRef, currentCount => {
-            return (currentCount || 0) + 1
-          })
+            // Contador de visitas com tratamento de erro
+            const visitCountRef = ref(database, 'visitCount')
+            try {
+              await runTransaction(visitCountRef, currentCount => {
+                return (currentCount || 0) + 1
+              })
 
-          onValue(visitCountRef, snapshot => {
-            const count = snapshot.val()
-            const element = document.getElementById('total-visitas')
-            if (element) {
-              element.textContent = `Total de visitas: ${
-                count?.toLocaleString() ?? 0
-              }`
+              onValue(visitCountRef, snapshot => {
+                const count = snapshot.val()
+                const element = document.getElementById('total-visitas')
+                if (element) {
+                  element.textContent = `Total de visitas: ${
+                    count?.toLocaleString() ?? 0
+                  }`
+                }
+              })
+            } catch (dbError) {
+              console.warn('Erro ao acessar o banco de dados:', dbError)
+              // Mostra um valor padrão no caso de erro
+              const element = document.getElementById('total-visitas')
+              if (element) {
+                element.textContent = 'Total de visitas: -'
+              }
             }
-          })
-        } catch (error) {
-          console.error('Erro ao inicializar Firebase:', error)
+          } catch (firebaseError) {
+            console.warn('Erro ao inicializar Firebase:', firebaseError)
+          }
+        } catch (importError) {
+          console.warn('Erro ao importar módulos do Firebase:', importError)
         }
       })
     </script>
