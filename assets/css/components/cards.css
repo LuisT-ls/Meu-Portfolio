@@ -1,0 +1,259 @@
+/**
+ * Cards - Estilos para diferentes cartões e elementos de conteúdo
+ */
+
+/* Card de Certificação */
+.certificacao {
+  display: flex;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.certificacao:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cert-logo {
+  flex: 0 0 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  background-color: var(--background-color);
+}
+
+.cert-logo img {
+  max-width: 80%;
+  max-height: 60px;
+  object-fit: contain;
+}
+
+.cert-info {
+  flex: 1;
+  padding: var(--spacing-lg);
+}
+
+.cert-info h3 {
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+}
+
+.cert-info time {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-sm);
+}
+
+.cert-info p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+.cert-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.cert-skills span {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.cert-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--primary-color);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.cert-link:hover {
+  color: var(--primary-dark);
+}
+
+/* Card de Contato */
+.info-card {
+  background-color: var(--card-bg);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.info-card i {
+  font-size: 32px;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.info-card h3 {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+}
+
+.info-card p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+/* Card de Estatística */
+.stat-item {
+  background-color: var(--card-bg);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto var(--spacing-sm);
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 50%;
+}
+
+.stat-icon i {
+  font-size: var(--font-size-xl);
+  color: var(--primary-color);
+}
+
+.stat-number {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.stat-item.highlight {
+  background-color: var(--primary-color);
+}
+
+.stat-item.highlight .stat-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.stat-item.highlight .stat-icon i {
+  color: white;
+}
+
+.stat-item.highlight .stat-number,
+.stat-item.highlight .stat-label {
+  color: white;
+}
+
+/* Card de Habilidade */
+.skill-item {
+  background-color: var(--card-bg);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.skill-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.skill-header img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.skill-header span {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.skill-level {
+  background-color: var(--border-color);
+  height: 8px;
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius-full);
+  width: 0;
+  transition: width 1.5s ease-in-out;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .certificacao {
+    flex-direction: column;
+  }
+
+  .cert-logo {
+    flex: 0 0 auto;
+    padding: var(--spacing-md);
+    width: 100%;
+  }
+
+  .cert-logo img {
+    max-height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-card,
+  .stat-item,
+  .skill-item {
+    padding: var(--spacing-sm);
+  }
+
+  .stat-number {
+    font-size: var(--font-size-xl);
+  }
+
+  .stat-label {
+    font-size: var(--font-size-xs);
+  }
+}

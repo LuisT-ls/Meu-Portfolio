@@ -1,0 +1,129 @@
+/**
+ * Progress - Barras de progresso e indicadores
+ */
+
+.progress {
+  background-color: var(--border-color);
+  height: 8px;
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+  margin-bottom: var(--spacing-md);
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius-full);
+  width: 0;
+  transition: width 1.5s ease-in-out;
+}
+
+/* Variações por cor */
+.progress-success .progress-bar {
+  background-color: var(--success-color);
+}
+
+.progress-warning .progress-bar {
+  background-color: var(--warning-color);
+}
+
+.progress-danger .progress-bar {
+  background-color: var(--danger-color);
+}
+
+.progress-info .progress-bar {
+  background-color: var(--info-color);
+}
+
+/* Barras com tamanhos diferentes */
+.progress-sm {
+  height: 4px;
+}
+
+.progress-lg {
+  height: 12px;
+}
+
+/* Barra de progresso com label */
+.progress-labeled {
+  position: relative;
+  margin-bottom: var(--spacing-lg);
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xs);
+}
+
+.progress-title {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.progress-value {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-muted);
+}
+
+/* Barras com animação */
+.progress-animated .progress-bar {
+  animation: progress-animation 1s linear infinite;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+}
+
+@keyframes progress-animation {
+  from {
+    background-position: 1rem 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Progress circular */
+.progress-circular {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-circular svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-circular-bg {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 4;
+}
+
+.progress-circular-bar {
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.5s ease-in-out;
+}
+
+.progress-circular-text {
+  position: absolute;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}

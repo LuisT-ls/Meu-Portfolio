@@ -1,0 +1,201 @@
+/**
+ * Contact - Estilos para a seção de contato
+ */
+
+.section-contato {
+  background-color: var(--card-bg);
+}
+
+.contato-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacing-xl);
+}
+
+.contato-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.info-card {
+  background-color: var(--background-color);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.info-card i {
+  font-size: 32px;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.info-card h3 {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+}
+
+.info-card p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+.btn-contato {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--primary-color);
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-contato:hover {
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+}
+
+.contato-form {
+  background-color: var(--background-color);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.form-header {
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.form-header h3 {
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+.form-header p {
+  color: var(--text-secondary);
+}
+
+/* Entrada animada dos elementos de contato */
+.contato-info .info-card {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.contato-info .info-card.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.contato-info .info-card:nth-child(1) {
+  transition-delay: 100ms;
+}
+.contato-info .info-card:nth-child(2) {
+  transition-delay: 200ms;
+}
+.contato-info .info-card:nth-child(3) {
+  transition-delay: 300ms;
+}
+
+.contato-form {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.contato-form.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Ícones coloridos para os cards de contato */
+.info-card:nth-child(1) i {
+  color: var(--primary-color);
+}
+
+.info-card:nth-child(2) i {
+  color: #25d366; /* WhatsApp Green */
+}
+
+.info-card:nth-child(3) i {
+  color: #0a66c2; /* LinkedIn Blue */
+}
+
+/* Botões de contato correspondentes */
+.info-card:nth-child(1) .btn-contato {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.info-card:nth-child(1) .btn-contato:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.info-card:nth-child(2) .btn-contato {
+  color: #25d366;
+  border-color: #25d366;
+}
+
+.info-card:nth-child(2) .btn-contato:hover {
+  background-color: #25d366;
+  color: white;
+}
+
+.info-card:nth-child(3) .btn-contato {
+  color: #0a66c2;
+  border-color: #0a66c2;
+}
+
+.info-card:nth-child(3) .btn-contato:hover {
+  background-color: #0a66c2;
+  color: white;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .contato-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .contato-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .contato-info {
+    grid-template-columns: 1fr;
+  }
+
+  .contato-form {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .contato-form {
+    padding: var(--spacing-md);
+  }
+}

@@ -1,0 +1,272 @@
+/**
+ * Sections - Estilos base para as seções do site
+ */
+
+/* Ajuste para o header fixo */
+main {
+  padding-top: var(--header-height);
+}
+
+/* Título de seção padrão */
+.section-title {
+  position: relative;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-2xl);
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.section-title:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 80px;
+  height: 4px;
+  background: var(--primary-color);
+  transform: translateX(-50%);
+  border-radius: var(--border-radius-full);
+}
+
+/* Seção Sobre */
+.section-sobre {
+  background-color: var(--card-bg);
+}
+
+.sobre-texto {
+  margin-bottom: var(--spacing-xl);
+}
+
+.sobre-highlights h3 {
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-xl);
+}
+
+.highlights-list {
+  list-style: none;
+  padding: 0;
+}
+
+.highlights-list li {
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.highlights-list li i {
+  color: var(--primary-color);
+  font-size: var(--font-size-lg);
+  width: 24px;
+  text-align: center;
+}
+
+/* Seção Experiência */
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-md) 0;
+}
+
+.timeline:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 3px;
+  background-color: var(--primary-color);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: var(--spacing-2xl);
+  padding-left: 60px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-marker {
+  position: absolute;
+  top: 0;
+  left: 12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color);
+  background-color: var(--background-color);
+  z-index: 1;
+}
+
+.timeline-content {
+  padding: var(--spacing-lg);
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.exp-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.exp-header h3 {
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+.exp-header .empresa {
+  display: block;
+  font-weight: var(--font-weight-medium);
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+.exp-header .periodo {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.exp-responsibilities {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-xl);
+}
+
+.exp-responsibilities li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.exp-achievements h4 {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+}
+
+.exp-achievements ul {
+  padding-left: var(--spacing-xl);
+}
+
+.exp-achievements li {
+  margin-bottom: var(--spacing-xs);
+  position: relative;
+}
+
+.exp-achievements li:before {
+  content: '✓';
+  color: var(--success-color);
+  position: absolute;
+  left: -20px;
+}
+
+/* Seção Certificações */
+.section-certificacoes {
+  background-color: var(--background-color);
+}
+
+/* Seção Habilidades */
+.section-habilidades {
+  background-color: var(--card-bg);
+}
+
+.hab-categoria {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.hab-categoria:last-child {
+  margin-bottom: 0;
+}
+
+.hab-categoria h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.hab-categoria h3 i {
+  color: var(--primary-color);
+}
+
+/* Seção Contato */
+.section-contato {
+  background-color: var(--background-color);
+}
+
+.contato-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacing-xl);
+}
+
+.contato-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* Responsividade para seções */
+@media (max-width: 992px) {
+  .contato-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .contato-info {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .info-card {
+    flex: 1 1 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .section-title:after {
+    width: 60px;
+    height: 3px;
+  }
+
+  .timeline:before {
+    left: 10px;
+  }
+
+  .timeline-marker {
+    left: 2px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .timeline-item {
+    padding-left: 40px;
+  }
+
+  .contato-info {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .exp-header {
+    text-align: center;
+  }
+
+  .timeline-content {
+    padding: var(--spacing-md);
+  }
+}

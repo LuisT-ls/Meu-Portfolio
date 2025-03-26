@@ -1,0 +1,193 @@
+/**
+ * Responsive - Classes de utilidade para responsividade
+ */
+
+/* Utilitários para visibilidade responsiva */
+.hide-sm {
+  display: none;
+}
+
+.show-sm {
+  display: none;
+}
+
+.hide-md {
+  display: none;
+}
+
+.show-md {
+  display: none;
+}
+
+.hide-lg {
+  display: none;
+}
+
+.show-lg {
+  display: none;
+}
+
+/* Media queries */
+@media (min-width: 576px) {
+  .hide-sm {
+    display: initial;
+  }
+
+  .show-sm {
+    display: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hide-sm {
+    display: none;
+  }
+
+  .show-sm {
+    display: initial;
+  }
+}
+
+@media (min-width: 768px) {
+  .hide-md {
+    display: initial;
+  }
+
+  .show-md {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hide-md {
+    display: none;
+  }
+
+  .show-md {
+    display: initial;
+  }
+}
+
+@media (min-width: 992px) {
+  .hide-lg {
+    display: initial;
+  }
+
+  .show-lg {
+    display: none;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .hide-lg {
+    display: none;
+  }
+
+  .show-lg {
+    display: initial;
+  }
+}
+
+/* Espaçamento responsivo */
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: var(--spacing-2xl);
+    padding-bottom: var(--spacing-2xl);
+  }
+
+  h1,
+  .h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h2,
+  .h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h3,
+  .h3 {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (max-width: 576px) {
+  .section-padding {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+  }
+
+  h1,
+  .h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h2,
+  .h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  h3,
+  .h3 {
+    font-size: var(--font-size-lg);
+  }
+
+  .container {
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+  }
+}
+
+/* Botões responsivos */
+@media (max-width: 576px) {
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-sm);
+  }
+
+  .btn.lg {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--font-size-md);
+  }
+
+  .btn.block-sm {
+    display: block;
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+  }
+}
+
+/* Ajustes para imagens responsivas */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Alinhamento de texto responsivo */
+@media (max-width: 576px) {
+  .text-center-sm {
+    text-align: center;
+  }
+
+  .text-left-sm {
+    text-align: left;
+  }
+
+  .text-right-sm {
+    text-align: right;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-center-md {
+    text-align: center;
+  }
+
+  .text-left-md {
+    text-align: left;
+  }
+
+  .text-right-md {
+    text-align: right;
+  }
+}

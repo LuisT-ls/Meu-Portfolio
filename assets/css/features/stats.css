@@ -1,0 +1,179 @@
+/**
+ * Stats - Estilos para as estatísticas e números
+ */
+
+.sobre-stats {
+  margin-top: var(--spacing-lg);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+}
+
+.stat-item {
+  background-color: var(--background-color);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto var(--spacing-sm);
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 50%;
+}
+
+.stat-icon i {
+  font-size: var(--font-size-xl);
+  color: var(--primary-color);
+}
+
+.stat-number {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.stat-item.highlight {
+  background-color: var(--primary-color);
+}
+
+.stat-item.highlight .stat-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.stat-item.highlight .stat-icon i {
+  color: white;
+}
+
+.stat-item.highlight .stat-number,
+.stat-item.highlight .stat-label {
+  color: white;
+}
+
+/* Animação de contagem */
+.stats-grid {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.stats-grid.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animação de entrada para cada item estatístico */
+.stat-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.stat-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay sequencial para animação das estatísticas */
+.stat-item:nth-child(1) {
+  transition-delay: 100ms;
+}
+.stat-item:nth-child(2) {
+  transition-delay: 200ms;
+}
+.stat-item:nth-child(3) {
+  transition-delay: 300ms;
+}
+.stat-item:nth-child(4) {
+  transition-delay: 400ms;
+}
+.stat-item:nth-child(5) {
+  transition-delay: 500ms;
+}
+.stat-item:nth-child(6) {
+  transition-delay: 600ms;
+}
+
+/* Variações de cores para os ícones */
+.stat-item:nth-child(1) .stat-icon {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+.stat-item:nth-child(1) .stat-icon i {
+  color: var(--primary-color);
+}
+
+.stat-item:nth-child(2) .stat-icon {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+.stat-item:nth-child(2) .stat-icon i {
+  color: var(--secondary-color);
+}
+
+.stat-item:nth-child(3) .stat-icon {
+  background-color: rgba(245, 158, 11, 0.1);
+}
+.stat-item:nth-child(3) .stat-icon i {
+  color: var(--warning-color);
+}
+
+.stat-item:nth-child(4) .stat-icon {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+.stat-item:nth-child(4) .stat-icon i {
+  color: var(--info-color);
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .stat-number {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-item {
+    padding: var(--spacing-sm);
+  }
+
+  .stat-number {
+    font-size: var(--font-size-lg);
+  }
+
+  .stat-label {
+    font-size: var(--font-size-xs);
+  }
+}

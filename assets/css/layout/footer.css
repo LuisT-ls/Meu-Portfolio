@@ -1,0 +1,137 @@
+/**
+ * Footer - Estilos para o rodapé
+ */
+
+footer {
+  background-color: var(--card-bg);
+  color: var(--text-secondary);
+  padding-top: var(--spacing-2xl);
+  padding-bottom: var(--spacing-xl);
+  border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.footer-section h2 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+}
+
+.footer-section.about {
+  grid-column: span 1;
+}
+
+.footer-section.about img {
+  width: 60px;
+  height: auto;
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-section.about p {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: var(--spacing-sm);
+}
+
+.footer-section ul li a {
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.footer-section ul li a:hover {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.footer-section ul li a i {
+  width: 18px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.social-icons li a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.social-icons li a i {
+  font-size: var(--font-size-lg);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.visitas-counter {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-section.about {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .footer-section.about {
+    grid-column: span 1;
+  }
+
+  .footer-section {
+    text-align: center;
+  }
+
+  .footer-section ul li a {
+    justify-content: center;
+  }
+
+  .social-icons {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+}

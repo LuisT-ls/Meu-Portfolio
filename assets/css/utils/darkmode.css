@@ -1,0 +1,111 @@
+/**
+ * Dark Mode - Utilitários para o tema escuro
+ */
+
+body.dark-mode {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+/* Transição suave para mudança de tema */
+body,
+body * {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Ícone do tema */
+.theme-toggle {
+  color: var(--text-secondary);
+}
+
+.dark-mode .theme-toggle {
+  color: var(--text-secondary);
+}
+
+/* Logo em modo escuro */
+.dark-mode .logo-img {
+  filter: brightness(1.2);
+}
+
+/* Cards em modo escuro */
+.dark-mode .card,
+.dark-mode .info-card,
+.dark-mode .certificacao,
+.dark-mode .stat-item,
+.dark-mode .skill-item,
+.dark-mode .timeline-content {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajustes para imagens em modo escuro */
+.dark-mode img:not(.logo-img) {
+  filter: brightness(0.9);
+}
+
+/* Ajustes de contraste para textos */
+.dark-mode .text-secondary {
+  color: var(--text-secondary);
+}
+
+.dark-mode .text-muted {
+  color: var(--text-muted);
+}
+
+/* Botões em modo escuro */
+.dark-mode .btn-outline {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.dark-mode .btn-ghost {
+  color: var(--text-primary);
+}
+
+.dark-mode .btn-ghost:hover {
+  background-color: var(--card-hover);
+}
+
+/* Formulários em modo escuro */
+.dark-mode .input-group input,
+.dark-mode .input-group textarea {
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark-mode .input-group input:focus,
+.dark-mode .input-group textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Barras de progresso em modo escuro */
+.dark-mode .progress {
+  background-color: var(--border-color);
+}
+
+/* Notificações em modo escuro */
+.dark-mode .notification {
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Seções alternadas em modo escuro */
+.dark-mode .section-sobre,
+.dark-mode .section-habilidades,
+.dark-mode .section-contato {
+  background-color: var(--card-bg);
+}
+
+.dark-mode .section-experiencia,
+.dark-mode .section-certificacoes {
+  background-color: var(--background-color);
+}
+
+/* Ícones em cards de contato no modo escuro */
+.dark-mode .info-card i {
+  filter: brightness(1.2);
+}

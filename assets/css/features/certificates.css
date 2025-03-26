@@ -1,0 +1,165 @@
+/**
+ * Certificates - Estilos para a seção de certificações
+ */
+
+.section-certificacoes {
+  background-color: var(--card-bg);
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
+}
+
+.certificacao {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  height: 100%;
+}
+
+.certificacao:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cert-logo {
+  flex: 0 0 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cert-logo img {
+  max-width: 80%;
+  max-height: 60px;
+  object-fit: contain;
+}
+
+.cert-info {
+  flex: 1;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.cert-info h3 {
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+}
+
+.cert-info time {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-sm);
+}
+
+.cert-info p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+  flex-grow: 1;
+}
+
+.cert-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.cert-skills span {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.cert-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--primary-color);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+  margin-top: auto;
+}
+
+.cert-link:hover {
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+/* Cores diferentes para categorias de certificações */
+.certificacao.dev .cert-skills span {
+  background-color: var(--primary-color);
+}
+
+.certificacao.infra .cert-skills span {
+  background-color: var(--secondary-color);
+}
+
+.certificacao.security .cert-skills span {
+  background-color: var(--warning-color);
+}
+
+.certificacao.cloud .cert-skills span {
+  background-color: var(--info-color);
+}
+
+/* Efeito de entrada para certificações */
+.cert-grid .certificacao {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.cert-grid .certificacao.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay sequencial para animação das certificações */
+.cert-grid .certificacao:nth-child(1) {
+  transition-delay: 100ms;
+}
+.cert-grid .certificacao:nth-child(2) {
+  transition-delay: 200ms;
+}
+.cert-grid .certificacao:nth-child(3) {
+  transition-delay: 300ms;
+}
+.cert-grid .certificacao:nth-child(4) {
+  transition-delay: 400ms;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .cert-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cert-info {
+    padding: var(--spacing-md);
+  }
+}

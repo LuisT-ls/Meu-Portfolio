@@ -1,0 +1,146 @@
+/**
+ * Skills - Estilos específicos para a seção de habilidades
+ */
+
+.hab-categorias {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.skill-item {
+  background-color: var(--card-bg);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.skill-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.skill-header img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.skill-header span {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.skill-level {
+  background-color: var(--border-color);
+  height: 8px;
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius-full);
+  width: 0;
+  transition: width 1.5s ease-in-out;
+}
+
+/* Animação para as skill bars */
+.skill-item[data-skill='HTML5'] .progress-bar {
+  width: 85%;
+}
+.skill-item[data-skill='CSS3'] .progress-bar {
+  width: 80%;
+}
+.skill-item[data-skill='JavaScript'] .progress-bar {
+  width: 75%;
+}
+.skill-item[data-skill='Node.js'] .progress-bar {
+  width: 70%;
+}
+.skill-item[data-skill='Linux'] .progress-bar {
+  width: 85%;
+}
+.skill-item[data-skill='Windows Server'] .progress-bar {
+  width: 80%;
+}
+.skill-item[data-skill='Redes'] .progress-bar {
+  width: 90%;
+}
+.skill-item[data-skill='Virtualização'] .progress-bar {
+  width: 80%;
+}
+.skill-item[data-skill='Git'] .progress-bar {
+  width: 80%;
+}
+.skill-item[data-skill='PowerShell'] .progress-bar {
+  width: 70%;
+}
+.skill-item[data-skill='SQL'] .progress-bar {
+  width: 70%;
+}
+
+/* Efeito de entrada para habilidades */
+.skills-grid .skill-item {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.skills-grid .skill-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+/* Delay sequencial para animação das habilidades */
+.skills-grid .skill-item:nth-child(1) {
+  transition-delay: 100ms;
+}
+.skills-grid .skill-item:nth-child(2) {
+  transition-delay: 200ms;
+}
+.skills-grid .skill-item:nth-child(3) {
+  transition-delay: 300ms;
+}
+.skills-grid .skill-item:nth-child(4) {
+  transition-delay: 400ms;
+}
+.skills-grid .skill-item:nth-child(5) {
+  transition-delay: 500ms;
+}
+.skills-grid .skill-item:nth-child(6) {
+  transition-delay: 600ms;
+}
+.skills-grid .skill-item:nth-child(7) {
+  transition-delay: 700ms;
+}
+.skills-grid .skill-item:nth-child(8) {
+  transition-delay: 800ms;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-item {
+    padding: var(--spacing-sm);
+  }
+}

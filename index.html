@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      Portfólio de Luís Teixeira - Desenvolvedor Web e Estudante de Tecnologia
+      Luís Teixeira | Desenvolvedor Web & Especialista em Tecnologia
     </title>
 
     <link
       rel="shortcut icon"
-      href="Imagens/icon/favicon.ico"
+      href="assets/img/icon/favicon.ico"
       type="image/x-icon"
     />
 
@@ -31,14 +31,8 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="preload" href="/style.css" as="style" />
-    <link rel="preload" href="/script.js" as="script" />
-    <link
-      rel="preload"
-      href="/Imagens/Logo/Logo.webp"
-      as="image"
-      type="image/webp"
-    />
+    <link rel="preload" href="assets/css/main.css" as="style" />
+    <link rel="preload" href="js/app.js" as="script" />
 
     <!-- Font display strategy -->
     <style>
@@ -54,7 +48,7 @@
     <!-- Meta tags para SEO -->
     <meta
       name="description"
-      content="Portfólio de Luís Teixeira, estudante de Ciência, Tecnologia e Inovação na UFBA. Desenvolvedor web especializado em Linux, redes e projetos inovadores. Explore meus projetos e entre em contato!"
+      content="Portfólio de Luís Teixeira, profissional em Tecnologia e estudante de Ciência, Tecnologia e Inovação na UFBA. Especializado em desenvolvimento web, Linux, redes e soluções tecnológicas inovadoras."
     />
     <meta
       name="keywords"
@@ -69,14 +63,17 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://luistls.vercel.app/" />
-    <meta property="og:title" content="Portfólio - Luís Teixeira" />
+    <meta
+      property="og:title"
+      content="Luís Teixeira | Desenvolvedor & Especialista em Tecnologia"
+    />
     <meta
       property="og:description"
       content="Conheça os projetos e habilidades de Luís Teixeira, desenvolvedor web e estudante de Ciência, Tecnologia e Inovação na UFBA. Especializado em criar soluções inovadoras em web, Linux e redes."
     />
     <meta
       property="og:image"
-      content="https://luistls.vercel.app/Imagens/og-image.png"
+      content="https://luistls.vercel.app/assets/img/og-image.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -87,7 +84,10 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@luistls_" />
     <meta name="twitter:creator" content="@luistls_" />
-    <meta name="twitter:title" content="Portfólio - Luís Teixeira" />
+    <meta
+      name="twitter:title"
+      content="Luís Teixeira | Desenvolvedor & Especialista em Tecnologia"
+    />
     <meta
       name="twitter:description"
       content="Conheça os projetos e habilidades de Luís Teixeira, desenvolvedor web e estudante de Ciência, Tecnologia e Inovação na UFBA. Especializado em criar soluções inovadoras em web, Linux e redes."
@@ -103,12 +103,12 @@
     />
     <meta
       name="apple-mobile-web-app-title"
-      content="Portfólio - Luís Teixeira"
+      content="Luís Teixeira | Portfolio"
     />
 
     <!-- Links importantes -->
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -118,127 +118,35 @@
     />
 
     <!-- Favicons -->
-    <link rel="icon" href="/Imagens/Logo/favicon.ico" sizes="any" />
-    <link rel="icon" href="/Imagens/Logo/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/Imagens/Logo/apple-touch-icon.png" />
+    <link rel="icon" href="assets/img/icon/favicon.ico" sizes="any" />
+    <link rel="icon" href="assets/img/Logo/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/img/Logo/apple-touch-icon.png" />
     <link
       rel="mask-icon"
-      href="/Imagens/Logo/safari-pinned-tab.svg"
+      href="assets/img/Logo/safari-pinned-tab.svg"
       color="#2563eb"
     />
 
     <!-- Scripts -->
-    <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
-
-    <!-- Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-VFM4M3FVS6"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag('js', new Date())
-
-      gtag('config', 'G-VFM4M3FVS6')
-    </script>
-
-    <!-- Firebase Config -->
-    <script type="module">
-      window.addEventListener('DOMContentLoaded', async event => {
-        // Inicialização do emailjs
-        emailjs.init('1PLc3xymOa3PrKHEX')
-
-        try {
-          // Importação e configuração do Firebase
-          const { initializeApp } = await import(
-            'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js'
-          )
-          const { getDatabase, ref, onValue, runTransaction } = await import(
-            'https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'
-          )
-
-          // Configuração do Firebase
-          const firebaseConfig = {
-            apiKey: 'AIzaSyCZvrx_AxtPb7QTO02zcI0kqyOv6OBUxkQ',
-            authDomain: 'meu-portf.firebaseapp.com',
-            projectId: 'meu-portf',
-            storageBucket: 'meu-portf.appspot.com',
-            messagingSenderId: '107302529297',
-            appId: '1:107302529297:web:834f7e50c460369b3944b0',
-            measurementId: 'G-VFM4M3FVS6',
-            databaseURL: 'https://meu-portf-default-rtdb.firebaseio.com'
-          }
-
-          const app = initializeApp(firebaseConfig)
-          const database = getDatabase(app)
-
-          // Contador de visitas com tratamento de erro
-          const visitCountRef = ref(database, 'visitCount')
-          await runTransaction(visitCountRef, currentCount => {
-            return (currentCount || 0) + 1
-          })
-
-          onValue(visitCountRef, snapshot => {
-            const count = snapshot.val()
-            const element = document.getElementById('total-visitas')
-            if (element) {
-              element.textContent = `Total de visitas: ${
-                count?.toLocaleString() ?? 0
-              }`
-            }
-          })
-        } catch (error) {
-          console.error('Erro ao inicializar Firebase:', error)
-        }
-      })
-    </script>
-
-    <!-- Service Worker -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', async () => {
-          try {
-            const registration = await navigator.serviceWorker.register(
-              '/sw.js',
-              {
-                scope: '/'
-              }
-            )
-            console.log(
-              'ServiceWorker registrado com sucesso:',
-              registration.scope
-            )
-          } catch (error) {
-            console.error('Erro ao registrar ServiceWorker:', error)
-          }
-        })
-      }
-    </script>
+    <script defer src="https://cdn.emailjs.com/dist/email.min.js"></script>
   </head>
 
-  <body class="dark-mode">
+  <body>
     <!-- Header -->
-    <header role="banner" class="site-header">
+    <header role="banner" class="site-header" id="header">
       <div class="container header-container">
-        <div class="logo-container">
-          <a href="/" class="logo-link">
-            <picture>
-              <source srcset="/Imagens/Logo/image.png" type="image/webp" />
-              <img
-                src="/Imagens/Logo/image.png"
-                alt="Logo Luís Teixeira"
-                width="50"
-                height="50"
-                class="logo-img"
-              />
-            </picture>
-          </a>
-        </div>
-
-        <h1 class="site-title">Luís Teixeira</h1>
+        <a href="/" class="logo-link" aria-label="Início">
+          <picture>
+            <img
+              src="assets/img/Logo/image.png"
+              alt="Logo Luís Teixeira"
+              width="40"
+              height="40"
+              class="logo-img"
+            />
+          </picture>
+          <span class="site-title">Luís Teixeira</span>
+        </a>
 
         <nav role="navigation" aria-label="Menu principal" class="main-nav">
           <button
@@ -256,9 +164,7 @@
           </button>
 
           <ul id="main-nav" class="nav-list">
-            <li>
-              <a href="#sobre" class="nav-link" aria-current="page">Sobre</a>
-            </li>
+            <li><a href="#sobre" class="nav-link">Sobre</a></li>
             <li><a href="#experiencia" class="nav-link">Experiência</a></li>
             <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
             <li><a href="#certificacoes" class="nav-link">Certificações</a></li>
@@ -268,7 +174,6 @@
                 href="/Data/Currículo-Luís Teixeira.pdf"
                 class="nav-link cv-link"
                 download
-                onclick="gtag('event', 'download', {'event_category': 'CV'});"
               >
                 <i class="fas fa-download"></i>
                 <span>Currículo</span>
@@ -276,6 +181,15 @@
             </li>
           </ul>
         </nav>
+
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="Alternar tema"
+        >
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+        </button>
       </div>
     </header>
 
@@ -284,25 +198,30 @@
       <section class="hero" aria-labelledby="hero-title">
         <div class="container hero-container">
           <div class="hero-content">
-            <h2 id="hero-title" class="animate-on-scroll">
-              Olá, eu sou Luís Teixeira
-            </h2>
+            <h1 id="hero-title" class="animate-on-scroll">
+              Olá, eu sou <span class="highlight">Luís Teixeira</span>
+            </h1>
             <p class="hero-subtitle animate-on-scroll">
-              Desenvolvedor Web & Estudante de Tecnologia
+              Desenvolvedor Web & Especialista em Tecnologia
             </p>
             <div class="cta-buttons">
               <a
                 href="https://github.com/LuisT-ls?tab=repositories"
                 class="btn primary"
-                >Ver Projetos</a
+                target="_blank"
+                rel="noopener"
               >
-              <a href="#contato" class="btn secondary">Contato</a>
+                <i class="fab fa-github"></i> Ver Projetos
+              </a>
+              <a href="#contato" class="btn secondary">
+                <i class="fas fa-envelope"></i> Contato
+              </a>
             </div>
           </div>
           <div class="hero-image">
             <picture>
               <img
-                src="/Imagens/web_development_maintenance_construction_teamwork_icon_192840.webp"
+                src="assets/img/web_development_maintenance_construction_teamwork_icon_192840.webp"
                 alt="Ilustração representando desenvolvimento web"
                 width="500"
                 height="500"
@@ -314,7 +233,11 @@
         </div>
       </section>
 
-      <section id="sobre" aria-labelledby="sobre-titulo" class="section-sobre">
+      <section
+        id="sobre"
+        aria-labelledby="sobre-titulo"
+        class="section-sobre section-padding"
+      >
         <div class="container">
           <h2 id="sobre-titulo" class="section-title">Sobre Mim</h2>
           <div class="sobre-grid">
@@ -336,19 +259,23 @@
                 </p>
                 <p class="sobre-goals">
                   Atualmente, foco meus estudos em desenvolvimento web moderno,
-                  arquitetura de software e estudos constantes em DevOps, sempre
-                  buscando criar soluções eficientes e escaláveis que façam a
-                  diferença.
+                  arquitetura de software e DevOps, sempre buscando criar
+                  soluções eficientes e escaláveis que façam a diferença.
                 </p>
               </div>
               <div class="sobre-highlights">
                 <h3>Destaques</h3>
                 <ul class="highlights-list">
-                  <li>🎓 Graduando em CTI na UFBA</li>
-                  <li>💻 Desenvolvedor Web</li>
-                  <li>🔧 Analista em Suporte Técnico</li>
-                  <li>🌟 Média Acadêmica 8.2</li>
-                  <li>📚 Aprendizado Contínuo</li>
+                  <li>
+                    <i class="fas fa-graduation-cap"></i> Graduando em CTI na
+                    UFBA
+                  </li>
+                  <li><i class="fas fa-laptop-code"></i> Desenvolvedor Web</li>
+                  <li>
+                    <i class="fas fa-tools"></i> Analista em Suporte Técnico
+                  </li>
+                  <li><i class="fas fa-chart-line"></i> Média Acadêmica 8.2</li>
+                  <li><i class="fas fa-book"></i> Aprendizado Contínuo</li>
                 </ul>
               </div>
             </div>
@@ -358,42 +285,42 @@
                   <div class="stat-icon">
                     <i class="fas fa-clock"></i>
                   </div>
-                  <span class="stat-number" data-count="2">2+</span>
+                  <span class="stat-number" data-count="2">0</span>
                   <span class="stat-label">Anos de Experiência</span>
                 </div>
                 <div class="stat-item" role="figure">
                   <div class="stat-icon">
                     <i class="fas fa-project-diagram"></i>
                   </div>
-                  <span class="stat-number" data-count="10">10+</span>
+                  <span class="stat-number" data-count="10">0</span>
                   <span class="stat-label">Projetos Completados</span>
                 </div>
                 <div class="stat-item" role="figure">
                   <div class="stat-icon">
                     <i class="fas fa-certificate"></i>
                   </div>
-                  <span class="stat-number" data-count="5">5+</span>
+                  <span class="stat-number" data-count="5">0</span>
                   <span class="stat-label">Certificações Técnicas</span>
                 </div>
                 <div class="stat-item" role="figure">
                   <div class="stat-icon">
                     <i class="fas fa-code"></i>
                   </div>
-                  <span class="stat-number" data-count="8">6+</span>
+                  <span class="stat-number" data-count="6">0</span>
                   <span class="stat-label">Tecnologias Dominadas</span>
                 </div>
                 <div class="stat-item highlight" role="figure">
                   <div class="stat-icon">
                     <i class="fas fa-users"></i>
                   </div>
-                  <span class="stat-number" data-count="20">20+</span>
+                  <span class="stat-number" data-count="20">0</span>
                   <span class="stat-label">Clientes Atendidos</span>
                 </div>
                 <div class="stat-item highlight" role="figure">
                   <div class="stat-icon">
                     <i class="fas fa-headset"></i>
                   </div>
-                  <span class="stat-number" data-count="1500">1500+</span>
+                  <span class="stat-number" data-count="1500">0</span>
                   <span class="stat-label">Horas de Suporte</span>
                 </div>
               </div>
@@ -402,7 +329,11 @@
         </div>
       </section>
 
-      <section id="experiencia" aria-labelledby="exp-titulo">
+      <section
+        id="experiencia"
+        aria-labelledby="exp-titulo"
+        class="section-padding"
+      >
         <div class="container">
           <h2 id="exp-titulo" class="section-title">
             Experiência Profissional
@@ -496,7 +427,7 @@
       <section
         id="certificacoes"
         aria-labelledby="cert-titulo"
-        class="section-certificacoes"
+        class="section-certificacoes section-padding"
       >
         <div class="container">
           <h2 id="cert-titulo" class="section-title">Certificações</h2>
@@ -504,14 +435,14 @@
             <article class="certificacao">
               <div class="cert-logo">
                 <img
-                  src="Imagens/icon/cisco-svgrepo-com.svg"
+                  src="assets/img/icon/cisco-svgrepo-com.svg"
                   alt="Cisco Logo"
                   loading="lazy"
                 />
               </div>
               <div class="cert-info">
                 <h3>CCNA - Cisco Certified Network Associate</h3>
-                <time datetime="2023-06">Novembro 2019</time>
+                <time datetime="2019-11">Novembro 2019</time>
                 <p>
                   Certificação em redes de computadores, incluindo roteamento,
                   switching e segurança.
@@ -525,16 +456,17 @@
                   href="/Data/Certificado Introduction to Cybersecurity.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
+                  class="cert-link"
                 >
-                  >Verificar Certificado</a
-                >
+                  <i class="fas fa-external-link-alt"></i> Verificar Certificado
+                </a>
               </div>
             </article>
 
             <article class="certificacao">
               <div class="cert-logo">
                 <img
-                  src="Imagens/icon/rocketseat.svg"
+                  src="assets/img/icon/rocketseat.svg"
                   alt="Rocketseat Logo"
                   loading="lazy"
                 />
@@ -554,16 +486,17 @@
                   href="https://app.rocketseat.com.br/certificates/a291ea1a-b9e9-45f2-abcb-6e41f7b0bee9"
                   target="_blank"
                   rel="noopener noreferrer"
+                  class="cert-link"
                 >
-                  >Verificar Credencial</a
-                >
+                  <i class="fas fa-external-link-alt"></i> Verificar Credencial
+                </a>
               </div>
             </article>
 
             <article class="certificacao">
               <div class="cert-logo">
                 <img
-                  src="Imagens/icon/microsoft-azure-svgrepo-com.svg"
+                  src="assets/img/icon/microsoft-azure-svgrepo-com.svg"
                   alt="Microsoft Logo"
                   loading="lazy"
                 />
@@ -581,12 +514,13 @@
                   <span>Server</span>
                 </div>
                 <a
-                  href="https://link-externo.com"
+                  href="#"
                   target="_blank"
                   rel="noopener noreferrer"
+                  class="cert-link"
                 >
-                  >Verificar Credencial</a
-                >
+                  <i class="fas fa-external-link-alt"></i> Verificar Credencial
+                </a>
               </div>
             </article>
           </div>
@@ -596,7 +530,7 @@
       <section
         id="habilidades"
         aria-labelledby="hab-titulo"
-        class="section-habilidades"
+        class="section-habilidades section-padding"
       >
         <div class="container">
           <h2 id="hab-titulo" class="section-title">
@@ -605,12 +539,12 @@
           <div class="hab-categorias">
             <!-- Categoria: Desenvolvimento Web -->
             <div class="hab-categoria">
-              <h3>Desenvolvimento Web</h3>
+              <h3><i class="fas fa-code"></i> Desenvolvimento Web</h3>
               <div class="skills-grid">
                 <div class="skill-item" data-skill="HTML5">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/html-templates-svgrepo-com.svg"
+                      src="assets/img/icon/html-templates-svgrepo-com.svg"
                       alt="HTML5 icon"
                     />
                     <span>HTML5</span>
@@ -622,7 +556,7 @@
                 <div class="skill-item" data-skill="CSS3">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/css-3-svgrepo-com.svg"
+                      src="assets/img/icon/css-3-svgrepo-com.svg"
                       alt="CSS3 icon"
                     />
                     <span>CSS3</span>
@@ -634,7 +568,7 @@
                 <div class="skill-item" data-skill="JavaScript">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/javascript-svgrepo-com.svg"
+                      src="assets/img/icon/javascript-svgrepo-com.svg"
                       alt="JavaScript icon"
                     />
                     <span>JavaScript</span>
@@ -646,7 +580,7 @@
                 <div class="skill-item" data-skill="Node.js">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/node-js-svgrepo-com.svg"
+                      src="assets/img/icon/node-js-svgrepo-com.svg"
                       alt="Node.js icon"
                     />
                     <span>Node.js</span>
@@ -660,12 +594,12 @@
 
             <!-- Categoria: Sistemas e Infraestrutura -->
             <div class="hab-categoria">
-              <h3>Sistemas e Infraestrutura</h3>
+              <h3><i class="fas fa-server"></i> Sistemas e Infraestrutura</h3>
               <div class="skills-grid">
                 <div class="skill-item" data-skill="Linux">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/linux-tux-svgrepo-com.svg"
+                      src="assets/img/icon/linux-tux-svgrepo-com.svg"
                       alt="Linux icon"
                     />
                     <span>Linux</span>
@@ -677,7 +611,7 @@
                 <div class="skill-item" data-skill="Windows Server">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/windows-applications-svgrepo-com.svg"
+                      src="assets/img/icon/windows-applications-svgrepo-com.svg"
                       alt="Windows Server icon"
                     />
                     <span>Windows Server</span>
@@ -689,7 +623,7 @@
                 <div class="skill-item" data-skill="Redes">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/server_technology_network_computer_connection_icon_175929.svg"
+                      src="assets/img/icon/server_technology_network_computer_connection_icon_175929.svg"
                       alt="Network icon"
                     />
                     <span>Redes</span>
@@ -701,7 +635,7 @@
                 <div class="skill-item" data-skill="Virtualização">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/vmware-svgrepo-com.svg"
+                      src="assets/img/icon/vmware-svgrepo-com.svg"
                       alt="VMware icon"
                     />
                     <span>Virtualização</span>
@@ -715,12 +649,12 @@
 
             <!-- Categoria: Ferramentas e Tecnologias -->
             <div class="hab-categoria">
-              <h3>Ferramentas e Tecnologias</h3>
+              <h3><i class="fas fa-tools"></i> Ferramentas e Tecnologias</h3>
               <div class="skills-grid">
                 <div class="skill-item" data-skill="Git">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/git-svgrepo-com.svg"
+                      src="assets/img/icon/git-svgrepo-com.svg"
                       alt="Git icon"
                     />
                     <span>Git</span>
@@ -732,7 +666,7 @@
                 <div class="skill-item" data-skill="PowerShell">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/powershell-psm-svgrepo-com.svg"
+                      src="assets/img/icon/powershell-psm-svgrepo-com.svg"
                       alt="PowerShell icon"
                     />
                     <span>PowerShell</span>
@@ -744,7 +678,7 @@
                 <div class="skill-item" data-skill="SQL">
                   <div class="skill-header">
                     <img
-                      src="Imagens/icon/sql-svgrepo-com.svg"
+                      src="assets/img/icon/sql-svgrepo-com.svg"
                       alt="SQL icon"
                     />
                     <span>SQL</span>
@@ -762,7 +696,7 @@
       <section
         id="contato"
         aria-labelledby="contato-titulo"
-        class="section-contato"
+        class="section-contato section-padding"
       >
         <div class="container">
           <h2 id="contato-titulo" class="section-title">Entre em Contato</h2>
@@ -861,30 +795,6 @@
               </div>
 
               <div class="form-group">
-                <label for="assunto"
-                  >Assunto <span class="required">*</span></label
-                >
-                <div class="input-group">
-                  <i class="fas fa-tag"></i>
-                  <input
-                    type="text"
-                    id="assunto"
-                    name="assunto"
-                    required
-                    minlength="5"
-                    aria-describedby="assunto-help"
-                    placeholder="Assunto da mensagem"
-                  />
-                </div>
-                <small id="assunto-help" class="form-text">
-                  Digite o assunto da sua mensagem
-                </small>
-                <div class="invalid-feedback">
-                  Por favor, digite um assunto válido
-                </div>
-              </div>
-
-              <div class="form-group">
                 <label for="mensagem"
                   >Mensagem <span class="required">*</span></label
                 >
@@ -926,10 +836,6 @@
                 </div>
               </div>
 
-              <div class="form-preview" aria-live="polite">
-                <!-- Preview da mensagem será mostrado aqui -->
-              </div>
-
               <button type="submit" class="btn-submit">
                 <span class="btn-text">
                   <i class="fas fa-paper-plane"></i> Enviar Mensagem
@@ -959,14 +865,11 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section about">
-            <picture>
-              <source srcset="/Imagens/Logo/image.png" type="image/webp" />
-              <img
-                src="/Imagens/Logo/image.png"
-                alt="Logo do portfólio Luís Teixeira"
-                loading="lazy"
-              />
-            </picture>
+            <img
+              src="assets/img/Logo/image.png"
+              alt="Logo do portfólio Luís Teixeira"
+              loading="lazy"
+            />
             <p>
               Desenvolvedor Web e estudante de Ciência, Tecnologia e Inovação na
               UFBA. Sempre em busca de aprendizado e inovação em tecnologia.
@@ -978,7 +881,7 @@
               <li><a href="#sobre">Sobre</a></li>
               <li><a href="#habilidades">Habilidades</a></li>
               <li><a href="#contato">Contato</a></li>
-              <li><a href="#">Voltar ao topo</a></li>
+              <li><a href="#" id="back-to-top">Voltar ao topo</a></li>
             </ul>
           </div>
           <div class="footer-section contact">
@@ -1026,24 +929,50 @@
                   <i class="fab fa-linkedin"></i> LinkedIn
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/luis.tei/"
+                  target="_blank"
+                  aria-label="Visitar meu perfil no Instagram"
+                >
+                  <i class="fab fa-instagram"></i> Instagram
+                </a>
+              </li>
             </ul>
           </div>
         </div>
-        <div id="total-visitas">Total de visitas: 0</div>
+        <div id="total-visitas" class="visitas-counter">
+          Total de visitas: 0
+        </div>
         <div class="footer-bottom">
-          <p>&copy; 2024 Luís Teixeira. Todos os direitos reservados.</p>
+          <p>
+            &copy; <time datetime="2025">2025</time> Luís Teixeira. Todos os
+            direitos reservados.
+          </p>
         </div>
       </div>
     </footer>
 
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTopBtn" aria-label="Voltar ao topo">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Notification System -->
+    <div id="notification-container"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/app.js"></script>
+
+    <!-- Schema.org structured data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Luís Teixeira",
         "url": "https://luistls.vercel.app/",
-        "image": "https://luistls.vercel.app/Imagens/Imagem Principal.png",
-        "jobTitle": "Estudante de Ciência, Tecnologia e Inovação",
+        "image": "https://luistls.vercel.app/assets/img/Logo/image.png",
+        "jobTitle": "Desenvolvedor Web e Especialista em Tecnologia",
         "sameAs": [
           "https://github.com/LuisT-ls",
           "https://www.linkedin.com/in/luis-tei"
@@ -1059,6 +988,80 @@
           "JavaScript",
           "Node.js"
         ]
+      }
+    </script>
+
+    <!-- Firebase & Analytics -->
+    <script type="module">
+      // Firebase initialization will be loaded here
+      window.addEventListener('DOMContentLoaded', async event => {
+        // Inicialização do emailjs
+        emailjs.init('1PLc3xymOa3PrKHEX')
+
+        try {
+          // Importação e configuração do Firebase
+          const { initializeApp } = await import(
+            'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js'
+          )
+          const { getDatabase, ref, onValue, runTransaction } = await import(
+            'https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'
+          )
+
+          // Configuração do Firebase
+          const firebaseConfig = {
+            apiKey: 'AIzaSyCZvrx_AxtPb7QTO02zcI0kqyOv6OBUxkQ',
+            authDomain: 'meu-portf.firebaseapp.com',
+            projectId: 'meu-portf',
+            storageBucket: 'meu-portf.appspot.com',
+            messagingSenderId: '107302529297',
+            appId: '1:107302529297:web:834f7e50c460369b3944b0',
+            measurementId: 'G-VFM4M3FVS6',
+            databaseURL: 'https://meu-portf-default-rtdb.firebaseio.com'
+          }
+
+          const app = initializeApp(firebaseConfig)
+          const database = getDatabase(app)
+
+          // Contador de visitas com tratamento de erro
+          const visitCountRef = ref(database, 'visitCount')
+          await runTransaction(visitCountRef, currentCount => {
+            return (currentCount || 0) + 1
+          })
+
+          onValue(visitCountRef, snapshot => {
+            const count = snapshot.val()
+            const element = document.getElementById('total-visitas')
+            if (element) {
+              element.textContent = `Total de visitas: ${
+                count?.toLocaleString() ?? 0
+              }`
+            }
+          })
+        } catch (error) {
+          console.error('Erro ao inicializar Firebase:', error)
+        }
+      })
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', async () => {
+          try {
+            const registration = await navigator.serviceWorker.register(
+              '/sw.js',
+              {
+                scope: '/'
+              }
+            )
+            console.log(
+              'ServiceWorker registrado com sucesso:',
+              registration.scope
+            )
+          } catch (error) {
+            console.error('Erro ao registrar ServiceWorker:', error)
+          }
+        })
       }
     </script>
   </body>

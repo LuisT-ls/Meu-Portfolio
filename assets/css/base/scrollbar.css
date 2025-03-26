@@ -1,0 +1,52 @@
+/**
+ * Scrollbar - Estiliza a barra de rolagem em navegadores compatíveis
+ */
+
+/* Scrollbar padrão */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: var(--border-radius-full);
+  border: 2px solid var(--card-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) var(--card-bg);
+}
+
+/* IE */
+body {
+  -ms-overflow-style: scrollbar;
+}
+
+/* Variação para o modo escuro */
+.dark-mode ::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+  background: var(--text-light);
+  border: 2px solid var(--card-bg);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.dark-mode * {
+  scrollbar-color: var(--text-light) var(--card-bg);
+}
