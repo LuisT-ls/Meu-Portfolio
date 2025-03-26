@@ -1000,7 +1000,7 @@
           const { initializeApp } = await import(
             'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js'
           )
-          const { getDatabase, ref, get, increment, update } = await import(
+          const { getDatabase, ref, get, set, onValue } = await import(
             'https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'
           )
           const { getAnalytics } = await import(
@@ -1030,16 +1030,21 @@
           const hasVisitBeenCounted = sessionStorage.getItem(sessionKey)
 
           if (!hasVisitBeenCounted) {
-            // Incrementa o contador de visitas
-            const visitsCountRef = ref(database, 'visitCount')
             try {
-              // Usa update com increment para operação atômica
-              await update(visitsCountRef, {
-                '.sv': 'increment',
-                '.value': increment(1)
-              })
+              // Obter valor atual
+              const visitsCountRef = ref(database, 'visitCount')
+              const snapshot = await get(visitsCountRef)
 
-              // Marca que a visita foi contada nesta sessão
+              // Definir valor inicial ou incrementar
+              let newCount = 1
+              if (snapshot.exists()) {
+                newCount = snapshot.val() + 1
+              }
+
+              // Atualizar o contador
+              await set(visitsCountRef, newCount)
+
+              // Marcar que a visita foi contada nesta sessão
               sessionStorage.setItem(sessionKey, 'true')
 
               console.log('Visita registrada com sucesso!')
@@ -1048,33 +1053,32 @@
             }
           }
 
-          // Buscar e exibir contagem atual
-          try {
-            const visitsCountRef = ref(database, 'visitCount')
-            const snapshot = await get(visitsCountRef)
+          // Configurar listener para atualizações em tempo real
+          const visitsCountRef = ref(database, 'visitCount')
+          onValue(
+            visitsCountRef,
+            snapshot => {
+              if (snapshot.exists()) {
+                const count = snapshot.val()
+                const element = document.getElementById('total-visitas')
 
-            if (snapshot.exists()) {
-              const count = snapshot.val()
-              const element = document.getElementById('total-visitas')
-
-              if (element) {
-                element.textContent = `Total de visitas: ${count.toLocaleString()}`
+                if (element) {
+                  element.textContent = `Total de visitas: ${count.toLocaleString()}`
+                }
+              } else {
+                console.log('Nenhum dado de visitas encontrado')
               }
-            } else {
-              console.log('Nenhum dado de visitas encontrado')
+            },
+            error => {
+              console.error('Erro ao observar contador:', error)
 
-              // Inicializar contador
-              await update(visitsCountRef, { '.value': 1 })
+              // Fallback para contador local
+              const element = document.getElementById('total-visitas')
+              if (element) {
+                element.textContent = 'Total de visitas: --'
+              }
             }
-          } catch (getError) {
-            console.warn('Erro ao buscar contador:', getError)
-
-            // Fallback para contador local em caso de erro
-            const element = document.getElementById('total-visitas')
-            if (element) {
-              element.textContent = 'Total de visitas: --'
-            }
-          }
+          )
         } catch (mainError) {
           // Fallback se o Firebase falhar completamente
           console.warn('Erro ao inicializar Firebase:', mainError)
