@@ -2,11 +2,38 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Política de Privacidade - Luís Teixeira</title>
+    <title>Política de Privacidade | Luís Teixeira</title>
+
+    <!-- Preconnect e preload -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+    <!-- Meta tags para SEO -->
+    <meta
+      name="description"
+      content="Política de Privacidade do site de Luís Teixeira, explicando como seus dados são coletados, usados e protegidos."
+    />
+    <meta name="robots" content="noindex, follow" />
+    <link
+      rel="canonical"
+      href="https://luistls.vercel.app/privacy-policy/privacy-policy.html"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="icon"
+      href="../assets/img/Logo/favicon.svg"
+      type="image/svg+xml"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="../assets/img/Logo/apple-touch-icon.svg"
+    />
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="stylesheet" href="style-pp.css" />
-    <!-- Font Awesome for icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -14,110 +41,414 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        document.body.classList.add('dark-mode')
-      })
-    </script>
   </head>
+
   <body>
     <!-- Header -->
-    <header class="site-header">
-      <div class="header-container">
-        <a href="/" class="logo-link">
+    <header role="banner" class="site-header">
+      <div class="container header-container">
+        <a href="../" class="logo-link" aria-label="Início">
           <img
-            src="/Imagens/Logo/image.png"
+            src="../assets/img/Logo/header-logo.svg"
             alt="Logo Luís Teixeira"
+            width="40"
+            height="40"
             class="logo-img"
           />
-          <span class="logo-text">Luís Teixeira</span>
+          <span class="site-title">Luís Teixeira</span>
         </a>
-        <nav class="main-nav">
-          <ul class="nav-list">
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/index.html#sobre">Sobre</a></li>
-            <li><a href="/index.html#projetos">Projetos</a></li>
-            <li><a href="/index.html#contato">Contato</a></li>
+
+        <nav role="navigation" aria-label="Menu principal" class="main-nav">
+          <button
+            id="menu-btn"
+            aria-expanded="false"
+            aria-controls="main-nav"
+            class="menu-toggle"
+          >
+            <span class="sr-only">Menu</span>
+            <div class="hamburger">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </div>
+          </button>
+
+          <ul id="main-nav" class="nav-list">
+            <li><a href="../#sobre" class="nav-link">Sobre</a></li>
+            <li><a href="../#experiencia" class="nav-link">Experiência</a></li>
+            <li><a href="../#habilidades" class="nav-link">Habilidades</a></li>
+            <li>
+              <a href="../#certificacoes" class="nav-link">Certificações</a>
+            </li>
+            <li><a href="../#contato" class="nav-link">Contato</a></li>
+            <li>
+              <a
+                href="../Data/Currículo-Luís Teixeira.pdf"
+                class="nav-link cv-link"
+                download
+              >
+                <i class="fas fa-download"></i>
+                <span>Currículo</span>
+              </a>
+            </li>
           </ul>
         </nav>
-        <button class="nav-toggle" aria-label="Menu">
-          <i class="fas fa-bars"></i>
+
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="Alternar tema"
+        >
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
         </button>
       </div>
     </header>
 
-    <!-- Política de Privacidade Section -->
     <main class="privacy-policy-container">
       <div class="container">
-        <h1 class="section-title">Política de Privacidade</h1>
-        <p>
-          Esta Política de Privacidade explica como coletamos, usamos e
-          protegemos suas informações pessoais quando você utiliza nosso site.
-        </p>
-        <h2>1. Informações que Coletamos</h2>
-        <p>
-          Podemos coletar informações pessoais, como nome, e-mail, telefone, e
-          outras informações fornecidas por você ao entrar em contato ou usar
-          nossos serviços.
-        </p>
-        <h2>2. Uso das Informações</h2>
-        <p>
-          Utilizamos suas informações para fornecer e melhorar nossos serviços,
-          responder às suas solicitações, e para comunicação relacionada ao
-          nosso site.
-        </p>
-        <h2>3. Proteção de Dados</h2>
-        <p>
-          Implementamos medidas de segurança para proteger suas informações
-          pessoais. No entanto, não podemos garantir a segurança absoluta das
-          informações transmitidas na internet.
-        </p>
-        <h2>4. Cookies</h2>
-        <p>
-          Nosso site pode utilizar cookies para melhorar sua experiência de
-          navegação. Você pode optar por desativar os cookies nas configurações
-          do seu navegador.
-        </p>
-        <h2>5. Links para Terceiros</h2>
-        <p>
-          Nosso site pode conter links para sites de terceiros. Não somos
-          responsáveis pelas práticas de privacidade desses sites e recomendamos
-          que você leia suas políticas de privacidade.
-        </p>
-        <h2>6. Alterações nesta Política</h2>
-        <p>
-          Reservamo-nos o direito de atualizar esta Política de Privacidade a
-          qualquer momento. As alterações serão publicadas nesta página.
-        </p>
-        <p>
-          Se tiver dúvidas ou preocupações sobre nossa Política de Privacidade,
-          entre em contato conosco pelo e-mail:
-          <a href="mailto:luisps4.lt@gmail.com">luisps4.lt@gmail.com</a>.
-        </p>
+        <section class="policy-header">
+          <h1>Política de Privacidade</h1>
+          <p class="last-updated">Última atualização: 26 de março de 2025</p>
+        </section>
+
+        <section class="policy-intro">
+          <p>
+            Bem-vindo à Política de Privacidade do portfólio de Luís Teixeira.
+            Respeito sua privacidade e estou comprometido em proteger seus dados
+            pessoais. Esta política de privacidade informará como seus dados são
+            tratados quando você visita este site e informa sobre seus direitos
+            de privacidade.
+          </p>
+          <p>
+            Por favor, leia atentamente para entender minhas práticas em relação
+            a seus dados pessoais. Ao utilizar este site, você concorda com a
+            coleta e uso de informações de acordo com esta política.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>1. Informações que coletamos</h2>
+          <p>
+            Posso coletar, usar, armazenar e transferir diferentes tipos de
+            dados pessoais sobre você, incluindo:
+          </p>
+
+          <h3>1.1. Informações fornecidas por você</h3>
+          <ul>
+            <li>
+              <strong>Dados de identidade:</strong> Inclui nome, sobrenome.
+            </li>
+            <li>
+              <strong>Dados de contato:</strong> Inclui endereço de e-mail e
+              número de telefone.
+            </li>
+            <li>
+              <strong>Dados de comunicação:</strong> Inclui o conteúdo das
+              mensagens que você envia através do formulário de contato.
+            </li>
+          </ul>
+
+          <h3>1.2. Informações coletadas automaticamente</h3>
+          <ul>
+            <li>
+              <strong>Dados técnicos:</strong> Endereço IP, tipo e versão do
+              navegador, configuração de fuso horário, tipos e versões de
+              plugins, sistema operacional e plataforma.
+            </li>
+            <li>
+              <strong>Dados de uso:</strong> Informações sobre como você utiliza
+              o site, incluindo páginas visitadas e tempo gasto em cada página.
+            </li>
+            <li>
+              <strong>Cookies e tecnologias similares:</strong> Para mais
+              informações sobre como usamos cookies, consulte a seção específica
+              sobre cookies abaixo.
+            </li>
+          </ul>
+        </section>
+
+        <section class="policy-section">
+          <h2>2. Como usamos suas informações</h2>
+          <p>
+            Utilizo suas informações pessoais apenas para os fins para os quais
+            as coletei, a menos que considere razoavelmente que preciso usá-las
+            por outro motivo compatível com o propósito original.
+          </p>
+
+          <h3>2.1. Propósitos para os quais usamos seus dados</h3>
+          <ul>
+            <li>
+              <strong>Para responder às suas consultas:</strong> Quando você
+              entra em contato através do formulário de contato, utilizo suas
+              informações para responder às suas perguntas ou solicitações.
+            </li>
+            <li>
+              <strong>Para melhorar o site:</strong> Analiso dados de uso para
+              entender como os visitantes interagem com o site, o que ajuda a
+              melhorar sua estrutura e conteúdo.
+            </li>
+            <li>
+              <strong>Para fornecer conteúdo relevante:</strong> Posso usar suas
+              informações para personalizar sua experiência e entregar conteúdo
+              mais relevante para você.
+            </li>
+            <li>
+              <strong>Para fins de segurança:</strong> Utilizo dados técnicos
+              para manter o site seguro e protegido.
+            </li>
+          </ul>
+        </section>
+
+        <section class="policy-section">
+          <h2>3. Compartilhamento de dados</h2>
+          <p>
+            Não vendo, alugo ou compartilho seus dados pessoais com terceiros
+            para fins de marketing. No entanto, posso compartilhar suas
+            informações com as seguintes categorias de terceiros:
+          </p>
+
+          <ul>
+            <li>
+              <strong>Provedores de serviço:</strong> Empresas que fornecem
+              serviços em meu nome, como hospedagem web, análise de dados e
+              serviços de e-mail (por exemplo, EmailJS para processar
+              formulários de contato).
+            </li>
+            <li>
+              <strong>Análise de dados:</strong> Uso serviços de análise como
+              Google Analytics para entender como o site é utilizado.
+            </li>
+            <li>
+              <strong>Requisitos legais:</strong> Quando necessário para cumprir
+              uma obrigação legal ou ordem judicial.
+            </li>
+          </ul>
+
+          <p>
+            Todos os terceiros com quem compartilho seus dados são obrigados a
+            respeitar a segurança dos seus dados pessoais e a tratá-los de
+            acordo com a lei.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>4. Segurança de dados</h2>
+          <p>
+            Implementei medidas de segurança apropriadas para evitar que seus
+            dados pessoais sejam acidentalmente perdidos, usados ou acessados de
+            maneira não autorizada, alterados ou divulgados. Além disso, limito
+            o acesso aos seus dados pessoais apenas àqueles que têm uma
+            necessidade comercial de conhecê-los.
+          </p>
+
+          <p>
+            Apesar das medidas implementadas, a transmissão de informações pela
+            internet nunca é completamente segura. Portanto, não posso garantir
+            a segurança dos dados transmitidos para o site, e qualquer
+            transmissão é por sua conta e risco.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>5. Retenção de dados</h2>
+          <p>
+            Mantenho seus dados pessoais apenas pelo tempo necessário para
+            cumprir os fins para os quais os coletei, inclusive para fins de
+            cumprimento de quaisquer requisitos legais, contábeis ou de
+            relatórios.
+          </p>
+
+          <p>
+            Para determinar o período de retenção apropriado para dados
+            pessoais, considero a quantidade, natureza e sensibilidade dos dados
+            pessoais, o risco potencial de danos do uso não autorizado ou
+            divulgação, os fins para os quais processo seus dados pessoais e se
+            posso alcançar esses fins através de outros meios.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>6. Seus direitos legais</h2>
+          <p>
+            Dependendo da sua localização, você pode ter certos direitos em
+            relação aos seus dados pessoais. Estes podem incluir:
+          </p>
+
+          <ul>
+            <li>
+              <strong>Direito de acesso:</strong> Você tem o direito de
+              solicitar acesso aos seus dados pessoais.
+            </li>
+            <li>
+              <strong>Direito de retificação:</strong> Você tem o direito de
+              solicitar a correção de quaisquer dados incompletos ou imprecisos.
+            </li>
+            <li>
+              <strong>Direito ao esquecimento:</strong> Em certas
+              circunstâncias, você pode solicitar a exclusão de seus dados
+              pessoais.
+            </li>
+            <li>
+              <strong>Direito de restrição de processamento:</strong> Em certas
+              circunstâncias, você pode solicitar a restrição do processamento
+              dos seus dados pessoais.
+            </li>
+            <li>
+              <strong>Direito à portabilidade de dados:</strong> Você pode
+              solicitar a transferência dos seus dados pessoais para você ou
+              para terceiros.
+            </li>
+            <li>
+              <strong>Direito de objeção:</strong> Você tem o direito de se opor
+              ao processamento dos seus dados pessoais em certas circunstâncias.
+            </li>
+          </ul>
+
+          <p>
+            Se você deseja exercer qualquer um desses direitos, entre em contato
+            através do formulário de contato no site ou pelo e-mail
+            luisps4.lt@gmail.com.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>7. Cookies</h2>
+          <p>
+            Este site utiliza cookies para melhorar sua experiência. Cookies são
+            pequenos arquivos de texto que são armazenados no seu dispositivo
+            quando você visita um site.
+          </p>
+
+          <h3>7.1. Tipos de cookies que usamos</h3>
+          <ul>
+            <li>
+              <strong>Cookies estritamente necessários:</strong> Necessários
+              para o funcionamento do site. Incluem, por exemplo, cookies que
+              permitem que você faça login em áreas seguras do site.
+            </li>
+            <li>
+              <strong>Cookies analíticos/de desempenho:</strong> Permitem
+              reconhecer e contar o número de visitantes e ver como os
+              visitantes navegam pelo site. Isso ajuda a melhorar o
+              funcionamento do site.
+            </li>
+            <li>
+              <strong>Cookies de funcionalidade:</strong> Reconhecem você quando
+              retorna ao site. Isso permite personalizar o conteúdo para você e
+              lembrar suas preferências (por exemplo, sua escolha de idioma ou
+              região).
+            </li>
+          </ul>
+
+          <h3>7.2. Gerenciamento de cookies</h3>
+          <p>
+            A maioria dos navegadores permite que você controle cookies através
+            das configurações. Você pode geralmente aceitar, recusar ou remover
+            cookies. Se você desativar ou recusar cookies, algumas partes do
+            site podem se tornar inacessíveis ou não funcionar corretamente.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>8. Política para menores</h2>
+          <p>
+            Este site não é destinado a menores de 18 anos e não coleto
+            intencionalmente dados relativos a crianças. Se descobrir que
+            coletei dados pessoais de menores sem verificação do consentimento
+            dos pais, tomarei medidas para remover esses dados.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>9. Mudanças nesta política de privacidade</h2>
+          <p>
+            Posso atualizar esta política de privacidade periodicamente. A
+            versão mais recente estará sempre disponível nesta página, com a
+            data da última atualização no topo. Recomendo que você revise esta
+            política regularmente para estar ciente de quaisquer alterações.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>10. Contato</h2>
+          <p>
+            Se você tiver dúvidas sobre esta política de privacidade ou como
+            seus dados são processados, entre em contato através do formulário
+            de contato no site ou pelo e-mail: luisps4.lt@gmail.com.
+          </p>
+        </section>
+
+        <section class="back-to-site">
+          <a href="../" class="btn primary"
+            ><i class="fas fa-arrow-left"></i> Voltar para o Portfólio</a
+          >
+        </section>
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="site-footer">
+    <footer role="contentinfo" class="pp-footer">
       <div class="container">
-        <p>&copy; 2024 Luís Teixeira. Todos os direitos reservados.</p>
-        <div class="social-icons">
-          <a
-            href="https://github.com/LuisT-ls"
-            target="_blank"
-            aria-label="GitHub"
-          >
-            <i class="fab fa-github"></i>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/luis-tei"
-            target="_blank"
-            aria-label="LinkedIn"
-          >
-            <i class="fab fa-linkedin"></i>
-          </a>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Luís Teixeira. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="../js/modules/ThemeManager.js"></script>
+    <script>
+      // Script simplificado para toggle de tema na página de política de privacidade
+      document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle')
+        const body = document.body
+        const storageKey = 'preferred-theme'
+
+        // Carregar tema salvo
+        const savedTheme = localStorage.getItem(storageKey)
+        if (
+          savedTheme === 'dark' ||
+          (!savedTheme &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+          body.classList.add('dark-mode')
+        } else {
+          body.classList.remove('dark-mode')
+        }
+
+        // Toggle do tema
+        themeToggle?.addEventListener('click', () => {
+          body.classList.toggle('dark-mode')
+          localStorage.setItem(
+            storageKey,
+            body.classList.contains('dark-mode') ? 'dark' : 'light'
+          )
+        })
+
+        // Toggle menu mobile
+        const menuBtn = document.getElementById('menu-btn')
+        const nav = document.querySelector('.main-nav')
+
+        menuBtn?.addEventListener('click', () => {
+          nav.classList.toggle('active')
+          menuBtn.classList.toggle('active')
+          menuBtn.setAttribute(
+            'aria-expanded',
+            nav.classList.contains('active')
+          )
+
+          const bars = menuBtn.querySelectorAll('.bar')
+          if (bars.length >= 3) {
+            bars[0].style.transform = nav.classList.contains('active')
+              ? 'rotate(45deg) translate(6px, 6px)'
+              : 'none'
+            bars[1].style.opacity = nav.classList.contains('active') ? '0' : '1'
+            bars[2].style.transform = nav.classList.contains('active')
+              ? 'rotate(-45deg) translate(6px, -6px)'
+              : 'none'
+          }
+        })
+      })
+    </script>
   </body>
 </html>
