@@ -987,69 +987,111 @@
       }
     </script>
 
-    <!-- Firebase Config -->
+    <!-- Firebase SDK -->
     <script type="module">
       window.addEventListener('DOMContentLoaded', async event => {
-        // Inicialização do emailjs
+        // Inicialização do emailjs (manter se você já estiver usando)
         if (typeof emailjs !== 'undefined') {
           emailjs.init('1PLc3xymOa3PrKHEX')
         }
 
         try {
-          // Importação e configuração do Firebase
+          // Importação dos módulos Firebase
           const { initializeApp } = await import(
             'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js'
           )
-          const { getDatabase, ref, onValue, runTransaction } = await import(
+          const { getDatabase, ref, get, increment, update } = await import(
             'https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'
+          )
+          const { getAnalytics } = await import(
+            'https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js'
           )
 
           // Configuração do Firebase
           const firebaseConfig = {
-            apiKey: 'AIzaSyCZvrx_AxtPb7QTO02zcI0kqyOv6OBUxkQ',
-            authDomain: 'meu-portf.firebaseapp.com',
-            projectId: 'meu-portf',
-            storageBucket: 'meu-portf.appspot.com',
-            messagingSenderId: '107302529297',
-            appId: '1:107302529297:web:834f7e50c460369b3944b0',
-            measurementId: 'G-VFM4M3FVS6',
-            databaseURL: 'https://meu-portf-default-rtdb.firebaseio.com'
+            apiKey: 'AIzaSyCCnYZhLovinEZrDLHHIfmO-nM7tGrcq4c',
+            authDomain: 'portfolio-contador.firebaseapp.com',
+            databaseURL:
+              'https://portfolio-contador-default-rtdb.firebaseio.com',
+            projectId: 'portfolio-contador',
+            storageBucket: 'portfolio-contador.firebasestorage.app',
+            messagingSenderId: '130162787302',
+            appId: '1:130162787302:web:6c38db876d8fa3f59e4c27',
+            measurementId: 'G-QS405DVJED'
           }
 
-          // Inicializa o Firebase com tratamento de erros
-          try {
-            const app = initializeApp(firebaseConfig)
-            const database = getDatabase(app)
+          // Inicializa o Firebase
+          const app = initializeApp(firebaseConfig)
+          const database = getDatabase(app)
+          const analytics = getAnalytics(app)
 
-            // Contador de visitas com tratamento de erro
-            const visitCountRef = ref(database, 'visitCount')
+          // Verificar se esta visita já foi contada nesta sessão
+          const sessionKey = 'visit_counted'
+          const hasVisitBeenCounted = sessionStorage.getItem(sessionKey)
+
+          if (!hasVisitBeenCounted) {
+            // Incrementa o contador de visitas
+            const visitsCountRef = ref(database, 'visitCount')
             try {
-              await runTransaction(visitCountRef, currentCount => {
-                return (currentCount || 0) + 1
+              // Usa update com increment para operação atômica
+              await update(visitsCountRef, {
+                '.sv': 'increment',
+                '.value': increment(1)
               })
 
-              onValue(visitCountRef, snapshot => {
-                const count = snapshot.val()
-                const element = document.getElementById('total-visitas')
-                if (element) {
-                  element.textContent = `Total de visitas: ${
-                    count?.toLocaleString() ?? 0
-                  }`
-                }
-              })
-            } catch (dbError) {
-              console.warn('Erro ao acessar o banco de dados:', dbError)
-              // Mostra um valor padrão no caso de erro
-              const element = document.getElementById('total-visitas')
-              if (element) {
-                element.textContent = 'Total de visitas: -'
-              }
+              // Marca que a visita foi contada nesta sessão
+              sessionStorage.setItem(sessionKey, 'true')
+
+              console.log('Visita registrada com sucesso!')
+            } catch (updateError) {
+              console.warn('Erro ao incrementar contador:', updateError)
             }
-          } catch (firebaseError) {
-            console.warn('Erro ao inicializar Firebase:', firebaseError)
           }
-        } catch (importError) {
-          console.warn('Erro ao importar módulos do Firebase:', importError)
+
+          // Buscar e exibir contagem atual
+          try {
+            const visitsCountRef = ref(database, 'visitCount')
+            const snapshot = await get(visitsCountRef)
+
+            if (snapshot.exists()) {
+              const count = snapshot.val()
+              const element = document.getElementById('total-visitas')
+
+              if (element) {
+                element.textContent = `Total de visitas: ${count.toLocaleString()}`
+              }
+            } else {
+              console.log('Nenhum dado de visitas encontrado')
+
+              // Inicializar contador
+              await update(visitsCountRef, { '.value': 1 })
+            }
+          } catch (getError) {
+            console.warn('Erro ao buscar contador:', getError)
+
+            // Fallback para contador local em caso de erro
+            const element = document.getElementById('total-visitas')
+            if (element) {
+              element.textContent = 'Total de visitas: --'
+            }
+          }
+        } catch (mainError) {
+          // Fallback se o Firebase falhar completamente
+          console.warn('Erro ao inicializar Firebase:', mainError)
+
+          // Mostrar contador local
+          try {
+            let localCount = localStorage.getItem('localVisitCount') || 0
+            localCount = parseInt(localCount, 10) + 1
+            localStorage.setItem('localVisitCount', localCount)
+
+            const element = document.getElementById('total-visitas')
+            if (element) {
+              element.textContent = `Visitas (local): ${localCount}`
+            }
+          } catch (localError) {
+            console.warn('Erro no contador local:', localError)
+          }
         }
       })
     </script>
