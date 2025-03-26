@@ -23,6 +23,7 @@ export class ContactForm {
       : null
     this.charCounter = null
     this.minMessageLength = 10
+    this.maxMessageLength = 1000
     this.notification = new NotificationManager()
     this.emailJsServiceId = 'service_luist-ls'
     this.emailJsTemplateId = 'template_8vzhxeg'
@@ -44,7 +45,8 @@ export class ContactForm {
       },
       mensagem: {
         valueMissing: 'Por favor, digite sua mensagem',
-        tooShort: `A mensagem deve ter pelo menos ${this.minMessageLength} caracteres`
+        tooShort: `A mensagem deve ter pelo menos ${this.minMessageLength} caracteres`,
+        tooLong: `A mensagem deve ter no máximo ${this.maxMessageLength} caracteres`
       }
     }
   }
@@ -79,8 +81,26 @@ export class ContactForm {
         if (input.name === 'mensagem') {
           this.updateCharCounter(input.value.length)
         }
+
+        // Controlar visibilidade dos textos de ajuda
+        this.toggleHelpText(input)
       })
     })
+  }
+
+  toggleHelpText(input) {
+    const formGroup = input.closest('.form-group')
+    const helpText = formGroup.querySelector('.form-help')
+
+    if (helpText) {
+      if (input.classList.contains('is-valid')) {
+        // Esconder texto de ajuda quando o campo for válido
+        helpText.style.display = 'none'
+      } else {
+        // Mostrar texto de ajuda quando o campo não for válido
+        helpText.style.display = 'block'
+      }
+    }
   }
 
   setupValidation() {
@@ -103,6 +123,7 @@ export class ContactForm {
 
     if (this.messageField) {
       this.messageField.minLength = this.minMessageLength
+      this.messageField.maxLength = this.maxMessageLength
     }
   }
 
@@ -126,9 +147,10 @@ export class ContactForm {
 
   updateCharCounter(length) {
     if (this.charCounter) {
-      const isSufficient = length >= this.minMessageLength
+      const isSufficient =
+        length >= this.minMessageLength && length <= this.maxMessageLength
 
-      this.charCounter.textContent = `${length} / ${this.minMessageLength} caracteres mínimos`
+      this.charCounter.textContent = `${length} / ${this.minMessageLength}-${this.maxMessageLength} caracteres`
       this.charCounter.className = `char-counter ${
         isSufficient ? 'sufficient' : 'insufficient'
       }`
@@ -151,23 +173,33 @@ export class ContactForm {
         errorMessage =
           this.errorMessages[field]?.tooShort ||
           `Mínimo de ${input.minLength} caracteres`
+      } else if (input.validity.tooLong) {
+        errorMessage =
+          this.errorMessages[field]?.tooLong ||
+          `Máximo de ${input.maxLength} caracteres`
       } else if (input.validity.patternMismatch) {
         errorMessage =
           this.errorMessages[field]?.patternMismatch || 'Formato inválido'
       }
     }
 
+    // Encontrar elementos relacionados ao campo
+    const formGroup = input.closest('.form-group')
+    const helpText = formGroup.querySelector('.form-text')
+    const feedback = formGroup.querySelector('.invalid-feedback')
+
     // Atualizar classes e mensagem de erro
     if (errorMessage) {
       input.classList.remove('is-valid')
       input.classList.add('is-invalid')
 
-      // Encontrar e atualizar o elemento de feedback
-      const formGroup = input.closest('.form-group')
-      const feedback = formGroup.querySelector('.invalid-feedback')
+      // Mostrar mensagem de erro e help text
       if (feedback) {
         feedback.textContent = errorMessage
         feedback.style.display = 'block'
+      }
+      if (helpText) {
+        helpText.style.display = 'block'
       }
 
       return false
@@ -175,11 +207,12 @@ export class ContactForm {
       input.classList.remove('is-invalid')
       input.classList.add('is-valid')
 
-      // Esconder mensagem de erro
-      const formGroup = input.closest('.form-group')
-      const feedback = formGroup.querySelector('.invalid-feedback')
+      // Esconder mensagem de erro e help text
       if (feedback) {
         feedback.style.display = 'none'
+      }
+      if (helpText) {
+        helpText.style.display = 'none'
       }
 
       return true
@@ -249,6 +282,13 @@ export class ContactForm {
         // Resetar estado de validação
         this.inputs.forEach(input => {
           input.classList.remove('is-valid', 'is-invalid')
+
+          // Mostrar novamente os textos de ajuda ao resetar
+          const formGroup = input.closest('.form-group')
+          const helpText = formGroup.querySelector('.form-help')
+          if (helpText) {
+            helpText.style.display = 'block'
+          }
         })
 
         // Resetar contador
