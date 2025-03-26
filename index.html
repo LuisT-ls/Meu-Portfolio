@@ -775,12 +775,13 @@
                     id="email"
                     name="email"
                     required
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     aria-describedby="email-help"
                     placeholder="seu.email@exemplo.com"
                   />
                 </div>
                 <small id="email-help" class="form-text">
-                  Digite um email válido
+                  Digite um email válido no formato nome@dominio.com
                 </small>
                 <div class="invalid-feedback">
                   Por favor, digite um email válido
@@ -804,7 +805,7 @@
                   ></textarea>
                 </div>
                 <small id="mensagem-help" class="form-text">
-                  Mínimo de 10 caracteres
+                  Compartilhe os detalhes do seu projeto ou pergunta
                 </small>
                 <div class="invalid-feedback">
                   Por favor, digite uma mensagem válida
@@ -826,6 +827,9 @@
                       >Política de Privacidade</a
                     >
                   </label>
+                  <div class="invalid-feedback">
+                    Você precisa concordar com a política de privacidade
+                  </div>
                 </div>
               </div>
 
@@ -833,7 +837,7 @@
                 <span class="btn-text">
                   <i class="fas fa-paper-plane"></i> Enviar Mensagem
                 </span>
-                <span class="btn-loading" hidden>
+                <span class="btn-loading">
                   <svg class="spinner" viewBox="0 0 50 50">
                     <circle
                       class="path"

@@ -11,17 +11,54 @@ export class ContactForm {
     this.submitBtn = this.form
       ? this.form.querySelector('button[type="submit"]')
       : null
+    this.submitBtnText = this.submitBtn
+      ? this.submitBtn.querySelector('.btn-text')
+      : null
+    this.submitBtnLoading = this.submitBtn
+      ? this.submitBtn.querySelector('.btn-loading')
+      : null
     this.inputs = this.form ? this.form.querySelectorAll('input, textarea') : []
+    this.messageField = this.form
+      ? this.form.querySelector('textarea[name="mensagem"]')
+      : null
+    this.charCounter = null
+    this.minMessageLength = 10
     this.notification = new NotificationManager()
     this.emailJsServiceId = 'service_id' // Substitua pelo seu service ID
     this.emailJsTemplateId = 'template_id' // Substitua pelo seu template ID
     this.emailJsUserId = '1PLc3xymOa3PrKHEX' // Seu user ID
+
+    // Mensagens de erro personalizadas
+    this.errorMessages = {
+      nome: {
+        valueMissing: 'Por favor, digite seu nome completo',
+        tooShort: 'O nome deve ter pelo menos 2 caracteres',
+        patternMismatch: 'O nome deve conter apenas letras e espaços'
+      },
+      email: {
+        valueMissing: 'Por favor, digite seu email',
+        typeMismatch:
+          'Por favor, digite um email válido (exemplo: nome@dominio.com)',
+        patternMismatch:
+          'Por favor, digite um email válido (exemplo: nome@dominio.com)'
+      },
+      mensagem: {
+        valueMissing: 'Por favor, digite sua mensagem',
+        tooShort: `A mensagem deve ter pelo menos ${this.minMessageLength} caracteres`
+      }
+    }
   }
 
   init() {
     if (this.form) {
+      // Esconder o estado de carregamento inicialmente
+      if (this.submitBtnLoading) {
+        this.submitBtnLoading.style.display = 'none'
+      }
+
       this.setupEventListeners()
       this.setupValidation()
+      this.createCharCounter()
       console.log('ContactForm inicializado')
     } else {
       console.warn('Formulário de contato não encontrado')
@@ -35,28 +72,118 @@ export class ContactForm {
     // Validação em tempo real para melhor UX
     this.inputs.forEach(input => {
       input.addEventListener('blur', () => this.validateInput(input))
-      input.addEventListener('input', () => this.validateInput(input))
+      input.addEventListener('input', () => {
+        this.validateInput(input)
+
+        // Atualizar contador se for o campo de mensagem
+        if (input.name === 'mensagem') {
+          this.updateCharCounter(input.value.length)
+        }
+      })
     })
   }
 
   setupValidation() {
     // Configura validação nativa do navegador
     this.form.setAttribute('novalidate', '')
+
+    // Configurar validações específicas
+    const emailInput = this.form.querySelector('input[name="email"]')
+    if (emailInput) {
+      // Padrão de email mais restritivo
+      emailInput.pattern = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+    }
+
+    const nomeInput = this.form.querySelector('input[name="nome"]')
+    if (nomeInput) {
+      // Padrão para aceitar apenas letras e espaços
+      nomeInput.pattern = '[A-Za-zÀ-ÿ\\s]+'
+      nomeInput.minLength = 2
+    }
+
+    if (this.messageField) {
+      this.messageField.minLength = this.minMessageLength
+    }
+  }
+
+  createCharCounter() {
+    if (this.messageField) {
+      // Criar o contador
+      this.charCounter = document.createElement('div')
+      this.charCounter.className = 'char-counter'
+      this.updateCharCounter(this.messageField.value.length)
+
+      // Inserir após o campo de mensagem
+      const parentElement = this.messageField.closest('.form-group')
+      const helpText = parentElement.querySelector('#mensagem-help')
+      if (helpText) {
+        parentElement.insertBefore(this.charCounter, helpText.nextSibling)
+      } else {
+        parentElement.appendChild(this.charCounter)
+      }
+    }
+  }
+
+  updateCharCounter(length) {
+    if (this.charCounter) {
+      const isSufficient = length >= this.minMessageLength
+
+      this.charCounter.textContent = `${length} / ${this.minMessageLength} caracteres mínimos`
+      this.charCounter.className = `char-counter ${
+        isSufficient ? 'sufficient' : 'insufficient'
+      }`
+    }
   }
 
   validateInput(input) {
-    // Validação básica por tipo de campo
-    const isValid = input.checkValidity()
+    const field = input.name
+    let errorMessage = ''
 
-    if (isValid) {
-      input.classList.remove('is-invalid')
-      input.classList.add('is-valid')
-    } else {
-      input.classList.remove('is-valid')
-      input.classList.add('is-invalid')
+    // Verificar cada tipo de erro possível
+    if (!input.validity.valid) {
+      if (input.validity.valueMissing) {
+        errorMessage =
+          this.errorMessages[field]?.valueMissing || 'Este campo é obrigatório'
+      } else if (input.validity.typeMismatch) {
+        errorMessage =
+          this.errorMessages[field]?.typeMismatch || 'Formato inválido'
+      } else if (input.validity.tooShort) {
+        errorMessage =
+          this.errorMessages[field]?.tooShort ||
+          `Mínimo de ${input.minLength} caracteres`
+      } else if (input.validity.patternMismatch) {
+        errorMessage =
+          this.errorMessages[field]?.patternMismatch || 'Formato inválido'
+      }
     }
 
-    return isValid
+    // Atualizar classes e mensagem de erro
+    if (errorMessage) {
+      input.classList.remove('is-valid')
+      input.classList.add('is-invalid')
+
+      // Encontrar e atualizar o elemento de feedback
+      const formGroup = input.closest('.form-group')
+      const feedback = formGroup.querySelector('.invalid-feedback')
+      if (feedback) {
+        feedback.textContent = errorMessage
+        feedback.style.display = 'block'
+      }
+
+      return false
+    } else {
+      input.classList.remove('is-invalid')
+      input.classList.add('is-valid')
+
+      // Esconder mensagem de erro
+      const formGroup = input.closest('.form-group')
+      const feedback = formGroup.querySelector('.invalid-feedback')
+      if (feedback) {
+        feedback.style.display = 'none'
+      }
+
+      return true
+    }
   }
 
   validateForm() {
@@ -84,15 +211,11 @@ export class ContactForm {
       return
     }
 
-    // Preparação para envio
-    const submitBtnText = this.submitBtn.querySelector('.btn-text')
-    const submitBtnLoading = this.submitBtn.querySelector('.btn-loading')
-
     try {
       // Mostrar indicador de carregamento
       this.submitBtn.disabled = true
-      submitBtnText.hidden = true
-      submitBtnLoading.hidden = false
+      if (this.submitBtnText) this.submitBtnText.style.display = 'none'
+      if (this.submitBtnLoading) this.submitBtnLoading.style.display = 'flex'
 
       // Coletar dados do formulário
       const formData = {
@@ -127,6 +250,11 @@ export class ContactForm {
         this.inputs.forEach(input => {
           input.classList.remove('is-valid', 'is-invalid')
         })
+
+        // Resetar contador
+        if (this.messageField) {
+          this.updateCharCounter(0)
+        }
       } else {
         throw new Error('Erro ao enviar mensagem')
       }
@@ -139,8 +267,8 @@ export class ContactForm {
     } finally {
       // Restaurar botão
       this.submitBtn.disabled = false
-      submitBtnText.hidden = false
-      submitBtnLoading.hidden = true
+      if (this.submitBtnText) this.submitBtnText.style.display = 'flex'
+      if (this.submitBtnLoading) this.submitBtnLoading.style.display = 'none'
     }
   }
 }

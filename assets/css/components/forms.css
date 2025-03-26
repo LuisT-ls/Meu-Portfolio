@@ -25,6 +25,7 @@
 
 .form-group {
   margin-bottom: var(--spacing-md);
+  position: relative;
 }
 
 .form-group label {
@@ -87,6 +88,7 @@
   margin-top: var(--spacing-xs);
   font-size: var(--font-size-xs);
   color: var(--danger-color);
+  font-weight: var(--font-weight-medium);
 }
 
 .form-check {
@@ -145,6 +147,30 @@
   stroke: white;
   stroke-linecap: round;
   animation: dash 1.5s ease-in-out infinite;
+}
+
+/* Contador de caracteres */
+.char-counter {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  transition: color var(--transition-fast);
+}
+
+.char-counter.insufficient {
+  color: var(--danger-color);
+}
+
+.char-counter.sufficient {
+  color: var(--success-color);
+}
+
+.is-invalid {
+  border-color: var(--danger-color) !important;
+}
+
+.is-valid {
+  border-color: var(--success-color) !important;
 }
 
 @keyframes dash {
