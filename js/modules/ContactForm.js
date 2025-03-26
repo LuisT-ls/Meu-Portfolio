@@ -24,9 +24,9 @@ export class ContactForm {
     this.charCounter = null
     this.minMessageLength = 10
     this.notification = new NotificationManager()
-    this.emailJsServiceId = 'service_id' // Substitua pelo seu service ID
-    this.emailJsTemplateId = 'template_id' // Substitua pelo seu template ID
-    this.emailJsUserId = '1PLc3xymOa3PrKHEX' // Seu user ID
+    this.emailJsServiceId = 'service_luist-ls'
+    this.emailJsTemplateId = 'template_8vzhxeg'
+    this.emailJsUserId = '1PLc3xymOa3PrKHEX'
 
     // Mensagens de erro personalizadas
     this.errorMessages = {
