@@ -24,7 +24,7 @@ Meu objetivo é criar soluções digitais eficientes, escaláveis e que realment
 
 ## Contato
 
-- [LinkedIn](https://www.linkedin.com/in/luistls/)
+- [LinkedIn](https://www.linkedin.com/in/luis-tei/)
 - [GitHub](https://github.com/LuisT-ls)
 - Email: luistls@outlook.com
 
