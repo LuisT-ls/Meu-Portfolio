@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { FirebaseProvider } from '@/lib/firebase-provider'
+import { ErrorBoundary } from '@/components/error-boundary'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -178,11 +179,13 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.variable} suppressHydrationWarning>
-        <ThemeProvider>
-          <FirebaseProvider>
-            {children}
-          </FirebaseProvider>
-        </ThemeProvider>
+        <ErrorBoundary>
+          <ThemeProvider>
+            <FirebaseProvider>
+              {children}
+            </FirebaseProvider>
+          </ThemeProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )

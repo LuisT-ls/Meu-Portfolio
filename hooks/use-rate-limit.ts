@@ -59,6 +59,7 @@ export function useRateLimit() {
         return () => clearTimeout(timer)
       }
     }
+    return undefined
   }, [rateLimitState.resetTime, rateLimitState.isBlocked])
 
   const recordAttempt = useCallback(() => {

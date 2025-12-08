@@ -49,8 +49,14 @@ export const getFirebaseApp = (): FirebaseApp => {
   }
 
   if (!app) {
-    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+    const existingApps = getApps()
+    app = existingApps.length === 0 ? initializeApp(firebaseConfig) : existingApps[0]
   }
+  
+  if (!app) {
+    throw new Error('Falha ao inicializar Firebase')
+  }
+  
   return app
 }
 

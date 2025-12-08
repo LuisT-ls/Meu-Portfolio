@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
-import { sendEmail } from '@/lib/emailjs'
 import { validateContactForm, type ContactFormData } from '@/lib/validations/contact'
 import { sanitizeInput } from '@/lib/utils/sanitize'
 import { useRateLimit } from '@/hooks/use-rate-limit'
@@ -100,16 +99,32 @@ export function Contato() {
     setFieldErrors({})
 
     try {
-      // Sanitiza os dados antes de enviar
-      const sanitizedData = {
-        nome: sanitizeInput(validation.data.nome),
-        email: sanitizeInput(validation.data.email),
-        mensagem: sanitizeInput(validation.data.mensagem),
+      // Envia para API Route (validação server-side)
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(validation.data),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        // Erros de validação do servidor
+        if (result.errors) {
+          setFieldErrors(result.errors)
+        }
+        setNotification({
+          message: result.message || 'Erro ao enviar mensagem. Por favor, tente novamente.',
+          type: 'error',
+        })
+        return
       }
 
-      await sendEmail(sanitizedData)
+      // Sucesso
       setNotification({
-        message: 'Mensagem enviada com sucesso! Logo entrarei em contato.',
+        message: result.message || 'Mensagem enviada com sucesso! Logo entrarei em contato.',
         type: 'success',
       })
       setFormData({ nome: '', email: '', mensagem: '' })
@@ -117,7 +132,7 @@ export function Contato() {
       console.error('Erro ao enviar mensagem:', error)
       setNotification({
         message:
-          'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.',
+          'Ocorreu um erro ao enviar sua mensagem. Por favor, verifique sua conexão e tente novamente.',
         type: 'error',
       })
     } finally {
