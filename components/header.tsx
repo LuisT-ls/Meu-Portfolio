@@ -116,8 +116,9 @@ export function Header() {
               className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-expanded={isMenuOpen}
               aria-controls="main-nav"
+              aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
             >
-              <span className="sr-only">Menu</span>
+              <span className="sr-only">{isMenuOpen ? 'Fechar menu' : 'Abrir menu'}</span>
               <div className="w-6 h-5 flex flex-col justify-between">
                 <span
                   className={cn(
@@ -144,6 +145,7 @@ export function Header() {
 
         {/* Mobile Navigation */}
         <nav
+          id="main-nav"
           role="navigation"
           aria-label="Menu principal mobile"
           className={cn(

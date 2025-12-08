@@ -148,6 +148,7 @@ export function Contato() {
               <a
                 href="mailto:luisps4.lt@gmail.com"
                 className="btn-contato inline-block px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                aria-label="Enviar email para luisps4.lt@gmail.com"
               >
                 Enviar Email
               </a>
@@ -163,8 +164,9 @@ export function Contato() {
               <a
                 href="https://wa.link/u8h8e6"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="btn-contato inline-block px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                aria-label="Enviar mensagem via WhatsApp"
               >
                 Enviar Mensagem
               </a>
@@ -178,8 +180,9 @@ export function Contato() {
               <a
                 href="https://www.linkedin.com/in/luis-tei"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="btn-contato inline-block px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                aria-label="Conectar no LinkedIn"
               >
                 Conectar
               </a>
@@ -189,6 +192,8 @@ export function Contato() {
           <form
             onSubmit={handleSubmit}
             className="contato-form bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            aria-label="Formulário de contato"
+            noValidate
           >
             <div className="form-header mb-6">
               <h3 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">
@@ -201,6 +206,9 @@ export function Contato() {
 
             {notification.type && (
               <div
+                role="alert"
+                aria-live={notification.type === 'error' ? 'assertive' : 'polite'}
+                aria-atomic="true"
                 className={`mb-4 p-4 rounded-lg ${
                   notification.type === 'success'
                     ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'

@@ -106,6 +106,47 @@ export default function RootLayout({
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        {/* Structured Data (Schema.org) para melhor SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Luís Teixeira',
+              jobTitle: 'Desenvolvedor Web',
+              description: 'Desenvolvedor Web e estudante de Ciência, Tecnologia e Inovação na UFBA. Especializado em criar soluções inovadoras em web, Linux e redes.',
+              url: 'https://luistls.vercel.app',
+              image: 'https://luistls.vercel.app/assets/img/Logo/header-logo.svg',
+              sameAs: [
+                'https://github.com/LuisT-ls',
+                'https://www.linkedin.com/in/luis-tei',
+              ],
+              alumniOf: {
+                '@type': 'EducationalOrganization',
+                name: 'Universidade Federal da Bahia (UFBA)',
+                department: 'Ciência, Tecnologia e Inovação',
+              },
+              knowsAbout: [
+                'Desenvolvimento Web',
+                'Frontend',
+                'Backend',
+                'Linux',
+                'Redes de Computadores',
+                'JavaScript',
+                'TypeScript',
+                'React',
+                'Next.js',
+                'Node.js',
+              ],
+              email: 'luisps4.lt@gmail.com',
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'BR',
+              },
+            }),
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
