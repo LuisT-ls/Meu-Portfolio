@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://luistls.vercel.app/sitemap.xml 
