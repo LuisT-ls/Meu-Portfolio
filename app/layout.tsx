@@ -4,6 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { FirebaseProvider } from '@/lib/firebase-provider'
 import { ErrorBoundary } from '@/components/error-boundary'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -183,6 +184,21 @@ export default function RootLayout({
           <ThemeProvider>
             <FirebaseProvider>
               {children}
+              <Toaster
+                position="top-right"
+                richColors
+                closeButton
+                duration={4000}
+                toastOptions={{
+                  classNames: {
+                    toast: 'dark:bg-gray-800 dark:text-white',
+                    title: 'dark:text-white',
+                    description: 'dark:text-gray-300',
+                    actionButton: 'dark:bg-primary dark:hover:bg-primary/90',
+                    cancelButton: 'dark:bg-gray-700 dark:hover:bg-gray-600',
+                  },
+                }}
+              />
             </FirebaseProvider>
           </ThemeProvider>
         </ErrorBoundary>

@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useCallback } from 'react'
 import { validateContactForm, type ContactFormData } from '@/lib/validations/contact'
 import { sanitizeInput } from '@/lib/utils/sanitize'
 import { useRateLimit } from '@/hooks/use-rate-limit'
+import { toast } from 'sonner'
 import Link from 'next/link'
 
 export function Contato() {
@@ -14,10 +15,6 @@ export function Contato() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
-  const [notification, setNotification] = useState<{
-    message: string
-    type: 'success' | 'error' | null
-  }>({ message: '', type: null })
 
   const {
     isBlocked,
@@ -25,6 +22,32 @@ export function Contato() {
     recordAttempt,
     getTimeUntilReset,
   } = useRateLimit()
+
+  // Validação em tempo real
+  const validateField = useCallback((name: string, value: string) => {
+    const tempFormData = { ...formData, [name]: value }
+    const validation = validateContactForm(tempFormData)
+
+    if (!validation.success) {
+      const fieldError = validation.errors.issues.find(
+        (error) => error.path[0] === name
+      )
+      if (fieldError) {
+        setFieldErrors((prev) => ({ ...prev, [name]: fieldError.message }))
+        return false
+      }
+    }
+
+    // Limpa erro se campo está válido
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
+    return true
+  }, [formData, fieldErrors])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -34,14 +57,17 @@ export function Contato() {
     const sanitizedValue = sanitizeInput(value)
     setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
     
-    // Limpa erro do campo quando o usuário começa a digitar
-    if (fieldErrors[name]) {
-      setFieldErrors((prev) => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
+    // Validação em tempo real (apenas se já houve tentativa de submit ou blur)
+    if (Object.keys(fieldErrors).length > 0) {
+      validateField(name, sanitizedValue)
     }
+  }
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target
+    validateField(name, value)
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -50,11 +76,10 @@ export function Contato() {
     // Verifica rate limiting
     if (isBlocked) {
       const secondsRemaining = getTimeUntilReset()
-      setNotification({
-        message: `Muitas tentativas. Aguarde ${secondsRemaining} segundo(s) antes de tentar novamente.`,
-        type: 'error',
-      })
-      setTimeout(() => setNotification({ message: '', type: null }), 5000)
+      toast.error(
+        `Muitas tentativas. Aguarde ${secondsRemaining} segundo(s) antes de tentar novamente.`,
+        { duration: 5000 }
+      )
       return
     }
 
@@ -72,13 +97,12 @@ export function Contato() {
       })
       setFieldErrors(errors)
 
-      // Mostra primeira mensagem de erro
+      // Mostra toast com primeiro erro
       const firstError = validation.errors.issues[0]
-      setNotification({
-        message: firstError?.message || 'Por favor, corrija os erros no formulário.',
-        type: 'error',
-      })
-      setTimeout(() => setNotification({ message: '', type: null }), 5000)
+      toast.error(
+        firstError?.message || 'Por favor, corrija os erros no formulário.',
+        { duration: 5000 }
+      )
       return
     }
 
@@ -86,16 +110,14 @@ export function Contato() {
     const canProceed = recordAttempt()
     if (!canProceed) {
       const secondsRemaining = getTimeUntilReset()
-      setNotification({
-        message: `Limite de tentativas excedido. Aguarde ${secondsRemaining} segundo(s).`,
-        type: 'error',
-      })
-      setTimeout(() => setNotification({ message: '', type: null }), 5000)
+      toast.error(
+        `Limite de tentativas excedido. Aguarde ${secondsRemaining} segundo(s).`,
+        { duration: 5000 }
+      )
       return
     }
 
     setIsSubmitting(true)
-    setNotification({ message: '', type: null })
     setFieldErrors({})
 
     try {
@@ -115,29 +137,27 @@ export function Contato() {
         if (result.errors) {
           setFieldErrors(result.errors)
         }
-        setNotification({
-          message: result.message || 'Erro ao enviar mensagem. Por favor, tente novamente.',
-          type: 'error',
-        })
+        toast.error(
+          result.message || 'Erro ao enviar mensagem. Por favor, tente novamente.',
+          { duration: 5000 }
+        )
         return
       }
 
       // Sucesso
-      setNotification({
-        message: result.message || 'Mensagem enviada com sucesso! Logo entrarei em contato.',
-        type: 'success',
-      })
+      toast.success(
+        result.message || 'Mensagem enviada com sucesso! Logo entrarei em contato.',
+        { duration: 5000 }
+      )
       setFormData({ nome: '', email: '', mensagem: '' })
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error)
-      setNotification({
-        message:
-          'Ocorreu um erro ao enviar sua mensagem. Por favor, verifique sua conexão e tente novamente.',
-        type: 'error',
-      })
+      toast.error(
+        'Ocorreu um erro ao enviar sua mensagem. Por favor, verifique sua conexão e tente novamente.',
+        { duration: 5000 }
+      )
     } finally {
       setIsSubmitting(false)
-      setTimeout(() => setNotification({ message: '', type: null }), 5000)
     }
   }
 
@@ -219,20 +239,6 @@ export function Contato() {
               </p>
             </div>
 
-            {notification.type && (
-              <div
-                role="alert"
-                aria-live={notification.type === 'error' ? 'assertive' : 'polite'}
-                aria-atomic="true"
-                className={`mb-4 p-4 rounded-lg ${
-                  notification.type === 'success'
-                    ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-                    : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
-                }`}
-              >
-                {notification.message}
-              </div>
-            )}
 
             <div className="form-group mb-4">
               <label
@@ -252,6 +258,7 @@ export function Contato() {
                   maxLength={100}
                   value={formData.nome}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className={`w-full pl-10 pr-4 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 ${
                     fieldErrors.nome
                       ? 'border-red-500 focus:ring-red-500'
@@ -286,6 +293,7 @@ export function Contato() {
                   maxLength={255}
                   value={formData.email}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className={`w-full pl-10 pr-4 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 ${
                     fieldErrors.email
                       ? 'border-red-500 focus:ring-red-500'
@@ -320,6 +328,7 @@ export function Contato() {
                   maxLength={2000}
                   value={formData.mensagem}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   rows={5}
                   className={`w-full pl-10 pr-4 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 resize-none ${
                     fieldErrors.mensagem

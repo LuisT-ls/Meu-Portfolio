@@ -108,6 +108,24 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Desabilita animações específicas */
+  .animate-pulse,
+  .animate-spin,
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-slide-down,
+  .animate-shimmer {
+    animation: none !important;
+  }
+
+  /* Remove transformações animadas */
+  [class*="translate"],
+  [class*="scale"],
+  [class*="rotate"] {
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Estilos para scrollbar */
