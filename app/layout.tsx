@@ -88,6 +88,14 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         
+        {/* Preload da imagem LCP para melhor performance */}
+        <link
+          rel="preload"
+          href="/assets/img/web_development_maintenance_construction_teamwork_icon_192840.webp"
+          as="image"
+          fetchPriority="high"
+        />
+        
         {/* Favicons */}
         <link rel="icon" href="/assets/img/Logo/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/assets/img/Logo/icon.svg" type="image/svg+xml" />
