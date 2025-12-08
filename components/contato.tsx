@@ -1,7 +1,10 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
-import { sendEmail, type ContactFormData } from '@/lib/emailjs'
+import { sendEmail } from '@/lib/emailjs'
+import { validateContactForm, type ContactFormData } from '@/lib/validations/contact'
+import { sanitizeInput } from '@/lib/utils/sanitize'
+import { useRateLimit } from '@/hooks/use-rate-limit'
 import Link from 'next/link'
 
 export function Contato() {
@@ -11,60 +14,100 @@ export function Contato() {
     mensagem: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [notification, setNotification] = useState<{
     message: string
     type: 'success' | 'error' | null
   }>({ message: '', type: null })
 
+  const {
+    isBlocked,
+    remainingAttempts,
+    recordAttempt,
+    getTimeUntilReset,
+  } = useRateLimit()
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const validateForm = (): boolean => {
-    if (!formData.nome.trim() || formData.nome.length < 2) {
-      setNotification({
-        message: 'Por favor, digite um nome válido (mínimo 2 caracteres)',
-        type: 'error',
+    // Sanitiza o input antes de atualizar o estado
+    const sanitizedValue = sanitizeInput(value)
+    setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
+    
+    // Limpa erro do campo quando o usuário começa a digitar
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
       })
-      return false
     }
-
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
-      setNotification({
-        message: 'Por favor, digite um email válido',
-        type: 'error',
-      })
-      return false
-    }
-
-    if (!formData.mensagem.trim() || formData.mensagem.length < 10) {
-      setNotification({
-        message: 'Por favor, digite uma mensagem válida (mínimo 10 caracteres)',
-        type: 'error',
-      })
-      return false
-    }
-
-    return true
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!validateForm()) {
+    // Verifica rate limiting
+    if (isBlocked) {
+      const secondsRemaining = getTimeUntilReset()
+      setNotification({
+        message: `Muitas tentativas. Aguarde ${secondsRemaining} segundo(s) antes de tentar novamente.`,
+        type: 'error',
+      })
+      setTimeout(() => setNotification({ message: '', type: null }), 5000)
+      return
+    }
+
+    // Validação com Zod
+    const validation = validateContactForm(formData)
+
+    if (!validation.success) {
+      // Processa erros do Zod
+      const errors: Record<string, string> = {}
+      validation.errors.issues.forEach((error) => {
+        if (error.path.length > 0) {
+          const field = error.path[0] as string
+          errors[field] = error.message
+        }
+      })
+      setFieldErrors(errors)
+
+      // Mostra primeira mensagem de erro
+      const firstError = validation.errors.issues[0]
+      setNotification({
+        message: firstError?.message || 'Por favor, corrija os erros no formulário.',
+        type: 'error',
+      })
+      setTimeout(() => setNotification({ message: '', type: null }), 5000)
+      return
+    }
+
+    // Registra tentativa (rate limiting)
+    const canProceed = recordAttempt()
+    if (!canProceed) {
+      const secondsRemaining = getTimeUntilReset()
+      setNotification({
+        message: `Limite de tentativas excedido. Aguarde ${secondsRemaining} segundo(s).`,
+        type: 'error',
+      })
       setTimeout(() => setNotification({ message: '', type: null }), 5000)
       return
     }
 
     setIsSubmitting(true)
     setNotification({ message: '', type: null })
+    setFieldErrors({})
 
     try {
-      await sendEmail(formData)
+      // Sanitiza os dados antes de enviar
+      const sanitizedData = {
+        nome: sanitizeInput(validation.data.nome),
+        email: sanitizeInput(validation.data.email),
+        mensagem: sanitizeInput(validation.data.mensagem),
+      }
+
+      await sendEmail(sanitizedData)
       setNotification({
         message: 'Mensagem enviada com sucesso! Logo entrarei em contato.',
         type: 'success',
@@ -183,12 +226,24 @@ export function Contato() {
                   name="nome"
                   required
                   minLength={2}
+                  maxLength={100}
                   value={formData.nome}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 ${
+                    fieldErrors.nome
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:ring-primary'
+                  }`}
                   placeholder="Seu nome completo"
+                  aria-invalid={!!fieldErrors.nome}
+                  aria-describedby={fieldErrors.nome ? 'nome-error' : undefined}
                 />
               </div>
+              {fieldErrors.nome && (
+                <p id="nome-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                  {fieldErrors.nome}
+                </p>
+              )}
             </div>
 
             <div className="form-group mb-4">
@@ -205,12 +260,24 @@ export function Contato() {
                   id="email"
                   name="email"
                   required
+                  maxLength={255}
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 ${
+                    fieldErrors.email
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:ring-primary'
+                  }`}
                   placeholder="seu.email@exemplo.com"
+                  aria-invalid={!!fieldErrors.email}
+                  aria-describedby={fieldErrors.email ? 'email-error' : undefined}
                 />
               </div>
+              {fieldErrors.email && (
+                <p id="email-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                  {fieldErrors.email}
+                </p>
+              )}
             </div>
 
             <div className="form-group mb-4">
@@ -227,16 +294,35 @@ export function Contato() {
                   name="mensagem"
                   required
                   minLength={10}
+                  maxLength={2000}
                   value={formData.mensagem}
                   onChange={handleChange}
                   rows={5}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 resize-none ${
+                    fieldErrors.mensagem
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:ring-primary'
+                  }`}
                   placeholder="Digite sua mensagem aqui..."
+                  aria-invalid={!!fieldErrors.mensagem}
+                  aria-describedby={fieldErrors.mensagem ? 'mensagem-error' : undefined}
                 />
               </div>
-              <small className="text-gray-500 dark:text-gray-400 text-sm mt-1 block">
-                {formData.mensagem.length} / 10-1000 caracteres
-              </small>
+              <div className="flex justify-between items-center mt-1">
+                <small className="text-gray-500 dark:text-gray-400 text-sm">
+                  {formData.mensagem.length} / 10-2000 caracteres
+                </small>
+                {remainingAttempts < 3 && (
+                  <small className="text-yellow-600 dark:text-yellow-400 text-sm">
+                    Tentativas restantes: {remainingAttempts}
+                  </small>
+                )}
+              </div>
+              {fieldErrors.mensagem && (
+                <p id="mensagem-error" className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
+                  {fieldErrors.mensagem}
+                </p>
+              )}
             </div>
 
             <div className="form-group mb-6">
@@ -264,8 +350,9 @@ export function Contato() {
 
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isBlocked}
               className="btn-submit w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              aria-label="Enviar mensagem de contato"
             >
               {isSubmitting ? (
                 <>
