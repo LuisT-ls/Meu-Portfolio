@@ -1,33 +1,95 @@
-# Sobre Luís Teixeira
+# Meu Portfólio - Next.js
 
-Olá! Eu sou Luís Teixeira 👋
+Portfólio pessoal desenvolvido com Next.js 14, TypeScript, Tailwind CSS, Firebase e EmailJS.
 
-Sou um entusiasta de tecnologia, apaixonado por desenvolvimento web, redes e sistemas Linux. Atualmente, sou estudante do Bacharelado Interdisciplinar em Ciência, Tecnologia e Inovação na UFBA, onde busco constantemente expandir meus conhecimentos e aplicar soluções inovadoras em projetos práticos.
+## 🚀 Tecnologias
 
-## Trajetória
+- **Next.js 14** - Framework React com App Router
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Estilização utilitária
+- **Firebase** - Analytics e Realtime Database (contador de visitas)
+- **EmailJS** - Envio de emails via formulário de contato
 
-- Experiência prática em suporte técnico e infraestrutura de TI
-- Foco atual em desenvolvimento web moderno (JavaScript, Node.js, React)
-- Conhecimentos sólidos em redes, sistemas operacionais e segurança da informação
+## 📦 Instalação
 
-## Habilidades
+1. Instale as dependências:
 
-- Desenvolvimento Web (Frontend e Backend)
-- Administração de sistemas Linux
-- Gerenciamento de redes e serviços
-- Automação e DevOps
-- Aprendizado contínuo e adaptação a novas tecnologias
+```bash
+npm install
+```
 
-## Objetivos
+2. Certifique-se de que os assets estão na pasta `public/`:
+   - `public/assets/img/` - Imagens e ícones
+   - `public/Data/` - PDFs (certificados, currículo)
 
-Meu objetivo é criar soluções digitais eficientes, escaláveis e que realmente façam a diferença. Busco oportunidades para colaborar em projetos inovadores, aprender com profissionais da área e contribuir para a comunidade de tecnologia.
+3. Execute o servidor de desenvolvimento:
 
-## Contato
+```bash
+npm run dev
+```
 
-- [LinkedIn](https://www.linkedin.com/in/luis-tei/)
-- [GitHub](https://github.com/LuisT-ls)
-- Email: luistls@outlook.com
+Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
----
+## 🏗️ Estrutura do Projeto
 
-Sinta-se à vontade para entrar em contato para trocar ideias, colaborar em projetos ou simplesmente conversar sobre tecnologia!
+```
+├── app/                  # App Router do Next.js
+│   ├── layout.tsx       # Layout principal
+│   ├── page.tsx         # Página inicial
+│   └── globals.css      # Estilos globais
+├── components/          # Componentes React
+│   ├── header.tsx
+│   ├── hero.tsx
+│   ├── sobre.tsx
+│   ├── experiencia.tsx
+│   ├── certificacoes.tsx
+│   ├── habilidades.tsx
+│   ├── contato.tsx
+│   ├── footer.tsx
+│   ├── back-to-top.tsx
+│   └── theme-provider.tsx
+├── lib/                 # Utilitários e configurações
+│   ├── firebase.ts      # Configuração Firebase
+│   ├── firebase-provider.tsx
+│   ├── emailjs.ts       # Configuração EmailJS
+│   └── utils.ts         # Funções utilitárias
+├── hooks/               # Hooks customizados
+│   └── use-in-view.ts
+└── public/              # Arquivos estáticos
+    ├── assets/
+    └── Data/
+```
+
+## 🔧 Configuração
+
+### Firebase
+
+As configurações do Firebase estão em `lib/firebase.ts`. Certifique-se de que as credenciais estão corretas.
+
+### EmailJS
+
+As configurações do EmailJS estão em `lib/emailjs.ts`:
+- Service ID: `service_luist-ls`
+- Template ID: `template_8vzhxeg`
+- User ID: `1PLc3xymOa3PrKHEX`
+
+## 📝 Scripts
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Cria build de produção
+- `npm run start` - Inicia o servidor de produção
+- `npm run lint` - Executa o linter
+
+## 🎨 Features
+
+- ✅ Design responsivo e moderno
+- ✅ Tema claro/escuro
+- ✅ Animações suaves
+- ✅ Formulário de contato funcional
+- ✅ Contador de visitas em tempo real
+- ✅ SEO otimizado
+- ✅ Performance otimizada
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.

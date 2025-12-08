@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <!-- Fundo com gradiente -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1e40af" />
+    </linearGradient>
+  </defs>
+
+  <!-- Círculo de fundo -->
+  <rect width="180" height="180" rx="40" fill="url(#bgGradient)" />
+
+  <!-- Iniciais -->
+  <text x="90" y="107" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-weight="bold" font-size="90">LT</text>
+</svg>
