@@ -35,9 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# arquivos antigos (opcional - manter para referência ou remover)
-# index.html
-# js/
-# assets/css/
-# sw.js
+# arquivos antigos (mantidos como backup)
+index.html.backup
+js/
+assets/css/
+sw.js
 

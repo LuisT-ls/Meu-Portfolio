@@ -14,8 +14,8 @@ const nextConfig = {
       },
     ],
   },
-  // Turbopack é o bundler padrão no Next.js 16
-  turbopack: {},
+  // Turbopack é usado apenas em desenvolvimento
+  // Em produção, o Vercel usa webpack automaticamente
 }
 
 export default nextConfig

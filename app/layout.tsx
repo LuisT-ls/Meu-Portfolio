@@ -107,14 +107,15 @@ export default function RootLayout({
                     }
                   }
                 } catch (e) {
-                  console.error('Erro ao aplicar tema:', e);
+                  // Silenciar erro em caso de falha
                 }
               })();
             `,
           }}
+          suppressHydrationWarning
         />
       </head>
-      <body className={inter.variable}>
+      <body className={inter.variable} suppressHydrationWarning>
         <ThemeProvider>
           <FirebaseProvider>
             {children}
