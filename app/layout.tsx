@@ -73,11 +73,32 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
+        {/* Preconnect para recursos externos - melhora performance */}
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://*.firebaseio.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://api.emailjs.com" crossOrigin="anonymous" />
+        
+        {/* DNS Prefetch para domínios adicionais */}
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        
+        {/* Favicons */}
         <link rel="icon" href="/assets/img/Logo/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/assets/img/Logo/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/assets/img/Logo/apple-touch-icon.svg" />
         <link rel="mask-icon" href="/assets/img/Logo/safari-pinned-tab.svg" color="#2563eb" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        
+        {/* Font Awesome - com preload para melhor performance */}
+        <link
+          rel="preload"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          as="style"
+        />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"

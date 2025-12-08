@@ -20,7 +20,10 @@ export function Footer() {
               alt="Logo do portfólio Luís Teixeira"
               width={60}
               height={60}
+              sizes="60px"
               className="mb-4"
+              loading="lazy"
+              quality={90}
             />
             <p className="text-gray-400">
               Desenvolvedor Web e estudante de Ciência, Tecnologia e Inovação na

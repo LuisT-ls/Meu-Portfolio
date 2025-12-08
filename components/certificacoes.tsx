@@ -54,7 +54,10 @@ function CertificacaoCard({
             alt={cert.alt}
             width={80}
             height={80}
+            sizes="80px"
             className="w-20 h-20 object-contain"
+            loading="lazy"
+            quality={85}
           />
         </div>
       </div>

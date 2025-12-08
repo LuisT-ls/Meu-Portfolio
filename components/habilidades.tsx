@@ -120,7 +120,10 @@ function SkillItem({ skill, delay = 0 }: { skill: Skill; delay?: number }) {
             alt={`${skill.name} icon`}
             width={32}
             height={32}
+            sizes="32px"
             className="w-8 h-8"
+            loading="lazy"
+            quality={85}
           />
         </div>
         <span className="font-medium text-gray-900 dark:text-white transition-colors">
