@@ -87,15 +87,16 @@ export function Header() {
           {/* Actions */}
           <div className="flex items-center gap-3 md:gap-4">
             {/* Currículo Button */}
-            <Link
+            <a
               href="/Data/Currículo-Luís Teixeira.pdf"
-              download
+              download="Currículo-Luís-Teixeira.pdf"
               className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium shadow-md"
               onClick={handleLinkClick}
+              aria-label="Baixar currículo em PDF"
             >
               <i className="fas fa-download"></i>
               <span>Currículo</span>
-            </Link>
+            </a>
 
             {/* Theme Toggle */}
             <button
@@ -166,15 +167,16 @@ export function Header() {
               </li>
             ))}
             <li>
-              <Link
+              <a
                 href="/Data/Currículo-Luís Teixeira.pdf"
-                download
+                download="Currículo-Luís-Teixeira.pdf"
                 className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
                 onClick={handleLinkClick}
+                aria-label="Baixar currículo em PDF"
               >
                 <i className="fas fa-download"></i>
                 <span>Currículo</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </nav>

@@ -23,6 +23,25 @@ const nextConfig = {
   // Headers de segurança
   async headers() {
     return [
+      // Headers específicos para arquivos PDF
+      {
+        source: '/Data/:path*.pdf',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/pdf',
+          },
+          {
+            key: 'Content-Disposition',
+            value: 'inline',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Headers gerais
       {
         source: '/:path*',
         headers: [
