@@ -371,7 +371,7 @@ export function Contato() {
                 >
                   Concordo com a{' '}
                   <Link
-                    href="/privacy-policy/privacy-policy.html"
+                    href="/privacy-policy"
                     className="text-primary hover:underline"
                   >
                     Política de Privacidade
