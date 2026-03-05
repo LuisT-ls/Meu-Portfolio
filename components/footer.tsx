@@ -32,43 +32,23 @@ export function Footer() {
           </div>
           <div className="footer-section links">
             <h2 className="text-xl font-semibold mb-4">Explore</h2>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="#sobre"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Sobre
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#habilidades"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Habilidades
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#contato"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Contato
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Voltar ao topo
-                </a>
-              </li>
+            <ul className="space-y-3">
+              {[
+                { href: '#sobre', label: 'Sobre mim' },
+                { href: '#projetos', label: 'Projetos' },
+                { href: '#habilidades', label: 'Habilidades' },
+                { href: '#contato', label: 'Contato' },
+              ].map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></span>
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="footer-section contact">
@@ -76,20 +56,20 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="mailto:luisps4.lt@gmail.com"
+                  href="mailto:luist_ls@outlook.pt"
                   className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
                 >
                   <i className="fas fa-envelope"></i>
-                  luisps4.lt@gmail.com
+                  luist_ls@outlook.pt
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+5571993322305"
+                  href="tel:+557192193686"
                   className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
                 >
                   <i className="fas fa-phone"></i>
-                  +55 (71) 99332-2305
+                  +55 71 99219-3686
                 </a>
               </li>
               <li>
@@ -150,6 +130,7 @@ export function Footer() {
         <div
           id="total-visitas"
           className="visitas-counter text-center text-gray-400 mb-4"
+          suppressHydrationWarning
         >
           {isLoading
             ? 'Carregando...'
@@ -157,7 +138,7 @@ export function Footer() {
         </div>
         <div className="footer-bottom text-center pt-8 border-t border-gray-800">
           <p className="text-gray-400">
-            &copy; <time dateTime="2025">2025</time> Luís Teixeira. Todos os
+            &copy; <time dateTime="2026">2026</time> Luís Teixeira. Todos os
             direitos reservados.
           </p>
         </div>

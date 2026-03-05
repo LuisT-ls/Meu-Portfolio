@@ -142,7 +142,7 @@ export default function RootLayout({
                 'Next.js',
                 'Node.js',
               ],
-              email: 'luisps4.lt@gmail.com',
+              Email: 'luist_ls@outlook.pt',
               address: {
                 '@type': 'PostalAddress',
                 addressCountry: 'BR',

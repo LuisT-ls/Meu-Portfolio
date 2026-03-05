@@ -36,6 +36,7 @@ export function Header() {
 
   const navLinks = [
     { href: '#sobre', label: 'Sobre' },
+    { href: '#projetos', label: 'Projetos' },
     { href: '#experiencia', label: 'Experiência' },
     { href: '#certificacoes', label: 'Certificações' },
     { href: '#habilidades', label: 'Habilidades' },
@@ -94,6 +95,17 @@ export function Header() {
             >
               <i className="fas fa-download"></i>
               <span>Currículo</span>
+            </a>
+
+            {/* GitHub Link */}
+            <a
+              href="https://github.com/LuisT-ls"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Perfil no GitHub"
+            >
+              <i className="fab fa-github text-lg"></i>
             </a>
 
             {/* Theme Toggle */}

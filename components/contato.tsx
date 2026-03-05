@@ -191,20 +191,23 @@ export function Contato() {
           >
             {[
               {
+                prefix: 'fas',
                 icon: 'fa-envelope',
-                title: 'Email',
-                value: 'luisps4.lt@gmail.com',
-                href: 'mailto:luisps4.lt@gmail.com',
-                label: 'Enviar Email'
+                title: 'E-mail',
+                value: 'luist_ls@outlook.pt',
+                href: 'mailto:luist_ls@outlook.pt',
+                label: 'Enviar E-mail'
               },
               {
+                prefix: 'fab',
                 icon: 'fa-whatsapp',
                 title: 'WhatsApp',
-                value: '+55 (71) 99332-2305',
+                value: '+55 71 99219-3686',
                 href: 'https://wa.link/u8h8e6',
                 label: 'Enviar Mensagem'
               },
               {
+                prefix: 'fab',
                 icon: 'fa-linkedin',
                 title: 'LinkedIn',
                 value: 'luis-tei',
@@ -218,7 +221,7 @@ export function Contato() {
                 className="glass-panel p-6 rounded-2xl border border-white/10 hover:border-primary/30 transition-all group flex items-center gap-6"
               >
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary text-2xl group-hover:scale-110 transition-transform">
-                  <i className={`fas ${info.icon}`}></i>
+                  <i className={`${info.prefix} ${info.icon}`}></i>
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold text-lg">{info.title}</h3>

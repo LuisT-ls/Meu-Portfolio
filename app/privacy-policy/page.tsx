@@ -255,10 +255,10 @@ export default function PrivacyPolicy() {
               Se você deseja exercer qualquer um desses direitos, entre em contato
               através do formulário de contato no site ou pelo e-mail{' '}
               <a
-                href="mailto:luisps4.lt@gmail.com"
+                href="mailto:luist_ls@outlook.pt"
                 className="text-primary dark:text-blue-400 hover:underline"
               >
-                luisps4.lt@gmail.com
+                luist_ls@outlook.pt
               </a>
               .
             </p>
@@ -337,10 +337,10 @@ export default function PrivacyPolicy() {
               seus dados são processados, entre em contato através do formulário
               de contato no site ou pelo e-mail:{' '}
               <a
-                href="mailto:luisps4.lt@gmail.com"
+                href="mailto:luist_ls@outlook.pt"
                 className="text-primary dark:text-blue-400 hover:underline"
               >
-                luisps4.lt@gmail.com
+                luist_ls@outlook.pt
               </a>
               .
             </p>
@@ -364,7 +364,7 @@ export default function PrivacyPolicy() {
         className="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 py-6 border-t border-gray-200 dark:border-gray-700 text-center"
       >
         <div className="container mx-auto px-4">
-          <p>&copy; 2025 Luís Teixeira. Todos os direitos reservados.</p>
+          <p>&copy; 2026 Luís Teixeira. Todos os direitos reservados.</p>
         </div>
       </footer>
     </>

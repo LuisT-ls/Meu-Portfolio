@@ -2,9 +2,25 @@ import dynamic from 'next/dynamic'
 import { Header } from '@/components/header'
 import { Hero } from '@/components/hero'
 import { Sobre } from '@/components/sobre'
+import { ScrollProgress } from '@/components/scroll-progress'
 import { Skeleton, SkeletonCard, SkeletonForm, SkeletonText } from '@/components/skeleton'
 
 // Code splitting: componentes abaixo da dobra são carregados sob demanda
+const Projetos = dynamic(() => import('@/components/projetos').then((mod) => ({ default: mod.Projetos })), {
+  loading: () => (
+    <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
+        <Skeleton variant="text" height={32} width="33%" className="mb-8" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map((i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  ),
+})
+
 const Experiencia = dynamic(() => import('@/components/experiencia').then((mod) => ({ default: mod.Experiencia })), {
   loading: () => (
     <section className="section-experiencia section-padding py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
@@ -76,10 +92,12 @@ const BackToTop = dynamic(() => import('@/components/back-to-top').then((mod) =>
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
       <Header />
       <main id="main-content" role="main">
         <Hero />
         <Sobre />
+        <Projetos />
         <Experiencia />
         <Certificacoes />
         <Habilidades />

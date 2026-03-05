@@ -20,13 +20,13 @@
       "name": "Contato",
       "short_name": "Contato",
       "description": "Entre em contato comigo",
-      "url": "index.html#contato"
+      "url": "/#contato"
     },
     {
       "name": "Projetos",
       "short_name": "Projetos",
       "description": "Veja meus projetos",
-      "url": "index.html#projetos"
+      "url": "/#projetos"
     }
   ]
 }
