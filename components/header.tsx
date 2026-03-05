@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from './theme-provider'
 import { cn } from '@/lib/utils'
 
@@ -46,8 +47,7 @@ export function Header() {
       role="banner"
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        'bg-white dark:bg-gray-900',
-        isScrolled && 'backdrop-blur-md shadow-sm bg-white/95 dark:bg-gray-900/95'
+        isScrolled ? 'glass-panel py-3' : 'bg-transparent py-5'
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,12 +55,10 @@ export function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            className="text-2xl font-display font-bold text-primary tracking-tighter"
             aria-label="Início"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md">
-              LT
-            </div>
+            LT.
           </Link>
 
           {/* Desktop Navigation */}
@@ -144,42 +142,45 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        <nav
-          id="main-nav"
-          role="navigation"
-          aria-label="Menu principal mobile"
-          className={cn(
-            'md:hidden overflow-hidden transition-all duration-300 ease-in-out',
-            isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.nav
+              id="main-nav"
+              role="navigation"
+              aria-label="Menu principal mobile"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden overflow-hidden glass-panel mt-4 rounded-xl border border-white/10"
+            >
+              <ul className="flex flex-col gap-2 py-4 px-4">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium py-3 px-2 rounded-lg hover:bg-white/10"
+                      onClick={handleLinkClick}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <a
+                    href="/Data/Currículo-Luís Teixeira.pdf"
+                    download="Currículo-Luís-Teixeira.pdf"
+                    className="flex items-center justify-center gap-2 px-4 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium mt-2"
+                    onClick={handleLinkClick}
+                    aria-label="Baixar currículo em PDF"
+                  >
+                    <i className="fas fa-download"></i>
+                    <span>Currículo</span>
+                  </a>
+                </li>
+              </ul>
+            </motion.nav>
           )}
-        >
-          <ul className="flex flex-col gap-4 py-4">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium py-2"
-                  onClick={handleLinkClick}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <a
-                href="/Data/Currículo-Luís Teixeira.pdf"
-                download="Currículo-Luís-Teixeira.pdf"
-                className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
-                onClick={handleLinkClick}
-                aria-label="Baixar currículo em PDF"
-              >
-                <i className="fas fa-download"></i>
-                <span>Currículo</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        </AnimatePresence>
       </div>
     </header>
   )

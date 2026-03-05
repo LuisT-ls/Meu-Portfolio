@@ -1,15 +1,21 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Outfit } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { FirebaseProvider } from '@/lib/firebase-provider'
 import { ErrorBoundary } from '@/components/error-boundary'
 import { Toaster } from 'sonner'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+})
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-outfit',
 })
 
 export const metadata: Metadata = {
@@ -82,33 +88,20 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://*.firebaseio.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://api.emailjs.com" crossOrigin="anonymous" />
-        
+
         {/* DNS Prefetch para domínios adicionais */}
         <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        
-        {/* Preload da imagem LCP para melhor performance */}
-        <link
-          rel="preload"
-          href="/assets/img/web_development_maintenance_construction_teamwork_icon_192840.webp"
-          as="image"
-          fetchPriority="high"
-        />
-        
+
         {/* Favicons */}
         <link rel="icon" href="/assets/img/Logo/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/assets/img/Logo/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/assets/img/Logo/apple-touch-icon.svg" />
         <link rel="mask-icon" href="/assets/img/Logo/safari-pinned-tab.svg" color="#2563eb" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        
-        {/* Font Awesome - com preload para melhor performance */}
-        <link
-          rel="preload"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-          as="style"
-        />
+
+        {/* Font Awesome */}
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -187,7 +180,7 @@ export default function RootLayout({
           suppressHydrationWarning
         />
       </head>
-      <body className={inter.variable} suppressHydrationWarning>
+      <body className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
         <ErrorBoundary>
           <ThemeProvider>
             <FirebaseProvider>

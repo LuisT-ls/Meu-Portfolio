@@ -1,3 +1,8 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import { revealItem, staggerContainer } from '@/lib/animations'
+
 export function Experiencia() {
   const experiencias = [
     {
@@ -56,45 +61,72 @@ export function Experiencia() {
   return (
     <section
       id="experiencia"
-      className="section-padding py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900"
+      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-transparent"
     >
       <div className="container mx-auto">
-        <h2 className="section-title text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-4xl sm:text-5xl font-bold text-center mb-16"
+        >
           Experiência Profissional
-        </h2>
-        <div className="timeline relative">
+        </motion.h2>
+
+        <motion.div
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          className="relative max-w-4xl mx-auto"
+        >
+          {/* Vertical line for desktop */}
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2" />
+
           {experiencias.map((exp, index) => (
-            <div key={index} className="timeline-item relative mb-8 pl-8 border-l-2 border-primary">
-              <div className="timeline-marker absolute -left-2 top-0 w-4 h-4 bg-primary rounded-full"></div>
-              <div className="timeline-content bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <div className="exp-header mb-4">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    {exp.titulo}
-                  </h3>
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
-                    <span className="empresa font-medium">{exp.empresa}</span>
-                    <span className="periodo">{exp.periodo}</span>
+            <motion.div
+              key={index}
+              variants={revealItem}
+              className={`relative mb-12 flex flex-col md:flex-row items-center justify-between w-full ${index % 2 === 0 ? 'md:flex-row-reverse' : ''
+                }`}
+            >
+              {/* Dot on timeline */}
+              <div className="hidden md:flex absolute left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background -translate-x-1/2 z-10" />
+
+              <div className="w-full md:w-[45%]">
+                <div className="glass-panel p-8 rounded-2xl hover:border-primary/50 transition-colors group">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary rounded-full">
+                      {exp.periodo}
+                    </span>
                   </div>
-                </div>
-                <ul className="exp-responsibilities list-disc list-inside space-y-2 mb-4 text-gray-700 dark:text-gray-300">
-                  {exp.responsabilidades.map((resp, i) => (
-                    <li key={i}>{resp}</li>
-                  ))}
-                </ul>
-                <div className="exp-achievements bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2 text-gray-900 dark:text-white">
-                    Principais Conquistas:
-                  </h4>
-                  <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
-                    {exp.conquistas.map((conq, i) => (
-                      <li key={i}>{conq}</li>
+                  <h3 className="text-2xl font-bold mb-2">{exp.titulo}</h3>
+                  <p className="text-lg text-primary font-semibold mb-6">{exp.empresa}</p>
+
+                  <ul className="space-y-3 mb-8">
+                    {exp.responsabilidades.map((resp, i) => (
+                      <li key={i} className="flex gap-3 text-muted-foreground text-sm">
+                        <i className="fas fa-check text-primary mt-1 shrink-0"></i>
+                        <span>{resp}</span>
+                      </li>
                     ))}
                   </ul>
+
+                  <div className="pt-6 border-t border-border">
+                    <h4 className="text-sm font-bold uppercase tracking-widest text-foreground/50 mb-4">Destaques</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {exp.conquistas.map((conq, i) => (
+                        <span key={i} className="text-xs px-2 py-1 bg-secondary/50 rounded-md border border-border">
+                          {conq}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
