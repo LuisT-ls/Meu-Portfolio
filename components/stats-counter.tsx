@@ -71,23 +71,21 @@ function StatItem({ icon, count, label, highlight, delay = 0 }: StatItemProps) {
 
 export function StatsCounter() {
   const stats = [
-    { icon: 'fas fa-clock', count: 2, label: 'Anos de Experiência' },
-    { icon: 'fas fa-project-diagram', count: 10, label: 'Projetos Completados' },
-    { icon: 'fas fa-certificate', count: 5, label: 'Certificações Técnicas' },
-    { icon: 'fas fa-code', count: 6, label: 'Tecnologias Dominadas' },
-    { icon: 'fas fa-users', count: 20, label: 'Clientes Atendidos', highlight: true },
-    { icon: 'fas fa-headset', count: 1500, label: 'Horas de Suporte', highlight: true },
+    { icon: 'fas fa-clock', count: 4, label: 'Anos de Experiência' },
+    { icon: 'fab fa-github', count: 35, label: 'Repositórios no GitHub' },
+    { icon: 'fas fa-certificate', count: 4, label: 'Certificações Técnicas' },
+    { icon: 'fas fa-code', count: 20, label: 'Tecnologias Utilizadas' },
   ]
 
   return (
-    <div className="stats-grid grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div className="stats-grid grid grid-cols-2 gap-4">
       {stats.map((stat, index) => (
         <StatItem
           key={index}
           icon={stat.icon}
           count={stat.count}
           label={stat.label}
-          highlight={stat.highlight}
+
           delay={index * 200}
         />
       ))}

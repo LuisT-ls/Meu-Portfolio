@@ -6,195 +6,268 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from './theme-provider'
 import { cn } from '@/lib/utils'
 
+const navLinks = [
+  { href: '#sobre', label: 'Sobre', icon: 'fa-user' },
+  { href: '#projetos', label: 'Projetos', icon: 'fa-folder-open' },
+  { href: '#experiencia', label: 'Experiência', icon: 'fa-briefcase' },
+  { href: '#certificacoes', label: 'Certificações', icon: 'fa-certificate' },
+  { href: '#habilidades', label: 'Habilidades', icon: 'fa-code' },
+  { href: '#contato', label: 'Contato', icon: 'fa-paper-plane' },
+]
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
   const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100)
-    }
-
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => setIsScrolled(window.scrollY > 60)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+  useEffect(() => {
+    const sectionIds = navLinks.map((l) => l.href.slice(1))
+    const observers: IntersectionObserver[] = []
 
-  const closeMenu = () => {
-    setIsMenuOpen(false)
-  }
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) setActiveSection(id)
+        },
+        { rootMargin: '-40% 0px -55% 0px' }
+      )
+      observer.observe(el)
+      observers.push(observer)
+    })
+
+    return () => observers.forEach((o) => o.disconnect())
+  }, [])
+
+  const closeMenu = () => setIsMenuOpen(false)
 
   const handleLinkClick = () => {
-    if (window.innerWidth <= 768) {
-      closeMenu()
-    }
+    if (window.innerWidth <= 768) closeMenu()
   }
-
-  const navLinks = [
-    { href: '#sobre', label: 'Sobre' },
-    { href: '#projetos', label: 'Projetos' },
-    { href: '#experiencia', label: 'Experiência' },
-    { href: '#certificacoes', label: 'Certificações' },
-    { href: '#habilidades', label: 'Habilidades' },
-    { href: '#contato', label: 'Contato' },
-  ]
 
   return (
     <header
       role="banner"
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'glass-panel py-3' : 'bg-transparent py-5'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        isScrolled ? 'py-2' : 'py-4'
       )}
     >
+      {/* Backdrop blur bar */}
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: isScrolled ? 1 : 0,
+          backdropFilter: isScrolled ? 'blur(16px)' : 'blur(0px)',
+        }}
+        transition={{ duration: 0.3 }}
+        className="absolute inset-0 bg-white/80 dark:bg-gray-950/80 border-b border-white/10 dark:border-white/5 shadow-sm -z-10"
+      />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-14">
+
           {/* Logo */}
           <Link
             href="/"
-            className="text-2xl font-display font-bold text-primary tracking-tighter"
             aria-label="Início"
+            className="relative text-2xl font-display font-bold tracking-tighter text-primary group"
           >
             LT.
+            <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300 rounded-full" />
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop nav — pill */}
           <nav
             role="navigation"
             aria-label="Menu principal"
-            className="hidden md:flex items-center gap-6 lg:gap-8"
+            className="hidden md:flex items-center"
           >
-            <ul className="flex items-center gap-6 lg:gap-8">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium text-sm lg:text-base"
-                    onClick={handleLinkClick}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+            <ul
+              className={cn(
+                'flex items-center gap-1 px-2 py-1.5 rounded-full transition-all duration-300',
+                isScrolled
+                  ? 'bg-gray-100/80 dark:bg-gray-800/80'
+                  : 'bg-transparent'
+              )}
+            >
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.slice(1)
+                const isHovered = hoveredLink === link.href
+
+                return (
+                  <li key={link.href} className="relative">
+                    <Link
+                      href={link.href}
+                      onClick={handleLinkClick}
+                      onMouseEnter={() => setHoveredLink(link.href)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      className={cn(
+                        'relative z-10 flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200',
+                        isActive
+                          ? 'text-primary'
+                          : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                      )}
+                    >
+                      {/* Hover/Active background indicator */}
+                      {(isHovered || isActive) && (
+                        <motion.span
+                          layoutId="nav-pill"
+                          className={cn(
+                            'absolute inset-0 rounded-full',
+                            isActive
+                              ? 'bg-primary/10 dark:bg-primary/15'
+                              : 'bg-gray-200/70 dark:bg-gray-700/70'
+                          )}
+                          transition={{ type: 'spring', stiffness: 380, damping: 35 }}
+                        />
+                      )}
+                      <span className="relative">{link.label}</span>
+                      {/* Active dot */}
+                      {isActive && (
+                        <motion.span
+                          layoutId="active-dot"
+                          className="relative ml-1.5 w-1 h-1 rounded-full bg-primary"
+                          transition={{ type: 'spring', stiffness: 380, damping: 35 }}
+                        />
+                      )}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-3 md:gap-4">
-            {/* Currículo Button */}
+          <div className="flex items-center gap-1.5">
+            {/* Currículo */}
             <a
               href="/Data/Currículo-Luís Teixeira.pdf"
               download="Currículo-Luís-Teixeira.pdf"
-              className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium shadow-md"
-              onClick={handleLinkClick}
               aria-label="Baixar currículo em PDF"
+              className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all duration-200"
             >
-              <i className="fas fa-download"></i>
-              <span>Currículo</span>
+              <i className="fas fa-download text-xs"></i>
+              Currículo
             </a>
 
-            {/* GitHub Link */}
+            {/* GitHub */}
             <a
               href="https://github.com/LuisT-ls"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Perfil no GitHub"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all duration-200"
             >
               <i className="fab fa-github text-lg"></i>
             </a>
 
-            {/* Theme Toggle */}
+            {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Alternar tema"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all duration-200"
             >
-              <i className={cn(
-                'text-lg',
-                theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'
-              )}></i>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.i
+                  key={theme}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className={cn('text-base', theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon')}
+                />
+              </AnimatePresence>
             </button>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile hamburger */}
             <button
-              id="menu-btn"
-              onClick={toggleMenu}
-              className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              onClick={() => setIsMenuOpen((v) => !v)}
               aria-expanded={isMenuOpen}
-              aria-controls="main-nav"
+              aria-controls="mobile-nav"
               aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+              className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
-              <span className="sr-only">{isMenuOpen ? 'Fechar menu' : 'Abrir menu'}</span>
-              <div className="w-6 h-5 flex flex-col justify-between">
-                <span
-                  className={cn(
-                    'block h-0.5 w-full bg-current transition-all duration-300',
-                    isMenuOpen && 'rotate-45 translate-y-2'
-                  )}
-                ></span>
-                <span
-                  className={cn(
-                    'block h-0.5 w-full bg-current transition-all duration-300',
-                    isMenuOpen && 'opacity-0'
-                  )}
-                ></span>
-                <span
-                  className={cn(
-                    'block h-0.5 w-full bg-current transition-all duration-300',
-                    isMenuOpen && '-rotate-45 -translate-y-2'
-                  )}
-                ></span>
-              </div>
+              <span className={cn('block h-0.5 w-5 bg-current transition-all duration-300 origin-center', isMenuOpen && 'rotate-45 translate-y-2')} />
+              <span className={cn('block h-0.5 w-5 bg-current transition-all duration-300', isMenuOpen && 'opacity-0 scale-x-0')} />
+              <span className={cn('block h-0.5 w-5 bg-current transition-all duration-300 origin-center', isMenuOpen && '-rotate-45 -translate-y-2')} />
             </button>
           </div>
         </div>
+      </div>
 
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.nav
-              id="main-nav"
-              role="navigation"
-              aria-label="Menu principal mobile"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden glass-panel mt-4 rounded-xl border border-white/10"
-            >
-              <ul className="flex flex-col gap-2 py-4 px-4">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            id="mobile-nav"
+            role="navigation"
+            aria-label="Menu mobile"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden absolute top-full left-0 right-0 mx-4 mt-2 rounded-2xl border border-white/10 dark:border-white/5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl overflow-hidden"
+          >
+            <ul className="flex flex-col p-3 gap-1">
+              {navLinks.map((link, i) => {
+                const isActive = activeSection === link.href.slice(1)
+                return (
+                  <motion.li
+                    key={link.href}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
                     <Link
                       href={link.href}
-                      className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium py-3 px-2 rounded-lg hover:bg-white/10"
                       onClick={handleLinkClick}
+                      className={cn(
+                        'flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200',
+                        isActive
+                          ? 'bg-primary/10 text-primary'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                      )}
                     >
+                      <span className={cn(
+                        'w-7 h-7 flex items-center justify-center rounded-lg text-xs',
+                        isActive ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
+                      )}>
+                        <i className={`fas ${link.icon}`}></i>
+                      </span>
                       {link.label}
+                      {isActive && (
+                        <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />
+                      )}
                     </Link>
-                  </li>
-                ))}
-                <li>
-                  <a
-                    href="/Data/Currículo-Luís Teixeira.pdf"
-                    download="Currículo-Luís-Teixeira.pdf"
-                    className="flex items-center justify-center gap-2 px-4 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium mt-2"
-                    onClick={handleLinkClick}
-                    aria-label="Baixar currículo em PDF"
-                  >
-                    <i className="fas fa-download"></i>
-                    <span>Currículo</span>
-                  </a>
-                </li>
-              </ul>
-            </motion.nav>
-          )}
-        </AnimatePresence>
-      </div>
+                  </motion.li>
+                )
+              })}
+            </ul>
+            <div className="p-3 pt-0">
+              <a
+                href="/Data/Currículo-Luís Teixeira.pdf"
+                download="Currículo-Luís-Teixeira.pdf"
+                onClick={handleLinkClick}
+                aria-label="Baixar currículo em PDF"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary text-white rounded-xl font-semibold text-sm hover:bg-primary/90 transition-colors"
+              >
+                <i className="fas fa-download text-xs"></i>
+                Baixar Currículo
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
-

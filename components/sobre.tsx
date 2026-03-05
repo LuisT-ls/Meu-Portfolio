@@ -32,10 +32,10 @@ export function Sobre() {
               <p>
                 Sou um estudante dedicado do curso de graduação Interdisciplinar
                 em Ciência, Tecnologia e Inovação na Universidade Federal da
-                Bahia, apaixonado por tecnologia e inovação. Com mais de 2 anos
-                de experiência prática de suporte técnico em sistemas, busco
-                constantemente aprender e aplicar novos conhecimentos em projetos
-                desafiadores.
+                Bahia, apaixonado por tecnologia e inovação. Com mais de 4 anos
+                de experiência em suporte técnico e desenvolvimento de sistemas,
+                busco constantemente aprender e aplicar novos conhecimentos em
+                projetos desafiadores.
               </p>
               <p>
                 Minha jornada na tecnologia começou com suporte técnico e no
