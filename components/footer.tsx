@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="site-footer bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8"
+      className="site-footer bg-surface-raised text-content py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="container mx-auto">
         <div className="footer-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -25,7 +25,7 @@ export function Footer() {
               loading="lazy"
               quality={90}
             />
-            <p className="text-gray-400">
+            <p className="text-content-secondary">
               Desenvolvedor Web e estudante de Ciência, Tecnologia e Inovação na
               UFBA. Sempre em busca de aprendizado e inovação em tecnologia.
             </p>
@@ -42,9 +42,9 @@ export function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                    className="group flex items-center gap-2 text-content-secondary hover:text-content transition-colors"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand/50 group-hover:bg-brand transition-colors"></span>
                     {label}
                   </Link>
                 </li>
@@ -57,7 +57,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:luist_ls@outlook.pt"
-                  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
+                  className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
                 >
                   <i className="fas fa-envelope"></i>
                   luist_ls@outlook.pt
@@ -66,7 +66,7 @@ export function Footer() {
               <li>
                 <a
                   href="tel:+557192193686"
-                  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
+                  className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
                 >
                   <i className="fas fa-phone"></i>
                   +55 71 99219-3686
@@ -77,7 +77,7 @@ export function Footer() {
                   href="https://wa.link/u8h8e6"
                   target="_blank"
                   rel="noopener"
-                  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
+                  className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
                 >
                   <i className="fab fa-whatsapp"></i>
                   WhatsApp
@@ -94,7 +94,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener"
                   aria-label="Visitar meu perfil no GitHub"
-                  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
+                  className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
                 >
                   <i className="fab fa-github"></i>
                   Github
@@ -106,7 +106,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener"
                   aria-label="Visitar meu perfil no LinkedIn"
-                  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
+                  className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
                 >
                   <i className="fab fa-linkedin"></i>
                   LinkedIn
@@ -118,7 +118,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener"
                   aria-label="Visitar meu perfil no Instagram"
-                  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
+                  className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
                 >
                   <i className="fab fa-instagram"></i>
                   Instagram
@@ -129,15 +129,15 @@ export function Footer() {
         </div>
         <div
           id="total-visitas"
-          className="visitas-counter text-center text-gray-400 mb-4"
+          className="visitas-counter text-center text-content-secondary mb-4"
           suppressHydrationWarning
         >
           {isLoading
             ? 'Carregando...'
             : `Total de visitas: ${visitCount?.toLocaleString() || '--'}`}
         </div>
-        <div className="footer-bottom text-center pt-8 border-t border-gray-800">
-          <p className="text-gray-400">
+        <div className="footer-bottom text-center pt-8 border-t border-line">
+          <p className="text-content-secondary">
             &copy; <time dateTime="2026">2026</time> Luís Teixeira. Todos os
             direitos reservados.
           </p>

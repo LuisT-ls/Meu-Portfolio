@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { revealItem, staggerContainer } from '@/lib/animations'
 import { StatsCounter } from './stats-counter'
+import { SectionHeading } from '@/components/ui/section-heading'
 
 export function Sobre() {
   return (
@@ -11,14 +12,7 @@ export function Sobre() {
       className="relative py-24 px-4 sm:px-6 lg:px-8 bg-transparent"
     >
       <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">Sobre Mim</h2>
-        </motion.div>
+        <SectionHeading title="Sobre Mim" />
 
         <motion.div
           variants={staggerContainer}
@@ -28,7 +22,7 @@ export function Sobre() {
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
         >
           <motion.div variants={revealItem} className="space-y-8">
-            <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
+            <div className="space-y-6 text-lg leading-relaxed text-content-secondary">
               <p>
                 Sou um estudante dedicado do curso de graduação Interdisciplinar
                 em Ciência, Tecnologia e Inovação na Universidade Federal da
@@ -53,7 +47,7 @@ export function Sobre() {
 
             <div className="glass-panel p-8 rounded-2xl border border-white/10 shadow-xl">
               <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
-                <i className="fas fa-rocket text-primary"></i>
+                <i className="fas fa-rocket text-brand" aria-hidden="true"></i>
                 Destaques
               </h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -68,9 +62,9 @@ export function Sobre() {
                   <motion.li
                     key={i}
                     whileHover={{ x: 5 }}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors"
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-surface transition-colors"
                   >
-                    <i className={`fas ${item.icon} text-primary`}></i>
+                    <i className={`fas ${item.icon} text-brand`} aria-hidden="true"></i>
                     <span className="text-sm font-medium">{item.text}</span>
                   </motion.li>
                 ))}
@@ -80,7 +74,7 @@ export function Sobre() {
 
           <motion.div variants={revealItem} className="lg:sticky lg:top-32">
             <div className="glass-panel p-8 rounded-3xl border border-white/10 shadow-2xl overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-primary/20 transition-colors" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-brand/20 transition-colors" />
               <StatsCounter />
             </div>
           </motion.div>

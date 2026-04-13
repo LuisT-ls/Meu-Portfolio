@@ -28,10 +28,10 @@ function CertificacaoCard({
     <article
       ref={ref}
       className={cn(
-        'certificacao bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md',
+        'certificacao bg-surface p-6 rounded-lg shadow-md',
         'transition-all duration-500 ease-out',
         'hover:shadow-xl hover:scale-105 hover:-translate-y-2',
-        'border border-transparent hover:border-primary/20',
+        'border border-transparent hover:border-brand/20',
         isInView
           ? 'opacity-100 translate-y-0'
           : 'opacity-0 translate-y-8'
@@ -64,17 +64,17 @@ function CertificacaoCard({
       <div className="cert-info">
         <h3
           className={cn(
-            'text-xl font-semibold mb-2 text-gray-900 dark:text-white',
+            'text-xl font-semibold mb-2 text-content',
             'transition-colors duration-300',
-            isHovered && 'text-primary'
+            isHovered && 'text-brand'
           )}
         >
           {cert.titulo}
         </h3>
-        <time className="text-sm text-gray-600 dark:text-gray-400 block mb-2">
+        <time className="text-sm text-content-secondary block mb-2">
           {cert.data}
         </time>
-        <p className="text-gray-700 dark:text-gray-300 mb-4">
+        <p className="text-content-secondary mb-4">
           {cert.descricao}
         </p>
         <div className="cert-skills flex flex-wrap gap-2 mb-4">
@@ -82,9 +82,9 @@ function CertificacaoCard({
             <span
               key={i}
               className={cn(
-                'px-3 py-1 bg-primary/10 text-primary rounded-full text-sm',
+                'px-3 py-1 bg-brand/10 text-brand rounded-full text-sm',
                 'transition-all duration-300',
-                isHovered && 'bg-primary/20 scale-105'
+                isHovered && 'bg-brand/20 scale-105'
               )}
               style={{
                 transitionDelay: isHovered ? `${i * 50}ms` : '0ms',
@@ -99,9 +99,9 @@ function CertificacaoCard({
           target={cert.external ? '_blank' : undefined}
           rel={cert.external ? 'noopener noreferrer' : undefined}
           className={cn(
-            'cert-link inline-flex items-center gap-2 text-primary',
+            'cert-link inline-flex items-center gap-2 text-brand',
             'transition-all duration-300',
-            'hover:text-primary/80 hover:gap-3',
+            'hover:text-brand/80 hover:gap-3',
             isHovered && 'font-semibold'
           )}
         >
@@ -154,12 +154,12 @@ export function Certificacoes() {
     <section
       id="certificacoes"
       ref={sectionRef}
-      className="section-certificacoes section-padding py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900"
+      className="section-certificacoes section-padding py-20 px-4 sm:px-6 lg:px-8 bg-surface"
     >
       <div className="container mx-auto">
         <h2
           className={cn(
-            'section-title text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white',
+            'section-title text-3xl sm:text-4xl font-bold text-center mb-12 text-content',
             'transition-all duration-700 ease-out',
             sectionInView
               ? 'opacity-100 translate-y-0'

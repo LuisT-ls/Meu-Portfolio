@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { revealItem, staggerContainer } from '@/lib/animations'
+import { SectionHeading } from '@/components/ui/section-heading'
 
 interface Project {
   title: string
@@ -71,40 +72,40 @@ function ProjectCard({ project }: { project: Project }) {
     <motion.div
       variants={revealItem}
       layout
-      className="glass-panel p-6 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 flex flex-col group"
+      className="glass-panel p-6 rounded-2xl border border-line hover:border-brand/30 transition-all duration-300 flex flex-col group"
     >
       <div className="flex items-start justify-between mb-4">
-        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-          <i className="fas fa-folder-open text-sm"></i>
+        <div className="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-content-on-brand transition-all duration-300">
+          <i className="fas fa-folder-open text-sm" aria-hidden="true"></i>
         </div>
         <div className="flex items-center gap-2">
           <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="p-2 text-content-muted hover:text-content transition-colors focus-visible:ring-2 focus-visible:ring-brand/40 rounded"
             aria-label={`Ver código de ${project.title} no GitHub`}
           >
-            <i className="fab fa-github text-lg"></i>
+            <i className="fab fa-github text-lg" aria-hidden="true"></i>
           </a>
           {project.demo && (
             <a
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-muted-foreground hover:text-primary transition-colors"
+              className="p-2 text-content-muted hover:text-brand transition-colors focus-visible:ring-2 focus-visible:ring-brand/40 rounded"
               aria-label={`Ver demo de ${project.title}`}
             >
-              <i className="fas fa-external-link-alt text-sm"></i>
+              <i className="fas fa-external-link-alt text-sm" aria-hidden="true"></i>
             </a>
           )}
         </div>
       </div>
 
-      <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors">
+      <h3 className="text-lg font-bold mb-2 group-hover:text-brand transition-colors">
         {project.title}
       </h3>
-      <p className="text-muted-foreground text-sm leading-relaxed flex-1 mb-4">
+      <p className="text-content-secondary text-sm leading-relaxed flex-1 mb-4">
         {project.description}
       </p>
 
@@ -112,7 +113,7 @@ function ProjectCard({ project }: { project: Project }) {
         {project.tags.map((tag) => (
           <span
             key={tag}
-            className="px-2.5 py-1 text-xs font-medium rounded-full bg-secondary/50 text-muted-foreground"
+            className="px-2.5 py-1 text-xs font-medium rounded-full bg-surface text-content-muted"
           >
             {tag}
           </span>
@@ -135,17 +136,10 @@ export function Projetos() {
       className="py-24 px-4 sm:px-6 lg:px-8 bg-transparent overflow-hidden"
     >
       <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">Projetos em Destaque</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Alguns dos projetos que desenvolvi — explorando diferentes tecnologias e solucionando problemas reais.
-          </p>
-        </motion.div>
+        <SectionHeading
+          title="Projetos em Destaque"
+          subtitle="Alguns dos projetos que desenvolvi — explorando diferentes tecnologias e solucionando problemas reais."
+        />
 
         {/* Filters */}
         <motion.div
@@ -158,10 +152,10 @@ export function Projetos() {
             <button
               key={f.value}
               onClick={() => setActiveFilter(f.value)}
-              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas ${
                 activeFilter === f.value
-                  ? 'bg-primary text-white shadow-lg shadow-primary/25'
-                  : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground'
+                  ? 'bg-brand text-content-on-brand shadow-lg shadow-brand/25'
+                  : 'bg-surface text-content-secondary hover:bg-surface-raised hover:text-content'
               }`}
             >
               {f.label}
@@ -193,7 +187,7 @@ export function Projetos() {
             href="https://github.com/LuisT-ls"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-full text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all duration-200 font-medium"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-line rounded-full text-content-secondary hover:text-content hover:border-brand/50 transition-all duration-200 font-medium focus-visible:ring-2 focus-visible:ring-brand/40"
           >
             <i className="fab fa-github"></i>
             Ver todos no GitHub

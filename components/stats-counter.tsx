@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useInView } from '@/hooks/use-in-view'
+import { cn } from '@/lib/utils'
 
 interface StatItemProps {
   icon: string
@@ -51,18 +52,19 @@ function StatItem({ icon, count, label, highlight, delay = 0 }: StatItemProps) {
   return (
     <div
       ref={ref}
-      className={`stat-item p-6 rounded-lg bg-white dark:bg-gray-800 shadow-md text-center ${
-        highlight ? 'ring-2 ring-primary' : ''
-      }`}
+      className={cn(
+        'stat-item p-6 rounded-lg bg-surface shadow-md text-center',
+        highlight ? 'ring-2 ring-brand' : ''
+      )}
       role="figure"
     >
-      <div className="stat-icon text-3xl text-primary mb-4">
+      <div className="stat-icon text-3xl text-brand mb-4">
         <i className={icon}></i>
       </div>
-      <span className="stat-number text-3xl font-bold text-gray-900 dark:text-white block mb-2">
+      <span className="stat-number text-3xl font-bold text-content block mb-2">
         {formatNumber(displayCount)}{plus}
       </span>
-      <span className="stat-label text-gray-600 dark:text-gray-400">
+      <span className="stat-label text-content-secondary">
         {label}
       </span>
     </div>

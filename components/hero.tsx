@@ -49,9 +49,9 @@ function TypewriterText() {
   }, [displayed, isDeleting, index])
 
   return (
-    <span className="text-gradient">
+    <span aria-live="polite" aria-atomic="true" className="text-gradient">
       {displayed}
-      <span className="animate-pulse">|</span>
+      <span className="animate-pulse" aria-hidden="true">|</span>
     </span>
   )
 }
@@ -63,7 +63,7 @@ export function Hero() {
       <motion.div
         animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/4 -left-20 w-72 h-72 bg-primary rounded-full blur-[120px] -z-10"
+        className="absolute top-1/4 -left-20 w-72 h-72 bg-brand rounded-full blur-[120px] -z-10"
       />
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.1, 0.2, 0.1] }}
@@ -86,7 +86,7 @@ export function Hero() {
           <div className="text-center lg:text-left">
             <motion.span
               variants={revealItem}
-              className="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wider text-primary uppercase bg-primary/10 rounded-full"
+              className="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wider text-brand uppercase bg-brand/10 rounded-full"
             >
               Disponível para novos desafios
             </motion.span>
@@ -108,7 +108,7 @@ export function Hero() {
 
             <motion.p
               variants={revealItem}
-              className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+              className="text-lg sm:text-xl text-content-secondary mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
               Construindo experiências digitais modernas e escaláveis com foco em performance e design.
             </motion.p>
@@ -119,14 +119,14 @@ export function Hero() {
             >
               <Link
                 href="#projetos"
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-white rounded-full font-bold hover:shadow-xl hover:shadow-primary/25 transition-all"
+                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand text-content-on-brand rounded-full font-bold hover:bg-brand-hover hover:shadow-brand transition-all focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
               >
                 Ver Projetos
                 <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
               </Link>
               <Link
                 href="#contato"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-secondary text-foreground rounded-full font-bold hover:bg-secondary/80 transition-all border border-border"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-surface text-content rounded-full font-bold hover:bg-surface-raised transition-all border border-line focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
               >
                 Entre em Contato
               </Link>
@@ -143,7 +143,7 @@ export function Hero() {
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative bg-background p-4 rounded-2xl shadow-2xl glass-panel"
+                className="relative bg-canvas p-4 rounded-2xl shadow-2xl glass-panel"
               >
                 <Image
                   src="/assets/img/web_development_maintenance_construction_teamwork_icon_192840.webp"
@@ -166,13 +166,13 @@ export function Hero() {
         transition={{ delay: 2, duration: 0.6 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-xs text-muted-foreground uppercase tracking-widest font-medium">Scroll</span>
+        <span className="text-xs text-content-muted uppercase tracking-widest font-medium">Scroll</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-5 h-8 border-2 border-muted-foreground/40 rounded-full flex items-start justify-center p-1"
+          className="w-5 h-8 border-2 border-line rounded-full flex items-start justify-center p-1"
         >
-          <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+          <div className="w-1.5 h-1.5 bg-brand rounded-full" />
         </motion.div>
       </motion.div>
     </section>

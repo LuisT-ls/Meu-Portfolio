@@ -15,7 +15,7 @@ export function Skeleton({
   height,
   animate = true,
 }: SkeletonProps) {
-  const baseStyles = 'bg-gray-200 dark:bg-gray-700'
+  const baseStyles = 'bg-line'
   
   const variantStyles = {
     text: 'rounded',
@@ -44,7 +44,7 @@ export function Skeleton({
 // Componentes pré-configurados para casos comuns
 export function SkeletonCard() {
   return (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md space-y-4">
+    <div className="p-6 bg-surface rounded-lg shadow-md space-y-4">
       <Skeleton variant="circular" width={80} height={80} className="mx-auto" />
       <Skeleton variant="text" height={24} width="60%" className="mx-auto" />
       <Skeleton variant="text" height={16} width="80%" className="mx-auto" />

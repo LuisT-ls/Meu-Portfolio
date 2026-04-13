@@ -40,45 +40,45 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
-          <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-center">
+        <div className="min-h-screen flex items-center justify-center bg-canvas px-4">
+          <div className="max-w-md w-full bg-surface rounded-lg shadow-lg p-8 text-center">
             <div className="mb-6">
-              <div className="mx-auto w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-4">
-                <i className="fas fa-exclamation-triangle text-red-600 dark:text-red-400 text-2xl"></i>
+              <div className="mx-auto w-16 h-16 bg-err/10 rounded-full flex items-center justify-center mb-4">
+                <i className="fas fa-exclamation-triangle text-err text-2xl" aria-hidden="true"></i>
               </div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <h1 className="text-2xl font-bold text-content mb-2">
                 Ops! Algo deu errado
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <p className="text-content-secondary mb-6">
                 Ocorreu um erro inesperado. Por favor, tente recarregar a página.
               </p>
             </div>
-            
+
             <div className="space-y-3">
               <button
                 onClick={() => window.location.reload()}
-                className="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
+                className="w-full px-4 py-2 bg-brand text-content-on-brand rounded-lg hover:bg-brand-hover transition-colors font-medium focus-visible:ring-2 focus-visible:ring-brand/40"
                 aria-label="Recarregar página"
               >
-                <i className="fas fa-redo mr-2"></i>
+                <i className="fas fa-redo mr-2" aria-hidden="true"></i>
                 Recarregar Página
               </button>
-              
+
               <Link
                 href="/"
-                className="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium"
+                className="block w-full px-4 py-2 bg-surface-raised text-content rounded-lg hover:bg-surface-inset transition-colors font-medium focus-visible:ring-2 focus-visible:ring-brand/40"
               >
-                <i className="fas fa-home mr-2"></i>
+                <i className="fas fa-home mr-2" aria-hidden="true"></i>
                 Voltar ao Início
               </Link>
             </div>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="mt-6 text-left">
-                <summary className="cursor-pointer text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                <summary className="cursor-pointer text-sm text-content-muted hover:text-content">
                   Detalhes do erro (apenas em desenvolvimento)
                 </summary>
-                <pre className="mt-2 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-auto text-red-600 dark:text-red-400">
+                <pre className="mt-2 p-4 bg-surface-inset rounded text-xs overflow-auto text-err">
                   {this.state.error.toString()}
                   {this.state.error.stack}
                 </pre>

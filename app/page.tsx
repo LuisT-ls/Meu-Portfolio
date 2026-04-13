@@ -23,7 +23,7 @@ const Projetos = dynamic(() => import('@/components/projetos').then((mod) => ({ 
 
 const Experiencia = dynamic(() => import('@/components/experiencia').then((mod) => ({ default: mod.Experiencia })), {
   loading: () => (
-    <section className="section-experiencia section-padding py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-canvas">
       <div className="container mx-auto">
         <SkeletonText lines={1} />
         <div className="space-y-4 mt-8">
@@ -37,7 +37,7 @@ const Experiencia = dynamic(() => import('@/components/experiencia').then((mod) 
 
 const Certificacoes = dynamic(() => import('@/components/certificacoes').then((mod) => ({ default: mod.Certificacoes })), {
   loading: () => (
-    <section className="section-certificacoes section-padding py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-surface">
       <div className="container mx-auto">
         <Skeleton variant="text" height={32} width="33%" className="mb-8" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -52,7 +52,7 @@ const Certificacoes = dynamic(() => import('@/components/certificacoes').then((m
 
 const Habilidades = dynamic(() => import('@/components/habilidades').then((mod) => ({ default: mod.Habilidades })), {
   loading: () => (
-    <section className="section-habilidades section-padding py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-canvas">
       <div className="container mx-auto">
         <Skeleton variant="text" height={32} width="33%" className="mb-8" />
         <div className="space-y-4">
@@ -66,7 +66,7 @@ const Habilidades = dynamic(() => import('@/components/habilidades').then((mod) 
 
 const Contato = dynamic(() => import('@/components/contato').then((mod) => ({ default: mod.Contato })), {
   loading: () => (
-    <section className="section-contato section-padding py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-canvas">
       <div className="container mx-auto">
         <Skeleton variant="text" height={32} width="33%" className="mb-8" />
         <SkeletonForm />
@@ -77,10 +77,10 @@ const Contato = dynamic(() => import('@/components/contato').then((mod) => ({ de
 
 const Footer = dynamic(() => import('@/components/footer').then((mod) => ({ default: mod.Footer })), {
   loading: () => (
-    <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-surface py-12 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto">
         <div className="animate-pulse">
-          <div className="h-32 bg-gray-800 rounded"></div>
+          <div className="h-32 bg-line rounded"></div>
         </div>
       </div>
     </footer>

@@ -22,7 +22,9 @@ export function ScrollProgress() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-[3px] bg-primary z-[100] origin-left"
+      aria-hidden="true"
+      role="presentation"
+      className="fixed top-0 left-0 right-0 h-[3px] bg-brand z-[100] origin-left"
       style={{ scaleX }}
     />
   )

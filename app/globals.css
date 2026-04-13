@@ -1,119 +1,541 @@
+/* ============================================================
+   DESIGN SYSTEM — GLOBAL TOKEN FOUNDATION
+   Arquiteto: Sistema de tokens semânticos em camadas
+   Metodologia: Semantic → Component → Utility
+   ============================================================ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.75rem;
-  }
+/* ────────────────────────────────────────────────────────────
+   LAYER 0 — MOTION & TIMING PRIMITIVES
+   Definidas antes de tudo pois são usadas nas próprias
+   transições de tema.
+   ──────────────────────────────────────────────────────────── */
+:root {
+  /* Curvas Bézier — cada uma com propósito semântico distinto */
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
+  /* Para revelar elementos: entrada agressiva, pouso suave */
+  --ease-reveal:    cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Para hover/elevação: deceleração exponencial = sensação premium */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Para spring físico: overshooting sutil, vida orgânica */
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Para transições de cor/opacidade: S-curve suave, não mecânica */
+  --ease-sine:      cubic-bezier(0.37, 0, 0.63, 1);
+
+  /* Para entradas rápidas de UI: padrão Material You / Google */
+  --ease-standard:  cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Para dismiss/exit: aceleração, sai do stage com propósito */
+  --ease-in-quart:  cubic-bezier(0.5, 0, 0.75, 0);
+
+  /* Para transforms de hover magnético */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Escala de Duração */
+  --dur-instant:  50ms;
+  --dur-fast:     100ms;
+  --dur-normal:   180ms;
+  --dur-slow:     300ms;
+  --dur-slower:   500ms;
+  --dur-lazy:     700ms;
 }
 
+/* ────────────────────────────────────────────────────────────
+   LAYER 1 — COLOR TOKENS (Light Mode)
+   Nomenclatura: --[domínio]-[role]-[modifier]
+   Formato: H S% L% para consumo pelo Tailwind via alpha-value
+   ──────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* ── SURFACES (fundos em camadas de profundidade) ─────── */
+  --canvas:          40 20% 98%;    /* #FAF9F7 — fundo da página, levemente quente        */
+  --surface:         40 14% 96%;    /* #F5F4F1 — cartões, painéis, contêineres            */
+  --surface-raised:   0  0% 100%;   /* #FFFFFF — modais, dropdowns: elevação máxima        */
+  --surface-inset:  220 18% 95%;    /* #EFF1F6 — campos, code blocks: recuo visual         */
+  --surface-overlay: 220 20% 10%;   /* #14181F — backdrop/dimmer de modais (aplicar /60)  */
+
+  /* ── CONTEÚDO (texto e ícones) ────────────────────────── */
+  --content:         220 20%  8%;   /* #0F1419 — título e corpo principal, quase preto     */
+  --content-secondary: 220 14% 30%; /* #414B5A — texto de suporte, labels                 */
+  --content-muted:   220  9% 52%;   /* #78818F — placeholders, legendas, metadados        */
+  --content-disabled: 220  6% 68%;  /* #A4A9B4 — estados desabilitados                    */
+  --content-inverse: 220 16% 94%;   /* #ECEEF3 — texto sobre fundos escuros/invertidos    */
+  --content-on-brand:  0  0% 100%;  /* #FFFFFF — texto sobre o brand color                */
+
+  /* ── BRAND / PRIMARY ─────────────────────────────────── */
+  --brand:           245 74% 59%;   /* #4F46E5 — ação primária, indigo elétrico           */
+  --brand-hover:     245 74% 52%;   /* #3E35D6 — hover no modo claro = escurece           */
+  --brand-active:    245 74% 45%;   /* #2F27BE — pressed / active                         */
+  --brand-subtle:    245 70% 97%;   /* #F2F1FD — fundo de badge, tint suave               */
+  --brand-muted:     245 55% 87%;   /* #C4C2F0 — borda de focus ring suave, chips         */
+
+  /* ── BORDAS ───────────────────────────────────────────── */
+  --line:            220 14% 91%;   /* #E3E6ED — separador padrão, quase invisível        */
+  --line-strong:     220 14% 80%;   /* #C3C9D7 — bordas enfatizadas                       */
+  --line-focus:      245 74% 59%;   /* = brand — ring de foco                             */
+
+  /* ── ESTADOS SEMÂNTICOS ──────────────────────────────── */
+  --ok:              142 65% 40%;   /* #23A355 — success                                  */
+  --warn:             38 92% 50%;   /* #F7A800 — warning                                  */
+  --err:               4 84% 57%;   /* #EC3E32 — error / destructive                      */
+  --info:            210 78% 52%;   /* #1E8BE8 — informational                            */
+
+  /* ── RADIUS ───────────────────────────────────────────── */
+  --radius-2xs:  0.125rem;  /*  2px */
+  --radius-xs:   0.25rem;   /*  4px */
+  --radius-sm:   0.375rem;  /*  6px */
+  --radius:      0.5rem;    /*  8px — base */
+  --radius-md:   0.75rem;   /* 12px */
+  --radius-lg:   1rem;      /* 16px */
+  --radius-xl:   1.25rem;   /* 20px */
+  --radius-2xl:  1.5rem;    /* 24px */
+  --radius-full: 9999px;
+
+  /* ── SOMBRAS — MULTI-CAMADA, DIFUSÃO ORGÂNICA ─────────── */
+  /*
+     Princípio: cada sombra é composta por 3 camadas:
+       1. Contorno de borda (0px blur, baixíssima opacidade)
+       2. Sombra próxima: pequena, sharp, define a borda
+       3. Sombra ambiente: grande, difusa, dá profundidade
+
+     Cor base do escuro: hsl(220 20% 8%) = #0F1419
+  */
+  --shadow-xs:
+    0 0 0 1px rgb(15 20 25 / 0.03),
+    0 1px 2px rgb(15 20 25 / 0.05);
+
+  --shadow-sm:
+    0 0 0 1px rgb(15 20 25 / 0.04),
+    0 1px 2px rgb(15 20 25 / 0.06),
+    0 2px 4px rgb(15 20 25 / 0.04);
+
+  --shadow-md:
+    0 0 0 1px rgb(15 20 25 / 0.04),
+    0 1px 3px rgb(15 20 25 / 0.06),
+    0 4px 8px -2px rgb(15 20 25 / 0.07),
+    0 8px 16px -4px rgb(15 20 25 / 0.04);
+
+  --shadow-lg:
+    0 0 0 1px rgb(15 20 25 / 0.05),
+    0 2px 4px rgb(15 20 25 / 0.06),
+    0 8px 16px -4px rgb(15 20 25 / 0.08),
+    0 16px 32px -8px rgb(15 20 25 / 0.06);
+
+  --shadow-xl:
+    0 0 0 1px rgb(15 20 25 / 0.05),
+    0 4px 6px rgb(15 20 25 / 0.06),
+    0 12px 24px -6px rgb(15 20 25 / 0.10),
+    0 24px 48px -12px rgb(15 20 25 / 0.08);
+
+  --shadow-2xl:
+    0 0 0 1px rgb(15 20 25 / 0.06),
+    0 8px 12px rgb(15 20 25 / 0.08),
+    0 20px 40px -8px rgb(15 20 25 / 0.14),
+    0 40px 80px -20px rgb(15 20 25 / 0.10);
+
+  /* Sombra escalonada estilo Vercel — máxima profundidade perceptual */
+  --shadow-floating:
+    0 1px 1px rgb(15 20 25 / 0.03),
+    0 2px 2px rgb(15 20 25 / 0.03),
+    0 4px 4px rgb(15 20 25 / 0.03),
+    0 8px 8px rgb(15 20 25 / 0.03),
+    0 16px 16px rgb(15 20 25 / 0.03),
+    0 32px 32px rgb(15 20 25 / 0.03),
+    0 0 0 1px rgb(15 20 25 / 0.05);
+
+  /* Glow para CTAs e elementos com brand */
+  --shadow-brand:
+    0 0 0 1px hsl(245 74% 59% / 0.25),
+    0 0 0 4px hsl(245 74% 59% / 0.10),
+    0 4px 16px -2px hsl(245 74% 59% / 0.20),
+    0 12px 40px -8px hsl(245 74% 59% / 0.15);
+
+  /* Para focus ring de inputs */
+  --shadow-focus:
+    0 0 0 2px hsl(var(--canvas)),
+    0 0 0 4px hsl(var(--brand) / 0.5);
+
+  /* Para estados pressionados / sunken */
+  --shadow-inset:
+    inset 0 1px 2px rgb(15 20 25 / 0.06),
+    inset 0 2px 4px rgb(15 20 25 / 0.04);
+
+  /* ── BACKWARD COMPAT — mantém componentes existentes ─── */
+  --background:          var(--canvas);
+  --foreground:          var(--content);
+  --card:                var(--surface);
+  --card-foreground:     var(--content);
+  --popover:             var(--surface-raised);
+  --popover-foreground:  var(--content);
+  --primary:             var(--brand);
+  --primary-foreground:  var(--content-on-brand);
+  --secondary:           var(--surface);
+  --secondary-foreground: var(--content);
+  --muted:               var(--surface);
+  --muted-foreground:    var(--content-muted);
+  --accent:              var(--surface-inset);
+  --accent-foreground:   var(--content);
+  --destructive:         var(--err);
+  --destructive-foreground: var(--content-on-brand);
+  --border:              var(--line);
+  --input:               var(--line);
+  --ring:                var(--brand);
+  --radius:              0.5rem;
+}
+
+/* ────────────────────────────────────────────────────────────
+   LAYER 1 — COLOR TOKENS (Dark Mode)
+   Filosofia: dark mode não é "inverter cores" — é uma
+   superfície própria. Fundos escuros exigem sombras mais
+   marcadas e brand mais brilhante para manter contraste.
+   ──────────────────────────────────────────────────────────── */
+.dark {
+  color-scheme: dark;
+
+  /* ── SURFACES ─────────────────────────────────────────── */
+  --canvas:          220 18%  7%;   /* #0D1117 — fundo, quase-preto com tom azulado       */
+  --surface:         220 16% 10%;   /* #141821 — cartões                                  */
+  --surface-raised:  220 15% 14%;   /* #1B2030 — modais, dropdowns                        */
+  --surface-inset:   220 20%  5%;   /* #080B10 — campos sunken, code blocks               */
+  --surface-overlay:   0  0%  0%;   /* #000000 — backdrop (aplicar /70)                   */
+
+  /* ── CONTEÚDO ─────────────────────────────────────────── */
+  --content:         220 14% 93%;   /* #E8EAF0 — texto primário, quase-branco frio        */
+  --content-secondary: 220 10% 64%; /* #96A0B2 — texto de suporte                        */
+  --content-muted:   220  8% 44%;   /* #666E7E — placeholders, metadados                  */
+  --content-disabled: 220  6% 28%;  /* #424852 — desabilitados                            */
+  --content-inverse: 220 16%  8%;   /* #0F1218 — texto sobre surfaces claras/invertidas   */
+  --content-on-brand:  0  0% 100%;  /* #FFFFFF                                            */
+
+  /* ── BRAND ────────────────────────────────────────────── */
+  --brand:           243 88% 68%;   /* #6370FA — mais brilhante no dark para manter pop  */
+  --brand-hover:     243 88% 74%;   /* lightens on hover in dark (inverso do light mode)  */
+  --brand-active:    243 88% 62%;
+  --brand-subtle:    243 50% 13%;   /* #131438 — tint muito escuro                        */
+  --brand-muted:     243 40% 24%;   /* #252250 — muted ring                               */
+
+  /* ── BORDAS ───────────────────────────────────────────── */
+  --line:            220 16% 17%;   /* #1E2436 — sutil                                    */
+  --line-strong:     220 14% 26%;   /* #2F3850 — enfatizada                               */
+  --line-focus:      243 88% 68%;   /* = brand                                            */
+
+  /* ── ESTADOS ─────────────────────────────────────────── */
+  --ok:              142 58% 50%;   /* #35C468 */
+  --warn:             38 90% 58%;   /* #F9BA40 */
+  --err:               4 80% 65%;   /* #F06057 */
+  --info:            210 80% 60%;   /* #3399F0 */
+
+  /* ── SOMBRAS DARK MODE ────────────────────────────────── */
+  /*
+     Dark mode: superfícies já são escuras, portanto sombras
+     precisam ser mais opacas para serem visíveis, além de
+     um highlight branco translúcido para simular borda-de-luz
+  */
+  --shadow-xs:
+    0 0 0 1px rgb(255 255 255 / 0.04),
+    0 1px 2px rgb(0 0 0 / 0.25);
+
+  --shadow-sm:
+    0 0 0 1px rgb(255 255 255 / 0.05),
+    0 1px 2px rgb(0 0 0 / 0.30),
+    0 2px 4px rgb(0 0 0 / 0.20);
+
+  --shadow-md:
+    0 0 0 1px rgb(255 255 255 / 0.05),
+    0 1px 3px rgb(0 0 0 / 0.35),
+    0 4px 8px -2px rgb(0 0 0 / 0.40),
+    0 8px 16px -4px rgb(0 0 0 / 0.25);
+
+  --shadow-lg:
+    0 0 0 1px rgb(255 255 255 / 0.06),
+    0 2px 4px rgb(0 0 0 / 0.35),
+    0 8px 16px -4px rgb(0 0 0 / 0.45),
+    0 16px 32px -8px rgb(0 0 0 / 0.30);
+
+  --shadow-xl:
+    0 0 0 1px rgb(255 255 255 / 0.06),
+    0 4px 6px rgb(0 0 0 / 0.40),
+    0 12px 24px -6px rgb(0 0 0 / 0.50),
+    0 24px 48px -12px rgb(0 0 0 / 0.35);
+
+  --shadow-2xl:
+    0 0 0 1px rgb(255 255 255 / 0.07),
+    0 8px 12px rgb(0 0 0 / 0.45),
+    0 20px 40px -8px rgb(0 0 0 / 0.60),
+    0 40px 80px -20px rgb(0 0 0 / 0.45);
+
+  --shadow-floating:
+    0 1px 1px rgb(0 0 0 / 0.20),
+    0 2px 2px rgb(0 0 0 / 0.20),
+    0 4px 4px rgb(0 0 0 / 0.18),
+    0 8px 8px rgb(0 0 0 / 0.16),
+    0 16px 16px rgb(0 0 0 / 0.14),
+    0 32px 32px rgb(0 0 0 / 0.12),
+    0 0 0 1px rgb(255 255 255 / 0.06);
+
+  --shadow-brand:
+    0 0 0 1px hsl(243 88% 68% / 0.35),
+    0 0 0 4px hsl(243 88% 68% / 0.15),
+    0 4px 16px -2px hsl(243 88% 68% / 0.30),
+    0 12px 40px -8px hsl(243 88% 68% / 0.20);
+
+  --shadow-focus:
+    0 0 0 2px hsl(var(--canvas)),
+    0 0 0 4px hsl(var(--brand) / 0.6);
+
+  --shadow-inset:
+    inset 0 1px 2px rgb(0 0 0 / 0.30),
+    inset 0 2px 4px rgb(0 0 0 / 0.20);
+
+  /* ── BACKWARD COMPAT ──────────────────────────────────── */
+  --background:          var(--canvas);
+  --foreground:          var(--content);
+  --card:                var(--surface);
+  --card-foreground:     var(--content);
+  --popover:             var(--surface-raised);
+  --popover-foreground:  var(--content);
+  --primary:             var(--brand);
+  --primary-foreground:  var(--content-on-brand);
+  --secondary:           var(--surface);
+  --secondary-foreground: var(--content);
+  --muted:               var(--surface);
+  --muted-foreground:    var(--content-muted);
+  --accent:              var(--surface-inset);
+  --accent-foreground:   var(--content);
+  --destructive:         var(--err);
+  --destructive-foreground: var(--content-on-brand);
+  --border:              var(--line);
+  --input:               var(--line);
+  --ring:                var(--brand);
+}
+
+/* ────────────────────────────────────────────────────────────
+   LAYER 2 — BASE RESETS & TYPOGRAPHIC RHYTHM
+   ──────────────────────────────────────────────────────────── */
 @layer base {
-  * {
-    @apply border-border;
+  *, *::before, *::after {
+    box-sizing: border-box;
   }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    /* Previne flash no carregamento do tema */
+    font-synthesis: none;
+  }
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-canvas text-content font-sans;
+    min-height: 100dvh;
+    /* Macro-whitespace: nunca deixe texto encostar nas bordas */
+    overflow-x: hidden;
   }
+
+  /* Hierarquia tipográfica — tracking negativo nos títulos para
+     o "contraste tipográfico brutal" solicitado */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight;
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  h1 { @apply text-7xl font-bold tracking-display; }
+  h2 { @apply text-6xl font-bold tracking-display; }
+  h3 { @apply text-5xl font-semibold tracking-heading; }
+  h4 { @apply text-4xl font-semibold tracking-heading; }
+  h5 { @apply text-3xl font-medium tracking-tight; }
+  h6 { @apply text-2xl font-medium tracking-tight; }
+
+  p {
+    text-wrap: pretty;
+    max-width: 68ch;   /* Medida ideal: 55–75 caracteres por linha */
+  }
+
+  /* Links */
+  a {
+    color: hsl(var(--brand));
+    text-decoration-color: hsl(var(--brand-muted));
+    text-underline-offset: 0.2em;
+    transition:
+      color var(--dur-fast) var(--ease-out-quart),
+      text-decoration-color var(--dur-fast) var(--ease-out-quart);
+  }
+
+  a:hover {
+    color: hsl(var(--brand-hover));
+    text-decoration-color: hsl(var(--brand));
+  }
+
+  /* Reset de border-color global — usa token semântico */
+  * {
+    border-color: hsl(var(--line));
+  }
+
+  /* Foco acessível — substituindo o outline padrão do browser */
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+    border-radius: var(--radius-xs);
+  }
+
+  /* Seleção de texto com brand color */
+  ::selection {
+    background-color: hsl(var(--brand) / 0.15);
+    color: hsl(var(--content));
   }
 }
 
+/* ────────────────────────────────────────────────────────────
+   LAYER 3 — COMPONENT PRIMITIVES
+   Classes utilitárias de alto nível consumindo os tokens
+   ──────────────────────────────────────────────────────────── */
 @layer components {
+
+  /* Surface de vidro (glassmorphism refinado)
+     .glass-panel mantido como alias para não quebrar componentes existentes */
+  .glass,
   .glass-panel {
-    @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-xl;
+    @apply
+      bg-surface/80
+      backdrop-blur-xl
+      border border-line
+      shadow-md;
   }
 
+  /* Gradiente de texto com brand
+     .text-gradient mantido como alias para hero.tsx e outros */
+  .text-gradient-brand,
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400;
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--brand)) 0%,
+      hsl(245 90% 75%) 100%
+    );
+  }
+
+  /* Container padrão com espaçamento generoso */
+  .container-ds {
+    @apply mx-auto w-full px-6 sm:px-8 lg:px-12;
+    max-width: 1280px;
+  }
+
+  /* Seção com whitespace macro generoso */
+  .section {
+    @apply py-24 md:py-32 lg:py-40;
+  }
+
+  /* Divider semântico */
+  .divider {
+    @apply h-px w-full bg-line;
+  }
+
+  /* Skeleton loader */
+  .skeleton {
+    @apply relative overflow-hidden rounded bg-surface;
+    &::after {
+      content: '';
+      @apply absolute inset-0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        hsl(var(--surface-raised) / 0.8) 50%,
+        transparent 100%
+      );
+      animation: shimmer 1.5s infinite;
+    }
+  }
+
+  /* Focus ring reutilizável como classe */
+  .focus-ring {
+    @apply focus-visible:outline-none;
+    &:focus-visible {
+      box-shadow: var(--shadow-focus);
+    }
   }
 }
 
-/* Animações customizadas */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
+/* ────────────────────────────────────────────────────────────
+   LAYER 4 — KEYFRAME ANIMATIONS
+   ──────────────────────────────────────────────────────────── */
 @keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes slideInLeft {
-  from {
-    transform: translateX(-30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Acessibilidade - Screen Reader Only */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Spinner para loading states */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ────────────────────────────────────────────────────────────
+   LAYER 5 — SCROLLBAR DESIGN SYSTEM
+   ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--line-strong));
+  border-radius: var(--radius-full);
+  border: 2px solid hsl(var(--canvas));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--content-muted));
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ────────────────────────────────────────────────────────────
+   LAYER 6 — ACESSIBILIDADE
+   ──────────────────────────────────────────────────────────── */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -126,55 +548,12 @@
   border-width: 0;
 }
 
-/* Scroll suave */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Redução de movimento para acessibilidade */
+/* Reduced motion — respeita preferências do sistema */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-
-  /* Desabilita animações específicas */
-  .animate-pulse,
-  .animate-spin,
-  .animate-fade-in,
-  .animate-slide-up,
-  .animate-slide-down,
-  .animate-shimmer {
-    animation: none !important;
-  }
-
-  /* Remove transformações animadas */
-  [class*="translate"],
-  [class*="scale"],
-  [class*="rotate"] {
-    transform: none !important;
-    transition: none !important;
-  }
 }
-
-/* Estilos para scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-900;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500 dark:bg-gray-500;
-}
-
