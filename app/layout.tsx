@@ -87,7 +87,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://*.firebaseio.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://api.emailjs.com" crossOrigin="anonymous" />
 
         {/* DNS Prefetch para domínios adicionais */}
         <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
@@ -207,4 +206,3 @@ export default function RootLayout({
     </html>
   )
 }
-

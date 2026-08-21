@@ -1,5 +1,11 @@
 {
   "database": {
     "rules": "database.rules.json"
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "extensions": {
+    "firestore-send-email": "firebase/firestore-send-email@0.2.10"
   }
 }

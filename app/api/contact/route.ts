@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateContactForm } from '@/lib/validations/contact'
-import { sanitizeInput } from '@/lib/utils/sanitize'
-import { sendEmail } from '@/lib/emailjs'
+import { enqueueContactEmail } from '@/lib/firebase-mail'
 import { consumeContactRateLimit, getClientIp } from '@/lib/contact-rate-limit'
 import { isAllowedOrigin } from '@/lib/request-security'
 
@@ -88,16 +87,9 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Sanitização dos dados validados
-    const sanitizedData = {
-      nome: sanitizeInput(validation.data.nome),
-      email: sanitizeInput(validation.data.email),
-      mensagem: sanitizeInput(validation.data.mensagem),
-    }
-
-    // Envio do email
+    // Enfileira o e-mail no Firestore para a extensão Firebase Trigger Email.
     try {
-      await sendEmail(sanitizedData)
+      await enqueueContactEmail(validation.data)
       
       return NextResponse.json(
         {

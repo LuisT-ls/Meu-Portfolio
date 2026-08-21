@@ -1,0 +1,11 @@
+{
+  "projects": {},
+  "targets": {},
+  "etags": {
+    "portfolio-contador": {
+      "extensionInstances": {
+        "firestore-send-email": "2d426caec0c3d2a0510e6004e6f7e6ffabc04ba56b1a4b51b1a5c0be6bc4c500"
+      }
+    }
+  }
+}

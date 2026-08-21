@@ -1,6 +1,6 @@
 # Portfólio — Luís Teixeira
 
-Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer Motion, Firebase e EmailJS. Inclui design responsivo, tema claro/escuro, animações fluidas, seção de projetos, detecção de seção ativa no nav e formulário de contato seguro.
+Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer Motion e Firebase. Inclui design responsivo, tema claro/escuro, animações fluidas, seção de projetos, detecção de seção ativa no nav e formulário de contato seguro.
 
 🔗 **[luistls.vercel.app](https://luistls.vercel.app)**
 
@@ -14,8 +14,8 @@ Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer
 | Linguagem | TypeScript 5 |
 | Estilização | Tailwind CSS 3 |
 | Animações | Framer Motion 12 |
-| Backend/DB | Firebase 12 + Firebase Admin (Realtime DB) |
-| E-mail | EmailJS |
+| Backend/DB | Firebase 12 + Firebase Admin (Realtime DB + Firestore) |
+| E-mail | Firebase Trigger Email + SMTP |
 | Validação | Zod 4 |
 | Notificações | Sonner |
 | Deploy | Vercel |
@@ -29,7 +29,7 @@ Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer
 - **Nav com seção ativa** — IntersectionObserver detecta a seção visível e destaca o link correspondente com animação `layoutId`
 - **Efeito typewriter no Hero** — rotação entre papéis com animação de digitação
 - **Scroll progress bar** — barra animada no topo indicando progresso na página
-- **Formulário de contato seguro** — validação com Zod, sanitização de input, rate limiting e envio via EmailJS
+- **Formulário de contato seguro** — validação com Zod, rate limiting e fila de e-mail no Firestore
 - **Contador de visitas em tempo real** — Firebase Realtime Database
 - **Code splitting** — seções abaixo da dobra carregadas com `next/dynamic`
 - **SEO completo** — metadata, OpenGraph, Twitter Card, Schema.org (JSON-LD), sitemap, robots.txt
@@ -73,7 +73,7 @@ Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer
 │   ├── firebase.ts             # Config Firebase
 │   ├── firebase-admin.ts       # Acesso server-side ao Firebase Admin
 │   ├── firebase-provider.tsx   # Contexto Firebase (visitas)
-│   ├── emailjs.ts              # Config EmailJS
+│   ├── firebase-mail.ts        # Fila de e-mails para o Trigger Email
 │   ├── animations.ts           # Variants Framer Motion reutilizáveis
 │   └── utils.ts                # cn() e helpers
 │
@@ -125,10 +125,9 @@ FIREBASE_CLIENT_EMAIL=
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
 FIREBASE_DATABASE_URL=
 
-# EmailJS
-NEXT_PUBLIC_EMAILJS_SERVICE_ID=
-NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
-NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
+# E-mail via Firebase Trigger Email
+CONTACT_EMAIL_TO=luist_ls@outlook.pt
+FIREBASE_MAIL_COLLECTION=mail
 ```
 
 ---
@@ -156,6 +155,25 @@ npx firebase-tools deploy --only database --project portfolio-contador
 ```
 
 As variáveis `FIREBASE_CLIENT_EMAIL` e `FIREBASE_PRIVATE_KEY` devem ser cadastradas somente na Vercel, com escopo de produção/preview conforme necessário.
+
+### Envio de e-mails pelo Firebase
+
+O formulário grava documentos na coleção `mail` do Cloud Firestore. A extensão
+oficial **Trigger Email** observa essa coleção e envia as mensagens usando um
+servidor SMTP configurado na extensão. O Firebase não fornece um servidor SMTP
+próprio, então é necessário informar um provedor de envio durante a instalação.
+
+Instalação pelo CLI:
+
+```bash
+npx firebase-tools ext:install firebase/firestore-send-email --project portfolio-contador
+npx firebase-tools deploy --only firestore:rules --project portfolio-contador
+```
+
+Durante a instalação, use `mail` como coleção de documentos, configure o
+endereço padrão de remetente e informe as credenciais SMTP do provedor escolhido.
+O servidor da aplicação grava na coleção usando o Firebase Admin SDK; clientes
+não têm permissão para ler ou escrever nessa fila.
 
 ---
 

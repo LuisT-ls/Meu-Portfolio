@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // A API do servidor grava os documentos usando o Admin SDK.
+    // Clientes não podem ler, criar ou alterar a fila de e-mails.
+    match /mail/{document} {
+      allow read, write: if false;
+    }
+  }
+}

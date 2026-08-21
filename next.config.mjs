@@ -50,11 +50,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://www.gstatic.com https://*.firebaseio.com https://api.emailjs.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://www.gstatic.com https://*.firebaseio.com",
               "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com",
-              "connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://api.emailjs.com https://www.google-analytics.com",
+              "connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://www.google-analytics.com",
               "frame-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",
@@ -92,4 +92,3 @@ const nextConfig = {
 }
 
 export default withBundleAnalyzer(nextConfig)
-

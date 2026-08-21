@@ -1,10 +1,13 @@
-import { cert, getApps, initializeApp } from 'firebase-admin/app'
+import { cert, getApps, initializeApp, type App } from 'firebase-admin/app'
 import { getDatabase, type Database } from 'firebase-admin/database'
+import { getFirestore, type Firestore } from 'firebase-admin/firestore'
 
+let app: App | undefined
 let database: Database | undefined
+let firestore: Firestore | undefined
 
-function getFirebaseAdminDatabase(): Database {
-  if (database) return database
+function getFirebaseAdminApp(): App {
+  if (app) return app
 
   const projectId = process.env.FIREBASE_PROJECT_ID
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
@@ -17,15 +20,28 @@ function getFirebaseAdminDatabase(): Database {
     )
   }
 
-  const app =
+  app =
     getApps()[0] ??
     initializeApp({
       credential: cert({ projectId, clientEmail, privateKey }),
       databaseURL,
     })
 
-  database = getDatabase(app)
+  return app
+}
+
+export function getFirebaseAdminDatabase(): Database {
+  if (database) return database
+
+  database = getDatabase(getFirebaseAdminApp())
   return database
+}
+
+export function getFirebaseAdminFirestore(): Firestore {
+  if (firestore) return firestore
+
+  firestore = getFirestore(getFirebaseAdminApp())
+  return firestore
 }
 
 export async function incrementVisitCount(): Promise<number> {

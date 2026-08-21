@@ -147,8 +147,9 @@ export default function PrivacyPolicy() {
                   Provedores de serviço:
                 </strong>{' '}
                 Empresas que fornecem serviços em meu nome, como hospedagem web,
-                análise de dados e serviços de e-mail (por exemplo, EmailJS para
-                processar formulários de contato).
+                análise de dados e serviços de e-mail (Firebase Cloud Firestore,
+                Trigger Email e o provedor SMTP configurado) para processar
+                formulários de contato.
               </li>
               <li>
                 <strong className="font-semibold text-content">Análise de dados:</strong>{' '}
