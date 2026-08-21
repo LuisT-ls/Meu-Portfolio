@@ -31,7 +31,7 @@ export const contactFormSchema = z.object({
       message: 'Você precisa aceitar a Política de Privacidade',
     }),
   // Campo honeypot: deve permanecer vazio para usuários reais.
-  website: z.string().max(0, 'Valor inválido').optional().default(''),
+  website: z.string().max(200, 'Valor inválido').optional().default(''),
 })
 
 export type ContactFormData = z.infer<typeof contactFormSchema>

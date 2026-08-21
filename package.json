@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit --incremental false",
     "analyze": "ANALYZE=true next build",
     "test": "vitest",
+    "test:integration": "firebase emulators:exec --only firestore,database --project portfolio-contador \"vitest run --config vitest.integration.config.ts\"",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
   },
