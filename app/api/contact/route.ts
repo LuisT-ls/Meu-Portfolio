@@ -3,23 +3,9 @@ import { validateContactForm } from '@/lib/validations/contact'
 import { sanitizeInput } from '@/lib/utils/sanitize'
 import { sendEmail } from '@/lib/emailjs'
 import { consumeContactRateLimit, getClientIp } from '@/lib/contact-rate-limit'
+import { isAllowedOrigin } from '@/lib/request-security'
 
 const MAX_BODY_BYTES = 32_000
-const PRODUCTION_ORIGIN = 'https://luistls.vercel.app'
-
-function isAllowedOrigin(origin: string | null) {
-  if (!origin) return true
-
-  const allowedOrigins = new Set([
-    process.env.APP_ORIGIN,
-    PRODUCTION_ORIGIN,
-    ...(process.env.NODE_ENV === 'production'
-      ? []
-      : ['http://localhost:3000', 'http://127.0.0.1:3000']),
-  ])
-
-  return allowedOrigins.has(origin)
-}
 
 /**
  * API Route para processar formulário de contato

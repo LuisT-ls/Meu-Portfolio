@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { getFirebaseDatabase, getFirebaseAnalytics } from './firebase'
-import { onValue, ref, runTransaction } from 'firebase/database'
+import { onValue, ref } from 'firebase/database'
 
 interface FirebaseContextType {
   visitCount: number | null
@@ -46,33 +46,32 @@ export function FirebaseProvider({ children }: { children: ReactNode }) {
 
     const initializeVisitCounter = async () => {
       try {
-        const database = getFirebaseDatabase()
-        const visitsCountRef = ref(database, 'visitCount')
-
         if (!hasVisitBeenCounted) {
           try {
-            // Transação evita perder incrementos quando duas visitas chegam juntas.
-            const result = await runTransaction(visitsCountRef, (currentValue) => {
-              const currentCount =
-                typeof currentValue === 'number' && Number.isFinite(currentValue)
-                  ? currentValue
-                  : 0
-
-              return currentCount + 1
+            const response = await fetch('/api/visit', {
+              method: 'POST',
+              headers: { Accept: 'application/json' },
+              credentials: 'same-origin',
             })
 
-            // Marcar que a visita foi contada nesta sessão
-            if (!cancelled && result.committed) {
+            if (!response.ok) {
+              throw new Error(`A API de visitas respondeu ${response.status}.`)
+            }
+
+            if (!cancelled) {
               sessionStorage.setItem(sessionKey, 'true')
             }
 
-            if (result.committed) console.log('Visita registrada com sucesso!')
-          } catch (updateError) {
-            console.warn('Erro ao incrementar contador:', updateError)
+            console.log('Visita registrada com sucesso!')
+          } catch (visitError) {
+            console.warn('Erro ao registrar visita:', visitError)
           }
         }
 
         if (cancelled) return
+
+        const database = getFirebaseDatabase()
+        const visitsCountRef = ref(database, 'visitCount')
 
         // Configurar listener para atualizações em tempo real
         unsubscribe = onValue(

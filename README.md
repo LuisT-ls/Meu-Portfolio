@@ -14,7 +14,7 @@ Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer
 | Linguagem | TypeScript 5 |
 | Estilização | Tailwind CSS 3 |
 | Animações | Framer Motion 12 |
-| Backend/DB | Firebase 10 (Realtime DB) |
+| Backend/DB | Firebase 12 + Firebase Admin (Realtime DB) |
 | E-mail | EmailJS |
 | Validação | Zod 4 |
 | Notificações | Sonner |
@@ -47,6 +47,7 @@ Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer
 │   ├── page.tsx                # Página inicial com code splitting
 │   ├── globals.css             # Variáveis CSS, glass-panel, keyframes
 │   ├── api/contact/route.ts    # API route do formulário de contato
+│   ├── api/visit/route.ts      # Incremento server-side do contador
 │   ├── privacy-policy/         # Página de política de privacidade
 │   ├── robots.ts               # robots.txt dinâmico
 │   └── sitemap.ts              # sitemap.xml dinâmico
@@ -70,6 +71,7 @@ Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer
 │
 ├── lib/
 │   ├── firebase.ts             # Config Firebase
+│   ├── firebase-admin.ts       # Acesso server-side ao Firebase Admin
 │   ├── firebase-provider.tsx   # Contexto Firebase (visitas)
 │   ├── emailjs.ts              # Config EmailJS
 │   ├── animations.ts           # Variants Framer Motion reutilizáveis
@@ -117,6 +119,12 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 
+# Firebase Admin — somente servidor
+FIREBASE_PROJECT_ID=
+FIREBASE_CLIENT_EMAIL=
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
+FIREBASE_DATABASE_URL=
+
 # EmailJS
 NEXT_PUBLIC_EMAILJS_SERVICE_ID=
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
@@ -136,6 +144,18 @@ npm run test       # Testes unitários (Vitest)
 npm run coverage   # Cobertura de testes
 npm run analyze    # Bundle analyzer (ANALYZE=true)
 ```
+
+### Regras do Realtime Database
+
+O navegador pode ler `visitCount`, mas não pode escrever diretamente. O incremento é feito pela rota server-side `/api/visit` usando o Firebase Admin SDK.
+
+Para aplicar as regras no projeto Firebase:
+
+```bash
+npx firebase-tools deploy --only database --project portfolio-contador
+```
+
+As variáveis `FIREBASE_CLIENT_EMAIL` e `FIREBASE_PRIVATE_KEY` devem ser cadastradas somente na Vercel, com escopo de produção/preview conforme necessário.
 
 ---
 
