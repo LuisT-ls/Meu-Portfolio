@@ -1,8 +1,14 @@
-import DOMPurify from 'isomorphic-dompurify'
+const HTML_ENTITIES: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+}
 
 /**
- * Sanitiza uma string removendo tags HTML e scripts maliciosos
- * Protege contra XSS (Cross-Site Scripting)
+ * Codifica uma string para que conteúdo controlado pelo usuário permaneça texto
+ * mesmo quando o template de e-mail for renderizado como HTML.
  * 
  * @param input - String a ser sanitizada
  * @returns String sanitizada
@@ -12,12 +18,7 @@ export function sanitizeInput(input: string): string {
     return ''
   }
 
-  // Remove todas as tags HTML e mantém apenas texto puro
-  return DOMPurify.sanitize(input, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-    KEEP_CONTENT: true,
-  })
+  return input.replace(/[&<>"']/g, (character) => HTML_ENTITIES[character] ?? character)
 }
 
 /**
