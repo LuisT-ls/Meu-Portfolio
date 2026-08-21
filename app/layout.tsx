@@ -83,15 +83,11 @@ export default function RootLayout({
       <head>
         {/* Preconnect para recursos externos - melhora performance */}
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://*.firebaseio.com" crossOrigin="anonymous" />
 
         {/* DNS Prefetch para domínios adicionais */}
         <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 
         {/* Favicons */}
         <link rel="icon" href="/assets/img/Logo/favicon.svg" type="image/svg+xml" />
