@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser'
-import type { ContactFormData } from '@/lib/validations/contact'
+import type { ContactEmailData } from '@/lib/validations/contact'
 
 // Carrega credenciais de variáveis de ambiente
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
@@ -22,10 +22,7 @@ if (typeof window !== 'undefined' && EMAILJS_USER_ID) {
   emailjs.init(EMAILJS_USER_ID)
 }
 
-// Re-exportar o tipo para compatibilidade
-export type { ContactFormData }
-
-export const sendEmail = async (formData: ContactFormData): Promise<void> => {
+export const sendEmail = async (formData: ContactEmailData): Promise<void> => {
   if (!validateEmailJSConfig() || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_USER_ID) {
     throw new Error('EmailJS não está configurado corretamente')
   }
@@ -46,4 +43,3 @@ export const sendEmail = async (formData: ContactFormData): Promise<void> => {
     throw error
   }
 }
-

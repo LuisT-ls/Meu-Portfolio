@@ -2,7 +2,6 @@
 
 import { useState, useCallback, FormEvent } from 'react'
 import { validateContactForm, type ContactFormData } from '@/lib/validations/contact'
-import { sanitizeInput } from '@/lib/utils/sanitize'
 import { useRateLimit } from '@/hooks/use-rate-limit'
 import { toast } from 'sonner'
 
@@ -12,6 +11,7 @@ interface UseContactFormReturn {
   fieldErrors: Record<string, string>
   isBlocked: boolean
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  handlePrivacyChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>
 }
@@ -21,6 +21,8 @@ export function useContactForm(): UseContactFormReturn {
     nome: '',
     email: '',
     mensagem: '',
+    acceptedPrivacy: false,
+    website: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
@@ -58,10 +60,22 @@ export function useContactForm(): UseContactFormReturn {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
-    const sanitizedValue = sanitizeInput(value)
-    setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
     if (Object.keys(fieldErrors).length > 0) {
-      validateField(name, sanitizedValue)
+      validateField(name, value)
+    }
+  }
+
+  const handlePrivacyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const acceptedPrivacy = e.target.checked
+    setFormData((prev) => ({ ...prev, acceptedPrivacy }))
+
+    if (acceptedPrivacy) {
+      setFieldErrors((prev) => {
+        const next = { ...prev }
+        delete next.acceptedPrivacy
+        return next
+      })
     }
   }
 
@@ -133,7 +147,13 @@ export function useContactForm(): UseContactFormReturn {
         result.message || 'Mensagem enviada com sucesso! Logo entrarei em contato.',
         { duration: 5000 }
       )
-      setFormData({ nome: '', email: '', mensagem: '' })
+      setFormData({
+        nome: '',
+        email: '',
+        mensagem: '',
+        acceptedPrivacy: false,
+        website: '',
+      })
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error)
       toast.error(
@@ -151,6 +171,7 @@ export function useContactForm(): UseContactFormReturn {
     fieldErrors,
     isBlocked,
     handleChange,
+    handlePrivacyChange,
     handleBlur,
     handleSubmit,
   }

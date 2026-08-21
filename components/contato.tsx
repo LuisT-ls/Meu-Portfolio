@@ -15,6 +15,7 @@ export function Contato() {
     fieldErrors,
     isBlocked,
     handleChange,
+    handlePrivacyChange,
     handleBlur,
     handleSubmit,
   } = useContactForm()
@@ -222,7 +223,11 @@ export function Contato() {
                 <input
                   type="checkbox"
                   id="privacy-check"
-                  required
+                  name="acceptedPrivacy"
+                  checked={formData.acceptedPrivacy}
+                  onChange={handlePrivacyChange}
+                  aria-invalid={!!fieldErrors.acceptedPrivacy}
+                  aria-describedby={fieldErrors.acceptedPrivacy ? 'privacy-error' : undefined}
                   className="mt-1 accent-brand"
                 />
                 <label
@@ -238,7 +243,22 @@ export function Contato() {
                   </Link>{' '}
                   e autorizo o processamento dos meus dados para este contato.
                 </label>
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute -left-[9999px] h-px w-px opacity-0"
+                />
               </div>
+              {fieldErrors.acceptedPrivacy && (
+                <p id="privacy-error" role="alert" className="text-xs text-err font-medium">
+                  {fieldErrors.acceptedPrivacy}
+                </p>
+              )}
 
               <button
                 type="submit"

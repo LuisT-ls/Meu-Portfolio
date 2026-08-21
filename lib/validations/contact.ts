@@ -25,9 +25,17 @@ export const contactFormSchema = z.object({
     .min(10, 'Mensagem deve ter no mínimo 10 caracteres')
     .max(2000, 'Mensagem muito longa (máximo 2000 caracteres)')
     .trim(),
+  acceptedPrivacy: z
+    .boolean()
+    .refine((accepted) => accepted, {
+      message: 'Você precisa aceitar a Política de Privacidade',
+    }),
+  // Campo honeypot: deve permanecer vazio para usuários reais.
+  website: z.string().max(0, 'Valor inválido').optional().default(''),
 })
 
 export type ContactFormData = z.infer<typeof contactFormSchema>
+export type ContactEmailData = Pick<ContactFormData, 'nome' | 'email' | 'mensagem'>
 
 /**
  * Valida os dados do formulário e retorna os dados validados ou erros

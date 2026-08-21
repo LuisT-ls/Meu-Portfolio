@@ -2,15 +2,74 @@ import { NextRequest, NextResponse } from 'next/server'
 import { validateContactForm } from '@/lib/validations/contact'
 import { sanitizeInput } from '@/lib/utils/sanitize'
 import { sendEmail } from '@/lib/emailjs'
+import { consumeContactRateLimit, getClientIp } from '@/lib/contact-rate-limit'
+
+const MAX_BODY_BYTES = 32_000
+const PRODUCTION_ORIGIN = 'https://luistls.vercel.app'
+
+function isAllowedOrigin(origin: string | null) {
+  if (!origin) return true
+
+  const allowedOrigins = new Set([
+    process.env.APP_ORIGIN,
+    PRODUCTION_ORIGIN,
+    ...(process.env.NODE_ENV === 'production'
+      ? []
+      : ['http://localhost:3000', 'http://127.0.0.1:3000']),
+  ])
+
+  return allowedOrigins.has(origin)
+}
 
 /**
  * API Route para processar formulário de contato
  * Validação server-side e envio de email
  */
 export async function POST(request: NextRequest) {
+  if (!isAllowedOrigin(request.headers.get('origin'))) {
+    return NextResponse.json(
+      { success: false, message: 'Origem não autorizada.' },
+      { status: 403 }
+    )
+  }
+
+  const rateLimit = consumeContactRateLimit(`contact:${getClientIp(request)}`)
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { success: false, message: 'Muitas tentativas. Tente novamente mais tarde.' },
+      {
+        status: 429,
+        headers: { 'Retry-After': String(rateLimit.retryAfter) },
+      }
+    )
+  }
+
   try {
-    // Parse do body
-    const body = await request.json()
+    const contentLength = Number(request.headers.get('content-length'))
+    if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { success: false, message: 'Requisição muito grande.' },
+        { status: 413 }
+      )
+    }
+
+    const rawBody = await request.text()
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { success: false, message: 'Requisição muito grande.' },
+        { status: 413 }
+      )
+    }
+
+    let body: unknown
+    try {
+      body = JSON.parse(rawBody)
+    } catch {
+      return NextResponse.json(
+        { success: false, message: 'JSON inválido.' },
+        { status: 400 }
+      )
+    }
 
     // Validação com Zod (server-side)
     const validation = validateContactForm(body)
@@ -33,6 +92,14 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 }
       )
+    }
+
+    // Bots que preenchem o campo honeypot recebem uma resposta neutra.
+    if (validation.data.website) {
+      return NextResponse.json({
+        success: true,
+        message: 'Mensagem enviada com sucesso! Logo entrarei em contato.',
+      })
     }
 
     // Sanitização dos dados validados
@@ -81,6 +148,6 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   return NextResponse.json(
     { message: 'Método não permitido. Use POST.' },
-    { status: 405 }
+    { status: 405, headers: { Allow: 'POST' } }
   )
 }

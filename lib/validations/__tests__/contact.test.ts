@@ -8,6 +8,7 @@ describe('contactFormSchema', () => {
         nome: 'Luís Teixeira',
         email: 'test@example.com',
         mensagem: 'Esta é uma mensagem de teste com mais de 10 caracteres.',
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(true)
@@ -18,6 +19,7 @@ describe('contactFormSchema', () => {
         nome: 'A',
         email: 'test@example.com',
         mensagem: 'Esta é uma mensagem de teste.',
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(false)
@@ -31,6 +33,7 @@ describe('contactFormSchema', () => {
         nome: 'Luís123',
         email: 'test@example.com',
         mensagem: 'Esta é uma mensagem de teste.',
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(false)
@@ -43,6 +46,7 @@ describe('contactFormSchema', () => {
         nome: 'Luís Teixeira',
         email: 'test@example.com',
         mensagem: 'Esta é uma mensagem de teste.',
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(true)
@@ -53,6 +57,7 @@ describe('contactFormSchema', () => {
         nome: 'Luís Teixeira',
         email: 'email-invalido',
         mensagem: 'Esta é uma mensagem de teste.',
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(false)
@@ -66,6 +71,7 @@ describe('contactFormSchema', () => {
         nome: 'Luís Teixeira',
         email: 'TEST@EXAMPLE.COM',
         mensagem: 'Esta é uma mensagem de teste.',
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(true)
@@ -81,6 +87,7 @@ describe('contactFormSchema', () => {
         nome: 'Luís Teixeira',
         email: 'test@example.com',
         mensagem: 'Esta é uma mensagem de teste com mais de 10 caracteres.',
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(true)
@@ -91,6 +98,7 @@ describe('contactFormSchema', () => {
         nome: 'Luís Teixeira',
         email: 'test@example.com',
         mensagem: 'Curta',
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(false)
@@ -105,6 +113,7 @@ describe('contactFormSchema', () => {
         nome: 'Luís Teixeira',
         email: 'test@example.com',
         mensagem: longMessage,
+        acceptedPrivacy: true,
       })
 
       expect(result.success).toBe(false)
@@ -121,6 +130,7 @@ describe('validateContactForm', () => {
       nome: 'Luís Teixeira',
       email: 'test@example.com',
       mensagem: 'Esta é uma mensagem de teste válida.',
+      acceptedPrivacy: true,
     })
 
     expect(result.success).toBe(true)
@@ -135,11 +145,26 @@ describe('validateContactForm', () => {
       nome: 'A',
       email: 'invalid',
       mensagem: 'Curta',
+      acceptedPrivacy: true,
     })
 
     expect(result.success).toBe(false)
     if (!result.success) {
       expect(result.errors.issues.length).toBeGreaterThan(0)
+    }
+  })
+
+  it('deve rejeitar o formulário sem consentimento', () => {
+    const result = contactFormSchema.safeParse({
+      nome: 'Luís Teixeira',
+      email: 'test@example.com',
+      mensagem: 'Esta é uma mensagem de teste válida.',
+      acceptedPrivacy: false,
+    })
+
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      expect(result.error.issues.some((issue) => issue.path[0] === 'acceptedPrivacy')).toBe(true)
     }
   })
 })

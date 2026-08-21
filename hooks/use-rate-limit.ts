@@ -45,7 +45,7 @@ export function useRateLimit() {
 
   // Limpar rate limit quando o tempo expirar
   useEffect(() => {
-    if (rateLimitState.resetTime && rateLimitState.isBlocked) {
+    if (rateLimitState.resetTime) {
       const timeUntilReset = rateLimitState.resetTime - Date.now()
 
       if (timeUntilReset > 0) {
@@ -64,9 +64,19 @@ export function useRateLimit() {
 
   const recordAttempt = useCallback(() => {
     const now = Date.now()
+
+    if (rateLimitState.attempts >= MAX_SUBMISSIONS) {
+      const blockedState: RateLimitState = {
+        ...rateLimitState,
+        isBlocked: true,
+      }
+      setRateLimitState(blockedState)
+      return false
+    }
+
     const newAttempts = rateLimitState.attempts + 1
     const isBlocked = newAttempts >= MAX_SUBMISSIONS
-    const resetTime = isBlocked ? now + TIME_WINDOW : null
+    const resetTime = rateLimitState.resetTime ?? now + TIME_WINDOW
 
     const newState: RateLimitState = {
       attempts: newAttempts,
@@ -85,8 +95,8 @@ export function useRateLimit() {
       }
     }
 
-    return !isBlocked
-  }, [rateLimitState.attempts])
+    return true
+  }, [rateLimitState])
 
   const reset = useCallback(() => {
     setRateLimitState({ attempts: 0, resetTime: null, isBlocked: false })
