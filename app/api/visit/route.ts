@@ -14,7 +14,19 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const rateLimit = consumeContactRateLimit(`visit:${getClientIp(request)}`)
+  let rateLimit
+
+  try {
+    rateLimit = await consumeContactRateLimit(`visit:${getClientIp(request)}`)
+  } catch (error) {
+    console.error('Erro ao consultar rate limit de visitas:', error)
+
+    return NextResponse.json(
+      { success: false, message: 'Serviço temporariamente indisponível.' },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } }
+    )
+  }
+
   if (!rateLimit.allowed) {
     return NextResponse.json(
       { success: false, message: 'Muitas tentativas. Tente novamente mais tarde.' },

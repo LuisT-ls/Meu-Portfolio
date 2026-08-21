@@ -175,6 +175,27 @@ endereço padrão de remetente e informe as credenciais SMTP do provedor escolhi
 O servidor da aplicação grava na coleção usando o Firebase Admin SDK; clientes
 não têm permissão para ler ou escrever nessa fila.
 
+### Rate limiting server-side
+
+As rotas `/api/contact` e `/api/visit` usam transações atômicas do Firestore
+para compartilhar o limite entre instâncias serverless. As chaves são
+armazenadas em hash na coleção `rateLimits`, bloqueada para clientes pelas
+regras do Firestore.
+
+Para remover automaticamente registros expirados, habilite o TTL no campo
+`expiresAt` uma vez no projeto:
+
+```bash
+gcloud firestore fields ttls update expiresAt \
+  --collection-group=rateLimits \
+  --database='(default)' \
+  --enable-ttl \
+  --project portfolio-contador
+```
+
+O TTL é uma configuração da conta/projeto e pode levar alguns minutos para
+ser ativado após o comando.
+
 ---
 
 ## Licença

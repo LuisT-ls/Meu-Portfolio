@@ -7,5 +7,10 @@ service cloud.firestore {
     match /mail/{document} {
       allow read, write: if false;
     }
+
+    // O rate limit é mantido exclusivamente pelo Admin SDK em transações.
+    match /rateLimits/{document} {
+      allow read, write: if false;
+    }
   }
 }

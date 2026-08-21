@@ -6,6 +6,8 @@ import { isAllowedOrigin } from '@/lib/request-security'
 
 const MAX_BODY_BYTES = 32_000
 
+export const runtime = 'nodejs'
+
 /**
  * API Route para processar formulário de contato
  * Validação server-side e envio de email
@@ -18,7 +20,19 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const rateLimit = consumeContactRateLimit(`contact:${getClientIp(request)}`)
+  let rateLimit
+
+  try {
+    rateLimit = await consumeContactRateLimit(`contact:${getClientIp(request)}`)
+  } catch (error) {
+    console.error('Erro ao consultar rate limit de contato:', error)
+
+    return NextResponse.json(
+      { success: false, message: 'Serviço temporariamente indisponível.' },
+      { status: 503 }
+    )
+  }
+
   if (!rateLimit.allowed) {
     return NextResponse.json(
       { success: false, message: 'Muitas tentativas. Tente novamente mais tarde.' },
