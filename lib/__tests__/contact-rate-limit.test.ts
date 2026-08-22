@@ -1,6 +1,6 @@
 import type { Firestore, Transaction } from 'firebase-admin/firestore'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { consumeContactRateLimit } from '../contact-rate-limit'
+import { consumeContactRateLimit, getClientIp } from '../contact-rate-limit'
 
 interface StoredDocument {
   attempts: number
@@ -43,6 +43,30 @@ describe('contact rate limit', () => {
 
   afterEach(() => {
     vi.useRealTimers()
+  })
+
+  it('prioriza o header da Vercel e ignora valores inválidos', () => {
+    const request = new Request('http://localhost:3000', {
+      headers: {
+        'x-vercel-forwarded-for': '203.0.113.20',
+        'x-real-ip': '198.51.100.20',
+        'x-forwarded-for': 'not-an-ip',
+      },
+    })
+
+    expect(getClientIp(request)).toBe('203.0.113.20')
+  })
+
+  it('aceita IPv6 e retorna unknown quando não há IP válido', () => {
+    const ipv6Request = new Request('http://localhost:3000', {
+      headers: { 'x-forwarded-for': '2001:db8::20, 198.51.100.20' },
+    })
+    const invalidRequest = new Request('http://localhost:3000', {
+      headers: { 'x-forwarded-for': 'not-an-ip' },
+    })
+
+    expect(getClientIp(ipv6Request)).toBe('2001:db8::20')
+    expect(getClientIp(invalidRequest)).toBe('unknown')
   })
 
   it('compartilha o limite entre instâncias usando o mesmo armazenamento', async () => {

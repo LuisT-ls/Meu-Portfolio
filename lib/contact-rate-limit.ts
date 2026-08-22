@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto'
+import { isIP } from 'node:net'
 import type { DocumentReference, Firestore, Transaction } from 'firebase-admin/firestore'
 import { getFirebaseAdminFirestore } from './firebase-admin'
 
@@ -93,9 +94,21 @@ export async function consumeContactRateLimit(
 }
 
 export function getClientIp(request: Request): string {
-  // Em produção, o provedor deve sobrescrever esses headers com o IP real.
-  const forwardedFor = request.headers.get('x-forwarded-for')
-  const realIp = request.headers.get('x-real-ip')
+  // Vercel documenta x-vercel-forwarded-for como a origem confiável quando
+  // existe um proxy adicional; os outros headers são fallbacks locais.
+  const candidates = [
+    request.headers.get('x-vercel-forwarded-for'),
+    request.headers.get('x-real-ip'),
+    request.headers.get('x-forwarded-for'),
+  ]
 
-  return forwardedFor?.split(',')[0]?.trim() || realIp || 'unknown'
+  for (const value of candidates) {
+    const candidate = value?.split(',')[0]?.trim()
+
+    if (candidate && isIP(candidate) !== 0) {
+      return candidate
+    }
+  }
+
+  return 'unknown'
 }
