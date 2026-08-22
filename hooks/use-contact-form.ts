@@ -10,10 +10,14 @@ interface UseContactFormReturn {
   isSubmitting: boolean
   fieldErrors: Record<string, string>
   isBlocked: boolean
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  submissionStatus: 'idle' | 'success' | 'error'
+  submissionMessage: string
+  retryAfter: number | null
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void
   handlePrivacyChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  handleBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void
   handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>
+  startNewMessage: () => void
 }
 
 export function useContactForm(): UseContactFormReturn {
@@ -23,9 +27,15 @@ export function useContactForm(): UseContactFormReturn {
     mensagem: '',
     acceptedPrivacy: false,
     website: '',
+    tipoProjeto: '',
+    prazo: '',
+    faixaInvestimento: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+  const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submissionMessage, setSubmissionMessage] = useState('')
+  const [retryAfter, setRetryAfter] = useState<number | null>(null)
 
   const { isBlocked, recordAttempt, getTimeUntilReset } = useRateLimit()
 
@@ -57,10 +67,15 @@ export function useContactForm(): UseContactFormReturn {
   )
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    if (submissionStatus !== 'idle') {
+      setSubmissionStatus('idle')
+      setSubmissionMessage('')
+      setRetryAfter(null)
+    }
     if (Object.keys(fieldErrors).length > 0) {
       validateField(name, value)
     }
@@ -69,6 +84,11 @@ export function useContactForm(): UseContactFormReturn {
   const handlePrivacyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const acceptedPrivacy = e.target.checked
     setFormData((prev) => ({ ...prev, acceptedPrivacy }))
+    if (submissionStatus !== 'idle') {
+      setSubmissionStatus('idle')
+      setSubmissionMessage('')
+      setRetryAfter(null)
+    }
 
     if (acceptedPrivacy) {
       setFieldErrors((prev) => {
@@ -80,7 +100,7 @@ export function useContactForm(): UseContactFormReturn {
   }
 
   const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     validateField(e.target.name, e.target.value)
   }
@@ -124,6 +144,9 @@ export function useContactForm(): UseContactFormReturn {
 
     setIsSubmitting(true)
     setFieldErrors({})
+    setSubmissionStatus('idle')
+    setSubmissionMessage('')
+    setRetryAfter(null)
 
     try {
       const response = await fetch('/api/contact', {
@@ -136,6 +159,11 @@ export function useContactForm(): UseContactFormReturn {
 
       if (!response.ok) {
         if (result.errors) setFieldErrors(result.errors)
+        const retryAfterHeader = response.headers.get('Retry-After')
+        const parsedRetryAfter = retryAfterHeader ? Number.parseInt(retryAfterHeader, 10) : NaN
+        setRetryAfter(Number.isFinite(parsedRetryAfter) ? parsedRetryAfter : null)
+        setSubmissionStatus('error')
+        setSubmissionMessage(result.message || 'Erro ao enviar mensagem. Por favor, tente novamente.')
         toast.error(
           result.message || 'Erro ao enviar mensagem. Por favor, tente novamente.',
           { duration: 5000 }
@@ -143,21 +171,26 @@ export function useContactForm(): UseContactFormReturn {
         return
       }
 
-      toast.success(
-        result.message || 'Mensagem enviada com sucesso! Logo entrarei em contato.',
-        { duration: 5000 }
-      )
+      const successMessage = result.message || 'Mensagem enviada com sucesso! Logo entrarei em contato.'
+      setSubmissionStatus('success')
+      setSubmissionMessage(successMessage)
+      toast.success(successMessage, { duration: 5000 })
       setFormData({
         nome: '',
         email: '',
         mensagem: '',
         acceptedPrivacy: false,
         website: '',
+        tipoProjeto: '',
+        prazo: '',
+        faixaInvestimento: '',
       })
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error)
+      setSubmissionStatus('error')
+      setSubmissionMessage('Ocorreu um erro ao enviar sua mensagem. Verifique sua conexão e tente novamente.')
       toast.error(
-        'Ocorreu um erro ao enviar sua mensagem. Por favor, verifique sua conexão e tente novamente.',
+        'Ocorreu um erro ao enviar sua mensagem. Verifique sua conexão e tente novamente.',
         { duration: 5000 }
       )
     } finally {
@@ -165,14 +198,35 @@ export function useContactForm(): UseContactFormReturn {
     }
   }
 
+  const startNewMessage = () => {
+    setFormData({
+      nome: '',
+      email: '',
+      mensagem: '',
+      acceptedPrivacy: false,
+      website: '',
+      tipoProjeto: '',
+      prazo: '',
+      faixaInvestimento: '',
+    })
+    setFieldErrors({})
+    setSubmissionStatus('idle')
+    setSubmissionMessage('')
+    setRetryAfter(null)
+  }
+
   return {
     formData,
     isSubmitting,
     fieldErrors,
     isBlocked,
+    submissionStatus,
+    submissionMessage,
+    retryAfter,
     handleChange,
     handlePrivacyChange,
     handleBlur,
     handleSubmit,
+    startNewMessage,
   }
 }

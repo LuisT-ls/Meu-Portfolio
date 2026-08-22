@@ -60,7 +60,6 @@ export const metadata: Metadata = {
     canonical: 'https://luistls.vercel.app/',
     languages: {
       'pt-BR': 'https://luistls.vercel.app/',
-      'en': 'https://luistls.vercel.app/en/',
     },
   },
   manifest: '/manifest.json',

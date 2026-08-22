@@ -118,11 +118,11 @@ export function Certificacoes() {
     {
       logo: '/assets/img/icon/cisco-svgrepo-com.svg',
       alt: 'Cisco Logo',
-      titulo: 'CCNA - Cisco Certified Network Associate',
+      titulo: 'Introduction to Cybersecurity',
       data: 'Novembro 2019',
       descricao:
-        'Certificação em redes de computadores, incluindo roteamento, switching e segurança.',
-      skills: ['Redes', 'Segurança', 'Routing'],
+        'Formação introdutória em cibersegurança, fundamentos de redes e práticas de proteção digital.',
+      skills: ['Cibersegurança', 'Redes', 'Fundamentos'],
       link: '/Data/Certificado Introduction to Cybersecurity.pdf',
     },
     {
@@ -154,7 +154,7 @@ export function Certificacoes() {
     <section
       id="certificacoes"
       ref={sectionRef}
-      className="section-certificacoes section-padding py-20 px-4 sm:px-6 lg:px-8 bg-surface"
+      className="section-certificacoes section-padding bg-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
     >
       <div className="container mx-auto">
         <h2
@@ -177,4 +177,3 @@ export function Certificacoes() {
     </section>
   )
 }
-

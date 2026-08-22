@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="site-footer bg-surface-raised text-content py-12 px-4 sm:px-6 lg:px-8"
+      className="site-footer bg-surface-raised px-4 py-10 text-content sm:px-6 sm:py-12 lg:px-8"
     >
       <div className="container mx-auto">
         <div className="footer-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -34,10 +34,12 @@ export function Footer() {
             <h2 className="text-xl font-semibold mb-4">Explore</h2>
             <ul className="space-y-3">
               {[
-                { href: '#sobre', label: 'Sobre mim' },
-                { href: '#projetos', label: 'Projetos' },
-                { href: '#habilidades', label: 'Habilidades' },
-                { href: '#contato', label: 'Contato' },
+                { href: '/#sobre', label: 'Sobre mim' },
+                { href: '/#projetos', label: 'Projetos' },
+                { href: '/#habilidades', label: 'Habilidades' },
+                { href: '/#contato', label: 'Contato' },
+                { href: '/agendar', label: 'Agendar conversa' },
+                { href: '/privacy-policy', label: 'Privacidade' },
               ].map(({ href, label }) => (
                 <li key={href}>
                   <Link
@@ -57,7 +59,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:luist_ls@outlook.pt"
-                  className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
+                  className="flex min-w-0 items-center gap-2 break-words text-content-secondary transition-colors hover:text-content"
                 >
                   <i className="fas fa-envelope"></i>
                   luist_ls@outlook.pt
@@ -65,16 +67,16 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="tel:+557192193686"
+                  href="tel:+5571993322305"
                   className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
                 >
                   <i className="fas fa-phone"></i>
-                  +55 71 99219-3686
+                  +55 71 99332-2305
                 </a>
               </li>
               <li>
                 <a
-                  href="https://wa.link/u8h8e6"
+                  href="https://wa.me/5571993322305"
                   target="_blank"
                   rel="noopener"
                   className="text-content-secondary hover:text-content transition-colors flex items-center gap-2"
@@ -146,4 +148,3 @@ export function Footer() {
     </footer>
   )
 }
-

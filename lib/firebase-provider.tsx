@@ -3,11 +3,15 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { getFirebaseDatabase, getFirebaseAnalytics } from './firebase'
 import { onValue, ref } from 'firebase/database'
+import { AnalyticsConsent } from '@/components/analytics-consent'
 
 interface FirebaseContextType {
   visitCount: number | null
   isLoading: boolean
 }
+
+const ANALYTICS_CONSENT_KEY = 'analytics-consent'
+type AnalyticsConsentState = 'unknown' | 'granted' | 'denied'
 
 const FirebaseContext = createContext<FirebaseContextType>({
   visitCount: null,
@@ -19,13 +23,21 @@ export const useFirebase = () => useContext(FirebaseContext)
 export function FirebaseProvider({ children }: { children: ReactNode }) {
   const [visitCount, setVisitCount] = useState<number | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsentState>('unknown')
 
   useEffect(() => {
     let cancelled = false
     let unsubscribe: (() => void) | undefined
 
-    // Inicializar Analytics
-    getFirebaseAnalytics()
+    try {
+      const storedConsent = localStorage.getItem(ANALYTICS_CONSENT_KEY)
+      if (storedConsent === 'granted' || storedConsent === 'denied') {
+        setAnalyticsConsent(storedConsent)
+        if (storedConsent === 'granted') getFirebaseAnalytics()
+      }
+    } catch (error) {
+      console.warn('Não foi possível ler a preferência de Analytics:', error)
+    }
 
     // Verificar se esta visita já foi contada nesta sessão
     const sessionKey = 'visit_counted'
@@ -111,9 +123,26 @@ export function FirebaseProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const updateAnalyticsConsent = (consent: Exclude<AnalyticsConsentState, 'unknown'>) => {
+    try {
+      localStorage.setItem(ANALYTICS_CONSENT_KEY, consent)
+    } catch (error) {
+      console.warn('Não foi possível salvar a preferência de Analytics:', error)
+    }
+
+    setAnalyticsConsent(consent)
+    if (consent === 'granted') getFirebaseAnalytics()
+  }
+
   return (
     <FirebaseContext.Provider value={{ visitCount, isLoading }}>
       {children}
+      {analyticsConsent === 'unknown' && (
+        <AnalyticsConsent
+          onAccept={() => updateAnalyticsConsent('granted')}
+          onReject={() => updateAnalyticsConsent('denied')}
+        />
+      )}
     </FirebaseContext.Provider>
   )
 }

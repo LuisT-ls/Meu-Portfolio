@@ -9,7 +9,7 @@ export function Sobre() {
   return (
     <section
       id="sobre"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-transparent"
+      className="relative bg-transparent px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
     >
       <div className="container mx-auto">
         <SectionHeading title="Sobre Mim" />
@@ -19,7 +19,7 @@ export function Sobre() {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
+          className="grid grid-cols-1 items-start gap-8 xl:grid-cols-2 xl:gap-16"
         >
           <motion.div variants={revealItem} className="space-y-8">
             <div className="space-y-6 text-lg leading-relaxed text-content-secondary">
@@ -45,7 +45,7 @@ export function Sobre() {
               </p>
             </div>
 
-            <div className="glass-panel p-8 rounded-2xl border border-white/10 shadow-xl">
+            <div className="glass-panel rounded-2xl border border-white/10 p-5 shadow-xl sm:p-8">
               <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
                 <i className="fas fa-rocket text-brand" aria-hidden="true"></i>
                 Destaques
@@ -72,8 +72,8 @@ export function Sobre() {
             </div>
           </motion.div>
 
-          <motion.div variants={revealItem} className="lg:sticky lg:top-32">
-            <div className="glass-panel p-8 rounded-3xl border border-white/10 shadow-2xl overflow-hidden group">
+          <motion.div variants={revealItem} className="xl:sticky xl:top-32">
+            <div className="glass-panel group overflow-hidden rounded-3xl border border-white/10 p-5 shadow-2xl sm:p-8">
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-brand/20 transition-colors" />
               <StatsCounter />
             </div>
@@ -83,4 +83,3 @@ export function Sobre() {
     </section>
   )
 }
-

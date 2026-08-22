@@ -27,7 +27,7 @@ Portfólio pessoal desenvolvido com Next.js 16, TypeScript, Tailwind CSS, Framer
 - **Tema claro/escuro** — persistido no localStorage, sem flash na inicialização
 - **Seção de Projetos** — cards filtráveis com links para o GitHub
 - **Nav com seção ativa** — IntersectionObserver detecta a seção visível e destaca o link correspondente com animação `layoutId`
-- **Efeito typewriter no Hero** — rotação entre papéis com animação de digitação
+- **Hero orientado por intenção** — seleção interativa de contexto com CTA e conteúdo contextual
 - **Scroll progress bar** — barra animada no topo indicando progresso na página
 - **Formulário de contato seguro** — validação com Zod, rate limiting e fila de e-mail no Firestore
 - **Contador de visitas em tempo real** — Firebase Realtime Database
@@ -128,6 +128,9 @@ FIREBASE_DATABASE_URL=
 # E-mail via Firebase Trigger Email
 CONTACT_EMAIL_TO=luist_ls@outlook.pt
 FIREBASE_MAIL_COLLECTION=mail
+
+# Agenda externa (opcional; sem ela, o fluxo usa WhatsApp)
+NEXT_PUBLIC_SCHEDULING_URL=
 ```
 
 ---

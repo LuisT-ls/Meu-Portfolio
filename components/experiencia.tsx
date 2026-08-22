@@ -70,7 +70,7 @@ export function Experiencia() {
   return (
     <section
       id="experiencia"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-transparent"
+      className="relative bg-transparent px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
     >
       <div className="container mx-auto">
         <SectionHeading title="Experiência Profissional" />

@@ -28,6 +28,12 @@ function getContactEmailRecipient(): string {
 export function buildContactEmailDocument(
   formData: ContactEmailData
 ): ContactEmailDocument {
+  const briefing = [
+    formData.tipoProjeto && `Tipo de projeto: ${formData.tipoProjeto}`,
+    formData.prazo && `Prazo: ${formData.prazo}`,
+    formData.faixaInvestimento && `Faixa de investimento: ${formData.faixaInvestimento}`,
+  ].filter(Boolean)
+
   return {
     to: getContactEmailRecipient(),
     replyTo: formData.email,
@@ -36,6 +42,7 @@ export function buildContactEmailDocument(
       text: [
         `Nome: ${formData.nome}`,
         `E-mail: ${formData.email}`,
+        ...(briefing.length > 0 ? ['', 'Briefing:', ...briefing] : []),
         '',
         'Mensagem:',
         formData.mensagem,

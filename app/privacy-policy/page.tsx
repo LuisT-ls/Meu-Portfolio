@@ -19,15 +19,15 @@ export default function PrivacyPolicy() {
   return (
     <>
       <Header />
-      <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-canvas">
+      <main className="min-h-screen bg-canvas px-4 pb-12 pt-24 sm:px-6 sm:pb-16 lg:px-8">
         <div className="container mx-auto max-w-4xl">
           {/* Cabeçalho */}
           <section className="text-center mb-12 pb-8 border-b border-line">
-            <h1 className="text-4xl font-bold text-brand mb-2">
+            <h1 className="mb-2 text-3xl font-bold text-brand sm:text-4xl">
               Política de Privacidade
             </h1>
             <p className="text-sm text-content-muted italic">
-              Última atualização: 26 de março de 2025
+              Última atualização: 21 de agosto de 2026
             </p>
           </section>
 
@@ -42,8 +42,8 @@ export default function PrivacyPolicy() {
             </p>
             <p>
               Por favor, leia atentamente para entender minhas práticas em relação
-              a seus dados pessoais. Ao utilizar este site, você concorda com a
-              coleta e uso de informações de acordo com esta política.
+              a seus dados pessoais. O Analytics só é inicializado após sua
+              escolha no aviso de consentimento apresentado no site.
             </p>
           </section>
 
@@ -268,9 +268,10 @@ export default function PrivacyPolicy() {
           {/* Seção 7 */}
           <PolicySection title="7. Cookies">
             <p className="mb-4 text-content-secondary">
-              Este site utiliza cookies para melhorar sua experiência. Cookies são
-              pequenos arquivos de texto que são armazenados no seu dispositivo
-              quando você visita um site.
+              Este site utiliza armazenamento local e, quando autorizado,
+              cookies de Analytics para melhorar a experiência e entender como o
+              conteúdo é utilizado. Você pode aceitar ou recusar o Analytics no
+              aviso de consentimento exibido na primeira visita.
             </p>
             <h3 className="text-lg font-semibold text-content mt-4 mb-2">
               7.1. Tipos de cookies que usamos
@@ -280,24 +281,24 @@ export default function PrivacyPolicy() {
                 <strong className="font-semibold text-content">
                   Cookies estritamente necessários:
                 </strong>{' '}
-                Necessários para o funcionamento do site. Incluem, por exemplo,
-                cookies que permitem que você faça login em áreas seguras do site.
+                Necessários para o funcionamento do site, como preferências de
+                tema e controle de sessão do contador de visitas. Este site não
+                possui área de login.
               </li>
               <li>
                 <strong className="font-semibold text-content">
                   Cookies analíticos/de desempenho:
                 </strong>{' '}
-                Permitem reconhecer e contar o número de visitantes e ver como os
-                visitantes navegam pelo site. Isso ajuda a melhorar o
-                funcionamento do site.
+                Só são utilizados após consentimento e ajudam a entender como os
+                visitantes navegam pelo site. A recusa não impede o acesso ao
+                conteúdo.
               </li>
               <li>
                 <strong className="font-semibold text-content">
                   Cookies de funcionalidade:
                 </strong>{' '}
-                Reconhecem você quando retorna ao site. Isso permite personalizar
-                o conteúdo para você e lembrar suas preferências (por exemplo,
-                sua escolha de idioma ou região).
+                Podem lembrar preferências locais, como a escolha de tema. O site
+                não utiliza personalização baseada em perfil.
               </li>
             </ul>
             <h3 className="text-lg font-semibold text-content mt-4 mb-2">

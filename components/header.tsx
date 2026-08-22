@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from './theme-provider'
@@ -8,12 +8,12 @@ import { useActiveSection } from '@/hooks/use-active-section'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
-  { href: '#sobre', label: 'Sobre', icon: 'fa-user' },
-  { href: '#projetos', label: 'Projetos', icon: 'fa-folder-open' },
-  { href: '#experiencia', label: 'Experiência', icon: 'fa-briefcase' },
-  { href: '#certificacoes', label: 'Certificações', icon: 'fa-certificate' },
-  { href: '#habilidades', label: 'Habilidades', icon: 'fa-code' },
-  { href: '#contato', label: 'Contato', icon: 'fa-paper-plane' },
+  { href: '/#sobre', section: 'sobre', label: 'Sobre', icon: 'fa-user' },
+  { href: '/#projetos', section: 'projetos', label: 'Projetos', icon: 'fa-folder-open' },
+  { href: '/#experiencia', section: 'experiencia', label: 'Experiência', icon: 'fa-briefcase' },
+  { href: '/#certificacoes', section: 'certificacoes', label: 'Certificações', icon: 'fa-certificate' },
+  { href: '/#habilidades', section: 'habilidades', label: 'Habilidades', icon: 'fa-code' },
+  { href: '/#contato', section: 'contato', label: 'Contato', icon: 'fa-paper-plane' },
 ]
 
 export function Header() {
@@ -21,8 +21,9 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
   const { theme, toggleTheme } = useTheme()
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
 
-  const sectionIds = navLinks.map((l) => l.href.slice(1))
+  const sectionIds = useMemo(() => navLinks.map((link) => link.section), [])
   const activeSection = useActiveSection(sectionIds)
 
   useEffect(() => {
@@ -33,8 +34,22 @@ export function Header() {
 
   const closeMenu = () => setIsMenuOpen(false)
 
+  useEffect(() => {
+    if (!isMenuOpen) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isMenuOpen])
+
   const handleLinkClick = () => {
-    if (window.innerWidth <= 768) closeMenu()
+    if (window.innerWidth < 1280) closeMenu()
   }
 
   return (
@@ -73,7 +88,7 @@ export function Header() {
           <nav
             role="navigation"
             aria-label="Menu principal"
-            className="hidden md:flex items-center"
+            className="hidden xl:flex items-center"
           >
             <ul
               className={cn(
@@ -84,7 +99,7 @@ export function Header() {
               )}
             >
               {navLinks.map((link) => {
-                const isActive = activeSection === link.href.slice(1)
+                const isActive = activeSection === link.section
                 const isHovered = hoveredLink === link.href
 
                 return (
@@ -94,6 +109,7 @@ export function Header() {
                       onClick={handleLinkClick}
                       onMouseEnter={() => setHoveredLink(link.href)}
                       onMouseLeave={() => setHoveredLink(null)}
+                      aria-current={isActive ? 'location' : undefined}
                       className={cn(
                         'relative z-10 flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200',
                         isActive
@@ -137,7 +153,7 @@ export function Header() {
               href="/Data/Currículo-Luís Teixeira.pdf"
               download="Currículo-Luís-Teixeira.pdf"
               aria-label="Baixar currículo em PDF"
-              className="hidden md:flex items-center gap-2 px-4 py-2 bg-brand text-content-on-brand rounded-full text-sm font-semibold hover:bg-brand-hover hover:shadow-lg hover:shadow-brand/20 transition-all duration-200"
+              className="hidden xl:flex items-center gap-2 px-4 py-2 bg-brand text-content-on-brand rounded-full text-sm font-semibold hover:bg-brand-hover hover:shadow-lg hover:shadow-brand/20 transition-all duration-200"
             >
               <i className="fas fa-download text-xs"></i>
               Currículo
@@ -174,11 +190,12 @@ export function Header() {
 
             {/* Mobile hamburger */}
             <button
+              ref={menuButtonRef}
               onClick={() => setIsMenuOpen((v) => !v)}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-nav"
               aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-              className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-full hover:bg-surface transition-colors"
+              className="xl:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-full hover:bg-surface transition-colors"
             >
               <span className={cn('block h-0.5 w-5 bg-current transition-all duration-300 origin-center', isMenuOpen && 'rotate-45 translate-y-2')} />
               <span className={cn('block h-0.5 w-5 bg-current transition-all duration-300', isMenuOpen && 'opacity-0 scale-x-0')} />
@@ -199,11 +216,11 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden absolute top-full left-0 right-0 mx-4 mt-2 rounded-2xl border border-line bg-surface-raised/95 backdrop-blur-xl shadow-2xl overflow-hidden"
+            className="xl:hidden absolute top-full left-0 right-0 mx-4 mt-2 max-h-[calc(100svh-5rem)] overflow-y-auto rounded-2xl border border-line bg-surface-raised/95 backdrop-blur-xl shadow-2xl"
           >
             <ul className="flex flex-col p-3 gap-1">
               {navLinks.map((link, i) => {
-                const isActive = activeSection === link.href.slice(1)
+                const isActive = activeSection === link.section
                 return (
                   <motion.li
                     key={link.href}
@@ -214,6 +231,7 @@ export function Header() {
                     <Link
                       href={link.href}
                       onClick={handleLinkClick}
+                      aria-current={isActive ? 'location' : undefined}
                       className={cn(
                         'flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200',
                         isActive

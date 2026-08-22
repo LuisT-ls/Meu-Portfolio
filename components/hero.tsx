@@ -1,180 +1,312 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { revealItem, staggerContainer } from '@/lib/animations'
 
-const roles = [
-  'Dev Full-Stack',
-  'Especialista em IA',
-  'Entusiasta de Linux',
-  'Especialista em Redes',
+type HeroIntentId = 'contract' | 'projects' | 'recruiter'
+
+type HeroIntent = {
+  id: HeroIntentId
+  label: string
+  eyebrow: string
+  highlight: string
+  description: string
+  primaryLabel: string
+  primaryHref: string
+  secondaryLabel: string
+  secondaryHref: string
+  panelLabel: string
+  panelTitle: string
+  panelDescription: string
+  panelSteps: Array<{ label: string; value: string }>
+}
+
+const heroIntents: [HeroIntent, HeroIntent, HeroIntent] = [
+  {
+    id: 'contract',
+    label: 'Quero contratar',
+    eyebrow: 'Do briefing ao produto',
+    highlight: 'que resolve de verdade.',
+    description:
+      'Junto contexto, experiência e engenharia para transformar uma ideia importante em uma entrega clara, segura e pronta para evoluir.',
+    primaryLabel: 'Falar sobre um projeto',
+    primaryHref: '#contato',
+    secondaryLabel: 'Como eu trabalho',
+    secondaryHref: '#sobre',
+    panelLabel: 'PERSPECTIVA DE PRODUTO',
+    panelTitle: 'Clareza antes de complexidade.',
+    panelDescription:
+      'Cada decisão conecta o que a pessoa precisa ao que o produto precisa sustentar.',
+    panelSteps: [
+      { label: 'Contexto', value: 'entender' },
+      { label: 'Direção', value: 'simplificar' },
+      { label: 'Entrega', value: 'evoluir' },
+    ],
+  },
+  {
+    id: 'projects',
+    label: 'Quero conhecer os projetos',
+    eyebrow: 'Cases com contexto',
+    highlight: 'que contam uma boa história.',
+    description:
+      'Explore projetos com o raciocínio por trás da interface, as decisões de arquitetura e os aprendizados que ficaram.',
+    primaryLabel: 'Explorar projetos',
+    primaryHref: '#projetos',
+    secondaryLabel: 'Ver minha trajetória',
+    secondaryHref: '#experiencia',
+    panelLabel: 'CASES EM DESTAQUE',
+    panelTitle: 'Código é parte da história.',
+    panelDescription:
+      'Um bom case mostra o problema, as escolhas e o impacto, não apenas a tela final.',
+    panelSteps: [
+      { label: 'Problema', value: 'enquadrar' },
+      { label: 'Decisões', value: 'explicar' },
+      { label: 'Aprendizado', value: 'compartilhar' },
+    ],
+  },
+  {
+    id: 'recruiter',
+    label: 'Sou recrutador',
+    eyebrow: 'Visão ponta a ponta',
+    highlight: 'que aguenta crescer.',
+    description:
+      'Uma visão de engenharia de produto que combina autonomia, colaboração e cuidado com a base técnica.',
+    primaryLabel: 'Ver experiência',
+    primaryHref: '#experiencia',
+    secondaryLabel: 'Baixar currículo',
+    secondaryHref: '/Data/Curr%C3%ADculo-Lu%C3%ADs%20Teixeira.pdf',
+    panelLabel: 'ENGENHARIA FULL-STACK',
+    panelTitle: 'Visão ampla, execução cuidadosa.',
+    panelDescription:
+      'Do primeiro componente ao fluxo em produção, com decisões que permanecem compreensíveis.',
+    panelSteps: [
+      { label: 'Produto', value: 'priorizar' },
+      { label: 'Código', value: 'construir' },
+      { label: 'Time', value: 'colaborar' },
+    ],
+  },
 ]
 
-function TypewriterText() {
-  const [index, setIndex] = useState(0)
-  const [displayed, setDisplayed] = useState('')
-  const [isDeleting, setIsDeleting] = useState(false)
+const intentIcons: Record<HeroIntentId, string> = {
+  contract: 'fa-comments',
+  projects: 'fa-layer-group',
+  recruiter: 'fa-compass',
+}
 
-  useEffect(() => {
-    const current = roles[index] ?? ''
-    const speed = isDeleting ? 50 : 90
-    const pauseAfterWord = 1800
-    const pauseBeforeDelete = 200
+function getNextIntentId(currentId: HeroIntentId): HeroIntentId {
+  const currentIndex = heroIntents.findIndex((intent) => intent.id === currentId)
+  const nextIndex = (currentIndex + 1) % heroIntents.length
+  return heroIntents[nextIndex]?.id ?? heroIntents[0].id
+}
 
-    if (!isDeleting && displayed === current) {
-      const timeout = setTimeout(() => setIsDeleting(true), pauseAfterWord)
-      return () => clearTimeout(timeout)
-    }
-
-    if (isDeleting && displayed === '') {
-      const timeout = setTimeout(() => {
-        setIsDeleting(false)
-        setIndex((prev) => (prev + 1) % roles.length)
-      }, pauseBeforeDelete)
-      return () => clearTimeout(timeout)
-    }
-
-    const timeout = setTimeout(() => {
-      setDisplayed(
-        isDeleting
-          ? current.slice(0, displayed.length - 1)
-          : current.slice(0, displayed.length + 1)
-      )
-    }, speed)
-
-    return () => clearTimeout(timeout)
-  }, [displayed, isDeleting, index])
-
+function StudioCanvas({ intent, reduceMotion }: { intent: HeroIntent; reduceMotion: boolean }) {
   return (
-    <span aria-live="polite" aria-atomic="true" className="text-gradient">
-      {displayed}
-      <span className="animate-pulse" aria-hidden="true">|</span>
-    </span>
+    <div className="relative mx-auto w-full max-w-xl">
+      <div className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-brand/10 blur-3xl" aria-hidden="true" />
+
+      <div className="rounded-[2rem] border border-line bg-surface/90 p-3 shadow-2xl backdrop-blur-xl">
+        <div className="overflow-hidden rounded-[1.5rem] border border-line bg-surface-inset">
+          <div className="flex items-center justify-between border-b border-line px-5 py-4 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-content-muted">
+            <span>Luís / Product studio</span>
+            <span className="flex items-center gap-2 text-ok">
+              <span className="h-1.5 w-1.5 rounded-full bg-ok" aria-hidden="true" />
+              disponível
+            </span>
+          </div>
+
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={intent.id}
+              initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
+              transition={{ duration: reduceMotion ? 0 : 0.24, ease: 'easeOut' }}
+              className="p-5 sm:p-7"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-brand">
+                  {intent.panelLabel}
+                </span>
+                <span className="font-mono text-xs text-content-muted">0{heroIntents.indexOf(intent) + 1} / 03</span>
+              </div>
+
+              <div className="mt-8 max-w-sm">
+                <p className="text-2xl font-bold leading-tight tracking-tight text-content sm:text-3xl">
+                  {intent.panelTitle}
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-content-secondary">
+                  {intent.panelDescription}
+                </p>
+              </div>
+
+              <div className="mt-8 grid grid-cols-3 gap-2 border-t border-line pt-4">
+                {intent.panelSteps.map((step, index) => (
+                  <div key={step.label} className="relative pr-2">
+                    {index < intent.panelSteps.length - 1 && (
+                      <span className="absolute right-1 top-1.5 h-px w-2 bg-line-strong" aria-hidden="true" />
+                    )}
+                    <span className="block text-[0.65rem] font-bold uppercase tracking-wider text-content-muted">
+                      {step.label}
+                    </span>
+                    <span className="mt-1 block text-sm font-semibold text-content">{step.value}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="flex items-center justify-between gap-4 px-3 pb-1 pt-4 text-xs text-content-muted">
+          <span>Interação, performance e escala</span>
+          <span className="font-mono text-brand">/01</span>
+        </div>
+
+        <div className="mx-3 mt-3 h-0.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
+          <motion.div
+            key={intent.id}
+            initial={reduceMotion ? false : { scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: reduceMotion ? 0 : 4, ease: 'linear' }}
+            className="h-full origin-left rounded-full bg-brand/70"
+          />
+        </div>
+      </div>
+    </div>
   )
 }
 
 export function Hero() {
-  return (
-    <section className="relative min-h-screen flex items-center pt-20 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Animated gradient blobs */}
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/4 -left-20 w-72 h-72 bg-brand rounded-full blur-[120px] -z-10"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        className="absolute bottom-1/4 -right-20 w-96 h-96 bg-indigo-500 rounded-full blur-[150px] -z-10"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.05, 0.12, 0.05] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-violet-500 rounded-full blur-[140px] -z-10"
-      />
+  const [activeIntentId, setActiveIntentId] = useState<HeroIntentId>('contract')
+  const reduceMotion = useReducedMotion() ?? false
+  const activeIntent = heroIntents.find((intent) => intent.id === activeIntentId) ?? heroIntents[0]
 
-      <div className="container mx-auto">
+  useEffect(() => {
+    if (reduceMotion) return
+
+    const intervalId = window.setInterval(() => {
+      setActiveIntentId((currentId) => getNextIntentId(currentId))
+    }, 4000)
+
+    return () => window.clearInterval(intervalId)
+  }, [reduceMotion])
+
+  return (
+    <section
+      id="inicio"
+      className="relative flex min-h-[min(780px,100svh)] items-center overflow-hidden px-4 pb-12 pt-24 sm:px-6 lg:px-8"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 -z-20 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, hsl(var(--line) / 0.28) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--line) / 0.28) 1px, transparent 1px)',
+          backgroundSize: '64px 64px',
+        }}
+        aria-hidden="true"
+      />
+      <div className="pointer-events-none absolute left-1/2 top-1/3 -z-10 h-96 w-96 -translate-x-1/2 rounded-full bg-brand/10 blur-[140px]" aria-hidden="true" />
+
+      <div className="container mx-auto w-full max-w-7xl">
         <motion.div
           variants={staggerContainer}
-          initial="initial"
+          initial={reduceMotion ? false : 'initial'}
           animate="animate"
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          className="grid items-start gap-10 xl:grid-cols-2 xl:gap-14"
         >
-          <div className="text-center lg:text-left">
-            <motion.span
-              variants={revealItem}
-              className="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wider text-brand uppercase bg-brand/10 rounded-full"
-            >
-              Disponível para novos desafios
-            </motion.span>
-
-            <motion.h1
-              variants={revealItem}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 leading-[1.1]"
-            >
-              Olá, eu sou <br />
-              <span className="text-gradient">Luís Teixeira</span>
-            </motion.h1>
-
-            <motion.div
-              variants={revealItem}
-              className="text-2xl sm:text-3xl font-bold mb-6 h-10"
-            >
-              <TypewriterText />
+          <div className="max-w-3xl text-center xl:text-left">
+            <motion.div variants={revealItem} className="flex items-center justify-center gap-3 text-sm font-semibold text-content-secondary xl:justify-start">
+              <span className="flex items-center gap-2 text-ok">
+                <span className="h-2 w-2 rounded-full bg-ok shadow-[0_0_0_4px_hsl(var(--ok)/0.12)]" aria-hidden="true" />
+                Disponível para novos desafios
+              </span>
+              <span className="hidden text-content-muted sm:inline" aria-hidden="true">/</span>
+              <span className="hidden font-mono text-xs text-content-muted sm:inline">LUÍS TEIXEIRA</span>
             </motion.div>
 
-            <motion.p
-              variants={revealItem}
-              className="text-lg sm:text-xl text-content-secondary mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed"
-            >
-              Construindo experiências digitais modernas e escaláveis com foco em performance e design.
+            <motion.h1 variants={revealItem} className="mt-6 max-w-2xl text-4xl font-bold leading-[1.05] tracking-display text-content sm:text-5xl lg:text-6xl">
+              Transformo problemas complexos em produtos digitais{' '}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={activeIntent.id}
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={reduceMotion ? undefined : { opacity: 0 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.24, ease: 'easeOut' }}
+                  className="text-gradient"
+                >
+                  {activeIntent.highlight}
+                </motion.span>
+              </AnimatePresence>
+            </motion.h1>
+
+            <motion.p variants={revealItem} className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-content-secondary sm:text-lg xl:mx-0">
+              {activeIntent.description}
             </motion.p>
 
-            <motion.div
-              variants={revealItem}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            >
+            <motion.div variants={revealItem} className="mt-8">
+              <p className="mb-3 text-xs font-bold uppercase tracking-caps text-content-muted">Comece por aqui</p>
+              <div className="grid gap-2 sm:grid-cols-3 lg:max-w-2xl">
+                {heroIntents.map((intent, index) => {
+                  const isActive = intent.id === activeIntent.id
+
+                  return (
+                    <button
+                      key={intent.id}
+                      type="button"
+                      aria-pressed={isActive}
+                      onClick={() => setActiveIntentId(intent.id)}
+                      className={`group rounded-2xl border p-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas ${
+                        isActive
+                          ? 'border-brand/50 bg-brand/10 shadow-[0_0_0_1px_hsl(var(--brand)/0.12)]'
+                          : 'border-line bg-surface/60 hover:border-line-strong hover:bg-surface'
+                      }`}
+                    >
+                      <span className={`flex items-center justify-between text-xs font-bold ${isActive ? 'text-brand' : 'text-content-muted'}`}>
+                        <span>0{index + 1}</span>
+                        <i className={`fas ${intentIcons[intent.id]} transition-transform duration-200 group-hover:translate-x-0.5`} aria-hidden="true" />
+                      </span>
+                      <span className={`mt-4 block text-sm font-semibold leading-snug ${isActive ? 'text-content' : 'text-content-secondary'}`}>
+                        {intent.label}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </motion.div>
+
+            <motion.div variants={revealItem} className="mt-6 flex flex-col justify-center gap-3 sm:flex-row xl:justify-start">
               <Link
-                href="#projetos"
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand text-content-on-brand rounded-full font-bold hover:bg-brand-hover hover:shadow-brand transition-all focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+                href={activeIntent.primaryHref}
+                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-6 py-3.5 font-bold text-content-on-brand transition-all hover:bg-brand-hover hover:shadow-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
               >
-                Ver Projetos
-                <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                {activeIntent.primaryLabel}
+                <i className="fas fa-arrow-right transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Link>
               <Link
-                href="#contato"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-surface text-content rounded-full font-bold hover:bg-surface-raised transition-all border border-line focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+                href={activeIntent.secondaryHref}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-surface/70 px-6 py-3.5 font-bold text-content transition-all hover:border-brand/40 hover:bg-surface hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
               >
-                Entre em Contato
+                {activeIntent.secondaryLabel}
               </Link>
+            </motion.div>
+
+            <motion.div variants={revealItem} className="mt-8 flex items-center justify-center gap-3 text-sm text-content-muted xl:justify-start">
+              <Link href="#projetos" className="group inline-flex items-center gap-2 transition-colors hover:text-content">
+                Explorar portfólio
+                <i className="fas fa-arrow-down text-xs transition-transform group-hover:translate-y-1" aria-hidden="true" />
+              </Link>
+              <span aria-hidden="true">·</span>
+              <span>{activeIntent.eyebrow}</span>
             </motion.div>
           </div>
 
-          <motion.div
-            variants={revealItem}
-            className="flex justify-center lg:justify-end"
-          >
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-indigo-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative bg-canvas p-4 rounded-2xl shadow-2xl glass-panel"
-              >
-                <Image
-                  src="/assets/img/web_development_maintenance_construction_teamwork_icon_192840.webp"
-                  alt="Luís Teixeira - Desenvolvedor Web"
-                  width={500}
-                  height={500}
-                  priority
-                  className="rounded-xl w-full h-auto object-cover max-w-sm"
-                />
-              </motion.div>
-            </div>
+          <motion.div variants={revealItem} className="xl:justify-self-end xl:pt-56">
+            <StudioCanvas intent={activeIntent} reduceMotion={reduceMotion} />
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="text-xs text-content-muted uppercase tracking-widest font-medium">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-5 h-8 border-2 border-line rounded-full flex items-start justify-center p-1"
-        >
-          <div className="w-1.5 h-1.5 bg-brand rounded-full" />
-        </motion.div>
-      </motion.div>
     </section>
   )
 }

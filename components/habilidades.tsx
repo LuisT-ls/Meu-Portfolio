@@ -81,7 +81,7 @@ export function Habilidades() {
   return (
     <section
       id="habilidades"
-      className="py-24 px-4 sm:px-6 lg:px-8 bg-transparent overflow-hidden"
+      className="overflow-hidden bg-transparent px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
     >
       <div className="container mx-auto">
         <SectionHeading
@@ -160,14 +160,14 @@ export function Habilidades() {
                   variants={staggerContainer}
                   initial="initial"
                   animate="animate"
-                  className="grid grid-cols-3 sm:grid-cols-4 gap-4"
+                  className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
                 >
                   {categoria.skills.map((skill) => (
                     <motion.div
                       key={skill.name}
                       variants={revealItem}
                       whileHover={{ y: -4 }}
-                      className="group flex flex-col items-center gap-3 p-4 rounded-2xl border border-line bg-surface hover:border-brand/40 hover:bg-brand/5 transition-colors duration-200 cursor-default"
+                      className="group flex flex-col items-center gap-3 rounded-2xl border border-line bg-surface p-3 transition-colors duration-200 hover:border-brand/40 hover:bg-brand/5 sm:p-4"
                     >
                       <div className="relative w-10 h-10 transition-transform duration-300 group-hover:scale-110">
                         <Image

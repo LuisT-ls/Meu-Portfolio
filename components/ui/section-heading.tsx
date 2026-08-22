@@ -15,11 +15,11 @@ export function SectionHeading({ title, subtitle }: SectionHeadingProps) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-center mb-16"
+      className="mb-10 px-1 text-center sm:mb-12 lg:mb-16"
     >
-      <h2 className="text-4xl sm:text-5xl font-bold mb-4">{title}</h2>
+      <h2 className="mb-3 text-3xl font-bold sm:mb-4 sm:text-4xl lg:text-5xl">{title}</h2>
       {subtitle && (
-        <p className="text-content-secondary text-lg max-w-2xl mx-auto">
+        <p className="mx-auto max-w-2xl text-base text-content-secondary sm:text-lg">
           {subtitle}
         </p>
       )}

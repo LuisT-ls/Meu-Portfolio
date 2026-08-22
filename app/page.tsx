@@ -2,13 +2,14 @@ import dynamic from 'next/dynamic'
 import { Header } from '@/components/header'
 import { Hero } from '@/components/hero'
 import { Sobre } from '@/components/sobre'
+import { Disponibilidade } from '@/components/disponibilidade'
 import { ScrollProgress } from '@/components/scroll-progress'
 import { Skeleton, SkeletonCard, SkeletonForm, SkeletonText } from '@/components/skeleton'
 
 // Code splitting: componentes abaixo da dobra são carregados sob demanda
 const Projetos = dynamic(() => import('@/components/projetos').then((mod) => ({ default: mod.Projetos })), {
   loading: () => (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <section className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
       <div className="container mx-auto">
         <Skeleton variant="text" height={32} width="33%" className="mb-8" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -23,7 +24,7 @@ const Projetos = dynamic(() => import('@/components/projetos').then((mod) => ({ 
 
 const Experiencia = dynamic(() => import('@/components/experiencia').then((mod) => ({ default: mod.Experiencia })), {
   loading: () => (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-canvas">
+    <section className="bg-canvas px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="container mx-auto">
         <SkeletonText lines={1} />
         <div className="space-y-4 mt-8">
@@ -37,7 +38,7 @@ const Experiencia = dynamic(() => import('@/components/experiencia').then((mod) 
 
 const Certificacoes = dynamic(() => import('@/components/certificacoes').then((mod) => ({ default: mod.Certificacoes })), {
   loading: () => (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-surface">
+    <section className="bg-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="container mx-auto">
         <Skeleton variant="text" height={32} width="33%" className="mb-8" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -52,7 +53,7 @@ const Certificacoes = dynamic(() => import('@/components/certificacoes').then((m
 
 const Habilidades = dynamic(() => import('@/components/habilidades').then((mod) => ({ default: mod.Habilidades })), {
   loading: () => (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-canvas">
+    <section className="bg-canvas px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="container mx-auto">
         <Skeleton variant="text" height={32} width="33%" className="mb-8" />
         <div className="space-y-4">
@@ -66,7 +67,7 @@ const Habilidades = dynamic(() => import('@/components/habilidades').then((mod) 
 
 const Contato = dynamic(() => import('@/components/contato').then((mod) => ({ default: mod.Contato })), {
   loading: () => (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-canvas">
+    <section className="bg-canvas px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="container mx-auto">
         <Skeleton variant="text" height={32} width="33%" className="mb-8" />
         <SkeletonForm />
@@ -77,7 +78,7 @@ const Contato = dynamic(() => import('@/components/contato').then((mod) => ({ de
 
 const Footer = dynamic(() => import('@/components/footer').then((mod) => ({ default: mod.Footer })), {
   loading: () => (
-    <footer className="bg-surface py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-surface px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
       <div className="container mx-auto">
         <div className="animate-pulse">
           <div className="h-32 bg-line rounded"></div>
@@ -101,6 +102,7 @@ export default function Home() {
         <Experiencia />
         <Certificacoes />
         <Habilidades />
+        <Disponibilidade />
         <Contato />
       </main>
       <Footer />
@@ -108,4 +110,3 @@ export default function Home() {
     </>
   )
 }
-

@@ -7,6 +7,11 @@ import { SectionHeading } from '@/components/ui/section-heading'
 import { IconBadge } from '@/components/ui/icon-badge'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import {
+  budgetOptions,
+  projectTypeOptions,
+  timelineOptions,
+} from '@/lib/validations/contact'
 
 export function Contato() {
   const {
@@ -14,16 +19,20 @@ export function Contato() {
     isSubmitting,
     fieldErrors,
     isBlocked,
+    submissionStatus,
+    submissionMessage,
+    retryAfter,
     handleChange,
     handlePrivacyChange,
     handleBlur,
     handleSubmit,
+    startNewMessage,
   } = useContactForm()
 
   return (
     <section
       id="contato"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-transparent"
+      className="relative bg-transparent px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
     >
       <div className="container mx-auto">
         <SectionHeading
@@ -31,13 +40,13 @@ export function Contato() {
           subtitle="Tem um projeto em mente ou apenas quer dizer oi? Sinta-se à vontade para me mandar uma mensagem!"
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 items-start gap-8 xl:grid-cols-12 xl:gap-12">
           <motion.div
             variants={staggerContainer}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className="lg:col-span-5 space-y-6"
+            className="space-y-5 xl:col-span-5 xl:space-y-6"
           >
             {[
               {
@@ -52,8 +61,8 @@ export function Contato() {
                 prefix: 'fab',
                 icon: 'fa-whatsapp',
                 title: 'WhatsApp',
-                value: '+55 71 99219-3686',
-                href: 'https://wa.link/u8h8e6',
+                value: '+55 71 99332-2305',
+                href: 'https://wa.me/5571993322305',
                 label: 'Enviar Mensagem'
               },
               {
@@ -68,7 +77,7 @@ export function Contato() {
               <motion.div
                 key={i}
                 variants={revealItem}
-                className="glass-panel p-6 rounded-2xl border border-line hover:border-brand/30 transition-all group flex items-center gap-6"
+                className="glass-panel group flex items-start gap-4 rounded-2xl border border-line p-5 transition-all hover:border-brand/30 sm:items-center sm:gap-6 sm:p-6"
               >
                 <IconBadge
                   icon={`${info.prefix} ${info.icon}`}
@@ -96,11 +105,61 @@ export function Contato() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-7"
+            className="xl:col-span-7"
           >
+            {submissionStatus !== 'idle' && (
+              <div
+                className={cn(
+                  'mb-6 rounded-2xl border p-5',
+                  submissionStatus === 'success'
+                    ? 'border-ok/30 bg-ok/10 text-content'
+                    : 'border-err/30 bg-err/10 text-content'
+                )}
+                role={submissionStatus === 'success' ? 'status' : 'alert'}
+                aria-live="polite"
+              >
+                <div className="flex items-start gap-3">
+                  <i
+                    className={cn(
+                      'fas mt-1',
+                      submissionStatus === 'success'
+                        ? 'fa-check-circle text-ok'
+                        : 'fa-triangle-exclamation text-err'
+                    )}
+                    aria-hidden="true"
+                  />
+                  <div className="flex-1 space-y-2">
+                    <p className="font-semibold">{submissionMessage}</p>
+                    {submissionStatus === 'success' ? (
+                      <>
+                        <p className="text-sm text-content-secondary">
+                          Sua mensagem foi recebida. Responderei assim que possível.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={startNewMessage}
+                          className="text-sm font-bold text-brand hover:underline focus-visible:ring-2 focus-visible:ring-brand/40 rounded"
+                        >
+                          Enviar outra mensagem
+                        </button>
+                      </>
+                    ) : retryAfter ? (
+                      <p className="text-sm text-content-secondary">
+                        Aguarde aproximadamente {retryAfter} segundo(s) antes de tentar novamente.
+                      </p>
+                    ) : (
+                      <p className="text-sm text-content-secondary">
+                        Seus dados continuam no formulário para que você possa revisar e tentar novamente.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
             <form
               onSubmit={handleSubmit}
-              className="glass-panel p-8 sm:p-10 rounded-3xl border border-line shadow-2xl space-y-6"
+              className="glass-panel space-y-6 rounded-3xl border border-line p-5 shadow-2xl sm:p-8 lg:p-10"
               aria-label="Formulário de contato"
               noValidate
             >
@@ -219,6 +278,79 @@ export function Contato() {
                 </div>
               </div>
 
+              <fieldset className="space-y-4 rounded-2xl border border-line bg-surface/60 p-5">
+                <legend className="px-2 text-sm font-bold uppercase tracking-widest text-content-secondary">
+                  Briefing rápido <span className="font-normal normal-case tracking-normal text-content-muted">(opcional)</span>
+                </legend>
+                <p className="text-sm leading-relaxed text-content-secondary">
+                  Essas respostas ajudam a entender seu contexto antes da nossa primeira conversa.
+                </p>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <label htmlFor="tipoProjeto" className="space-y-2">
+                    <span className="text-xs font-bold uppercase tracking-widest text-content-muted">O que você precisa?</span>
+                    <div className="relative">
+                      <select
+                        id="tipoProjeto"
+                        name="tipoProjeto"
+                        value={formData.tipoProjeto}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className="w-full appearance-none rounded-xl border border-line bg-surface-inset px-4 py-3 pr-10 text-sm text-content transition-all focus:border-brand/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                      >
+                        {projectTypeOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                      <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-content-muted" aria-hidden="true"></i>
+                    </div>
+                  </label>
+
+                  <label htmlFor="prazo" className="space-y-2">
+                    <span className="text-xs font-bold uppercase tracking-widest text-content-muted">Quando pretende começar?</span>
+                    <div className="relative">
+                      <select
+                        id="prazo"
+                        name="prazo"
+                        value={formData.prazo}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className="w-full appearance-none rounded-xl border border-line bg-surface-inset px-4 py-3 pr-10 text-sm text-content transition-all focus:border-brand/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                      >
+                        {timelineOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                      <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-content-muted" aria-hidden="true"></i>
+                    </div>
+                  </label>
+
+                  <label htmlFor="faixaInvestimento" className="space-y-2 sm:col-span-2">
+                    <span className="text-xs font-bold uppercase tracking-widest text-content-muted">Faixa de investimento</span>
+                    <div className="relative">
+                      <select
+                        id="faixaInvestimento"
+                        name="faixaInvestimento"
+                        value={formData.faixaInvestimento}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className="w-full appearance-none rounded-xl border border-line bg-surface-inset px-4 py-3 pr-10 text-sm text-content transition-all focus:border-brand/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                      >
+                        {budgetOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                      <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-content-muted" aria-hidden="true"></i>
+                    </div>
+                  </label>
+                </div>
+              </fieldset>
+
               <div className="flex items-start gap-3 p-4 rounded-xl bg-brand/5 border border-brand/10">
                 <input
                   type="checkbox"
@@ -263,6 +395,7 @@ export function Contato() {
               <button
                 type="submit"
                 disabled={isSubmitting || isBlocked}
+                aria-busy={isSubmitting}
                 className="w-full py-4 px-8 rounded-xl bg-brand text-content-on-brand font-bold text-lg hover:shadow-brand transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 overflow-hidden relative group focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

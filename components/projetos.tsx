@@ -4,60 +4,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { revealItem, staggerContainer } from '@/lib/animations'
 import { SectionHeading } from '@/components/ui/section-heading'
-
-interface Project {
-  title: string
-  description: string
-  tags: string[]
-  github: string
-  demo?: string
-  category: 'web' | 'mobile' | 'tools' | 'data'
-}
-
-const projects: Project[] = [
-  {
-    title: 'Delivery SaaS',
-    description: 'Solução SaaS para delivery com dashboard administrativo, gestão de pedidos em tempo real e integração de pagamentos.',
-    tags: ['Next.js', 'TypeScript', 'Firebase'],
-    github: 'https://github.com/LuisT-ls/delivery-saas',
-    category: 'web',
-  },
-  {
-    title: 'Sistema de Venda de Ingressos',
-    description: 'Plataforma para venda e gerenciamento de ingressos com carrinho de compras, validação de assentos e processamento de pedidos.',
-    tags: ['JavaScript', 'HTML5', 'CSS3'],
-    github: 'https://github.com/LuisT-ls/ticket-sales-system',
-    category: 'web',
-  },
-  {
-    title: 'Meu Orçamento',
-    description: 'Aplicativo de controle financeiro pessoal com categorização de gastos, gráficos interativos e exportação de relatórios.',
-    tags: ['JavaScript', 'Chart.js', 'LocalStorage'],
-    github: 'https://github.com/LuisT-ls/meu-orcamento',
-    category: 'web',
-  },
-  {
-    title: 'QUARTIL',
-    description: 'Ferramenta estatística para análise de dados com cálculo de quartis, mediana, média e visualização de boxplots.',
-    tags: ['JavaScript', 'Estatística', 'Visualização'],
-    github: 'https://github.com/LuisT-ls/QUARTIL',
-    category: 'data',
-  },
-  {
-    title: 'Conversor de Imagens',
-    description: 'Conversor de imagens client-side com suporte a múltiplos formatos (PNG, JPEG, WebP, SVG) e redimensionamento.',
-    tags: ['JavaScript', 'Canvas API', 'HTML5'],
-    github: 'https://github.com/LuisT-ls/Conversor-Imagens',
-    category: 'tools',
-  },
-  {
-    title: 'Histórico Universitário',
-    description: 'Sistema para acompanhamento do histórico acadêmico com visualização de disciplinas, notas e cálculo de coeficiente de rendimento.',
-    tags: ['JavaScript', 'React', 'Firebase'],
-    github: 'https://github.com/LuisT-ls/Historico-Universitario',
-    category: 'tools',
-  },
-]
+import Link from 'next/link'
+import { projects, type Project } from '@/lib/projects'
 
 const filters = [
   { label: 'Todos', value: 'all' },
@@ -72,11 +20,16 @@ function ProjectCard({ project }: { project: Project }) {
     <motion.div
       variants={revealItem}
       layout
-      className="glass-panel p-6 rounded-2xl border border-line hover:border-brand/30 transition-all duration-300 flex flex-col group"
+      className="glass-panel group flex flex-col rounded-2xl border border-line p-5 transition-all duration-300 hover:border-brand/30 sm:p-6"
     >
       <div className="flex items-start justify-between mb-4">
-        <div className="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-content-on-brand transition-all duration-300">
-          <i className="fas fa-folder-open text-sm" aria-hidden="true"></i>
+        <div>
+          <div className="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-content-on-brand transition-all duration-300">
+            <i className="fas fa-folder-open text-sm" aria-hidden="true"></i>
+          </div>
+          <span className="inline-flex mt-3 px-2.5 py-1 text-xs font-semibold rounded-full bg-surface text-content-muted">
+            {project.role}
+          </span>
         </div>
         <div className="flex items-center gap-2">
           <a
@@ -109,6 +62,11 @@ function ProjectCard({ project }: { project: Project }) {
         {project.description}
       </p>
 
+      <p className="text-xs text-content-secondary mb-5 flex items-start gap-2">
+        <i className="fas fa-bullseye text-brand mt-0.5" aria-hidden="true"></i>
+        <span><strong className="text-content">Foco:</strong> {project.focus}</span>
+      </p>
+
       <div className="flex flex-wrap gap-2">
         {project.tags.map((tag) => (
           <span
@@ -118,6 +76,36 @@ function ProjectCard({ project }: { project: Project }) {
             {tag}
           </span>
         ))}
+      </div>
+
+      <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-4">
+        <Link
+          href={`/projetos/${project.slug}`}
+          className="inline-flex items-center gap-2 text-sm font-bold text-brand hover:underline focus-visible:ring-2 focus-visible:ring-brand/40 rounded"
+        >
+          <i className="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          Ver case
+        </Link>
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm font-bold text-content-secondary hover:text-content focus-visible:ring-2 focus-visible:ring-brand/40 rounded"
+        >
+          <i className="fab fa-github" aria-hidden="true"></i>
+          Ver código
+        </a>
+        {project.demo && (
+          <a
+            href={project.demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-bold text-content-secondary hover:text-content focus-visible:ring-2 focus-visible:ring-brand/40 rounded"
+          >
+            <i className="fas fa-external-link-alt" aria-hidden="true"></i>
+            Ver demo
+          </a>
+        )}
       </div>
     </motion.div>
   )
@@ -133,7 +121,7 @@ export function Projetos() {
   return (
     <section
       id="projetos"
-      className="py-24 px-4 sm:px-6 lg:px-8 bg-transparent overflow-hidden"
+      className="overflow-hidden bg-transparent px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
     >
       <div className="container mx-auto">
         <SectionHeading
@@ -146,12 +134,15 @@ export function Projetos() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          role="group"
+          aria-label="Filtrar projetos por categoria"
+          className="mb-8 flex flex-wrap justify-center gap-2 sm:mb-12 sm:gap-3"
         >
           {filters.map((f) => (
             <button
               key={f.value}
               onClick={() => setActiveFilter(f.value)}
+              aria-pressed={activeFilter === f.value}
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas ${
                 activeFilter === f.value
                   ? 'bg-brand text-content-on-brand shadow-lg shadow-brand/25'
@@ -163,9 +154,14 @@ export function Projetos() {
           ))}
         </motion.div>
 
+        <p className="sr-only" aria-live="polite">
+          {filtered.length} {filtered.length === 1 ? 'projeto encontrado' : 'projetos encontrados'}.
+        </p>
+
         <AnimatePresence mode="wait">
           <motion.div
             key={activeFilter}
+            id="projects-grid"
             variants={staggerContainer}
             initial="initial"
             animate="animate"

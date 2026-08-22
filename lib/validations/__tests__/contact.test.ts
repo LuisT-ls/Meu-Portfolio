@@ -167,4 +167,30 @@ describe('validateContactForm', () => {
       expect(result.error.issues.some((issue) => issue.path[0] === 'acceptedPrivacy')).toBe(true)
     }
   })
+
+  it('deve aceitar o briefing opcional com valores conhecidos', () => {
+    const result = contactFormSchema.safeParse({
+      nome: 'Luís Teixeira',
+      email: 'test@example.com',
+      mensagem: 'Esta é uma mensagem de teste válida.',
+      acceptedPrivacy: true,
+      tipoProjeto: 'system',
+      prazo: 'within-one-month',
+      faixaInvestimento: '5k-to-15k',
+    })
+
+    expect(result.success).toBe(true)
+  })
+
+  it('deve rejeitar opções de briefing desconhecidas', () => {
+    const result = contactFormSchema.safeParse({
+      nome: 'Luís Teixeira',
+      email: 'test@example.com',
+      mensagem: 'Esta é uma mensagem de teste válida.',
+      acceptedPrivacy: true,
+      tipoProjeto: 'unknown',
+    })
+
+    expect(result.success).toBe(false)
+  })
 })

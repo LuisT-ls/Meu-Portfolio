@@ -1,5 +1,30 @@
 import { z } from 'zod'
 
+export const projectTypeOptions = [
+  { value: '', label: 'Selecione (opcional)' },
+  { value: 'website', label: 'Site ou landing page' },
+  { value: 'system', label: 'Sistema ou dashboard' },
+  { value: 'automation', label: 'Automação ou integração' },
+  { value: 'consulting', label: 'Consultoria técnica' },
+  { value: 'other', label: 'Outro' },
+] as const
+
+export const timelineOptions = [
+  { value: '', label: 'Selecione (opcional)' },
+  { value: 'exploring', label: 'Ainda estou explorando' },
+  { value: 'one-to-three-months', label: 'Entre 1 e 3 meses' },
+  { value: 'within-one-month', label: 'Preciso começar em até 1 mês' },
+  { value: 'urgent', label: 'Preciso começar com urgência' },
+] as const
+
+export const budgetOptions = [
+  { value: '', label: 'Selecione (opcional)' },
+  { value: 'not-defined', label: 'Ainda não definido' },
+  { value: 'up-to-5k', label: 'Até R$ 5 mil' },
+  { value: '5k-to-15k', label: 'Entre R$ 5 mil e R$ 15 mil' },
+  { value: 'above-15k', label: 'Acima de R$ 15 mil' },
+] as const
+
 /**
  * Schema de validação para o formulário de contato
  * Usa Zod para validação type-safe e proteção contra XSS
@@ -32,10 +57,14 @@ export const contactFormSchema = z.object({
     }),
   // Campo honeypot: deve permanecer vazio para usuários reais.
   website: z.string().max(200, 'Valor inválido').optional().default(''),
+  tipoProjeto: z.enum(['', 'website', 'system', 'automation', 'consulting', 'other']).default(''),
+  prazo: z.enum(['', 'exploring', 'one-to-three-months', 'within-one-month', 'urgent']).default(''),
+  faixaInvestimento: z.enum(['', 'not-defined', 'up-to-5k', '5k-to-15k', 'above-15k']).default(''),
 })
 
 export type ContactFormData = z.infer<typeof contactFormSchema>
-export type ContactEmailData = Pick<ContactFormData, 'nome' | 'email' | 'mensagem'>
+export type ContactEmailData = Pick<ContactFormData, 'nome' | 'email' | 'mensagem'> &
+  Partial<Pick<ContactFormData, 'tipoProjeto' | 'prazo' | 'faixaInvestimento'>>
 
 /**
  * Valida os dados do formulário e retorna os dados validados ou erros
