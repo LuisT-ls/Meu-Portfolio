@@ -13,17 +13,17 @@ export function AnalyticsConsent({ onAccept, onReject }: AnalyticsConsentProps) 
       role="dialog"
       aria-labelledby="analytics-consent-title"
       aria-describedby="analytics-consent-description"
-      className="fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-3xl rounded-2xl border border-line bg-surface-raised p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-2xl sm:inset-x-6 sm:bottom-4 sm:p-6"
+      className="fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-2xl rounded-2xl border border-line bg-surface-raised p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-2xl sm:inset-x-6 sm:bottom-4 sm:p-5"
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1.5">
-          <h2 id="analytics-consent-title" className="font-bold text-content">
-            Posso usar dados de navegação para melhorar o site?
+          <h2 id="analytics-consent-title" className="text-lg font-bold leading-tight text-content sm:text-xl">
+            Posso melhorar o site com dados de uso?
           </h2>
-          <p id="analytics-consent-description" className="text-sm leading-relaxed text-content-secondary">
-            O Analytics ajuda a entender quais conteúdos são mais úteis. Você pode aceitar ou recusar, e mudar de ideia depois nas configurações do navegador.{' '}
+          <p id="analytics-consent-description" className="max-w-xl text-sm leading-relaxed text-content-secondary">
+            O Analytics mostra quais conteúdos ajudam mais. Você escolhe aceitar ou recusar, e pode mudar de ideia quando quiser.{' '}
             <Link href="/privacy-policy" className="font-semibold text-brand hover:underline">
-              Saiba mais na política de privacidade.
+              Ver política de privacidade.
             </Link>
           </p>
         </div>
@@ -31,16 +31,16 @@ export function AnalyticsConsent({ onAccept, onReject }: AnalyticsConsentProps) 
           <button
             type="button"
             onClick={onReject}
-            className="rounded-xl border border-line px-4 py-2.5 text-sm font-semibold text-content-secondary transition-colors hover:bg-surface hover:text-content focus-visible:ring-2 focus-visible:ring-brand/40"
+            className="rounded-xl border border-line px-3.5 py-2 text-sm font-semibold text-content-secondary transition-colors hover:bg-surface hover:text-content focus-visible:ring-2 focus-visible:ring-brand/40"
           >
             Recusar
           </button>
           <button
             type="button"
             onClick={onAccept}
-            className="rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-content-on-brand transition-colors hover:bg-brand-hover focus-visible:ring-2 focus-visible:ring-brand/40"
+            className="rounded-xl bg-brand px-3.5 py-2 text-sm font-semibold text-content-on-brand transition-colors hover:bg-brand-hover focus-visible:ring-2 focus-visible:ring-brand/40"
           >
-            Aceitar Analytics
+            Aceitar
           </button>
         </div>
       </div>
